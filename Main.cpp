@@ -10,6 +10,35 @@ float mainTime;
 double speedAnimation = 9 * pow(10, -6);//Реализовать зависимость скоросити анимации от скорости
 double speedPlayer = 0.00033;//
 
+sf::String level[] = {
+	"0000000000000000000000000000000000000000",
+	"0                                      0",
+	"0   s                                  0",
+	"0                                      0",
+	"0                                      0",
+	"0                                      0",
+	"0                                      0",
+	"0                                      0",
+	"0                                      0",
+	"0                                      0",
+	"0                                      0",
+	"0                                      0",
+	"0                                      0",
+	"0                                      0",
+	"0                                      0",
+	"0                                      0",
+	"0                                      0",
+	"0                                      0",
+	"0                                      0",
+	"0                                      0",
+	"0                                      0",
+	"0                                      0",
+	"0                                      0",
+	"0                                      0",
+	"0000000000000000000000000000000000000000",
+};
+
+
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(verticalHeight, horizontalHeight), "SFMLwork");
@@ -17,7 +46,8 @@ int main()
 
 	Player player("resource\\devil.png", 2, 4, 100, 100, speedPlayer);
 	//player.setMaxFrames(4, 4);
-	Map map("resource\\8k_stars_milky_way.jpg");
+	Map map("resource\\Map_Tileds\\Dungeon\\Hell.png", 25, 40, 9);//C:\Users\Andrey\Desktop\RPGGame\resource\Map_Tileds\Dungeon
+	map.setMap(level, 25, 40);
 	map.setPosBG(verticalHeight, horizontalHeight);
 	
 	//start(window,hero);
@@ -39,6 +69,7 @@ int main()
 		}
 		player.MoveHero();
 		window.clear();
+		map.updateMap(&window);
 		window.draw(map.getSprite());
 		window.draw(player.getSprite());
 		window.display();

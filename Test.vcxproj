@@ -141,6 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Hero.cpp" />
+    <ClCompile Include="LevelTileds.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -148,14 +149,14 @@
   <ItemGroup>
     <ClInclude Include="Header.h" />
     <ClInclude Include="Hero.h" />
+    <ClInclude Include="LevelTileds.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="resource\8k_stars_milky_way.jpg" />
-    <Image Include="resource\Background.jpg" />
     <Image Include="resource\devil.png" />
+    <Image Include="resource\Map_Tileds\Dungeon\Hell.png" />
     <Image Include="resource\SpaceShipGG.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
