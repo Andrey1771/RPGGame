@@ -13,7 +13,7 @@ double speedPlayer = 0.00033;//
 sf::String level[] = {
 	"0000000000000000000000000000000000000000",
 	"0                                      0",
-	"0   s                                  0",
+	"0   3                                  0",
 	"0                                      0",
 	"0                                      0",
 	"0                                      0",
@@ -22,10 +22,10 @@ sf::String level[] = {
 	"0                                      0",
 	"0                                      0",
 	"0                                      0",
+	"0                      6               0",
 	"0                                      0",
 	"0                                      0",
-	"0                                      0",
-	"0                                      0",
+	"0                            5         0",
 	"0                                      0",
 	"0                                      0",
 	"0                                      0",
@@ -43,8 +43,11 @@ int main()
 {
 	sf::RenderWindow window(sf::VideoMode(verticalHeight, horizontalHeight), "SFMLwork");
 	window.setVerticalSyncEnabled(true); // запустите это один раз, после создания окна
-
-	Player player("resource\\devil.png", 2, 4, 100, 100, speedPlayer);
+	sf::View* camera = new sf::View;
+	//camera->setSize(verticalHeight, horizontalHeight);
+	
+	//sf::View view = const_cast<sf::View&> (window.getView());
+	Player player(*camera, "resource\\devil.png", 2, 4, 100, 100, speedPlayer);
 	//player.setMaxFrames(4, 4);
 	Map map("resource\\Map_Tileds\\Dungeon\\Hell.png", 25, 40, 9);//C:\Users\Andrey\Desktop\RPGGame\resource\Map_Tileds\Dungeon
 	map.setMap(level, 25, 40);
@@ -52,7 +55,7 @@ int main()
 	
 	//start(window,hero);
 	sf::Clock clock;
-
+	
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -67,6 +70,7 @@ int main()
 				window.close();
 			}
 		}
+		window.setView(*camera);
 		player.MoveHero();
 		window.clear();
 		map.updateMap(&window);

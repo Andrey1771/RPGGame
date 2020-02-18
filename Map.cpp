@@ -40,10 +40,15 @@ void Map::updateMap(sf::RenderWindow *window)
 			for (int j = 0; j < widthMap; j++)
 			{
 				
-				if (tieldMaps[i][j] == ' ')  sprite.setTextureRect(sf::IntRect(0, 0, tieldWidth, tieldHeight)); //если встретили символ пробел, то рисуем 1й квадратик
-				if (tieldMaps[i][j] == 's')  sprite.setTextureRect(sf::IntRect(tieldWidth, 0, tieldWidth, tieldHeight));//если встретили символ s, то рисуем 2й квадратик
-				if ((tieldMaps[i][j] == '0')) sprite.setTextureRect(sf::IntRect(tieldWidth*2, 0, tieldWidth, tieldHeight));//если встретили символ 0, то рисуем 3й квадратик
-
+				if (tieldMaps[i][j] == '5')  sprite.setTextureRect(sf::IntRect(0, 0, tieldWidth, tieldHeight)); 
+				if (tieldMaps[i][j] == '1')  sprite.setTextureRect(sf::IntRect(tieldWidth, 0, tieldWidth, tieldHeight));
+				if ((tieldMaps[i][j] == '2')) sprite.setTextureRect(sf::IntRect(tieldWidth*2, 0, tieldWidth, tieldHeight));
+				if (tieldMaps[i][j] == '3')  sprite.setTextureRect(sf::IntRect(tieldWidth*3, 0, tieldWidth, tieldHeight));
+				if (tieldMaps[i][j] == '4')  sprite.setTextureRect(sf::IntRect(tieldWidth*4, 0, tieldWidth, tieldHeight));
+				if ((tieldMaps[i][j] == ' ')) sprite.setTextureRect(sf::IntRect(tieldWidth * 5, 0, tieldWidth, tieldHeight));
+				if (tieldMaps[i][j] == '0')  sprite.setTextureRect(sf::IntRect(tieldWidth*6, 0, tieldWidth, tieldHeight)); 
+				if (tieldMaps[i][j] == '7')  sprite.setTextureRect(sf::IntRect(tieldWidth*7, 0, tieldWidth, tieldHeight));
+				if ((tieldMaps[i][j] == '8')) sprite.setTextureRect(sf::IntRect(tieldWidth * 8, 0, tieldWidth, tieldHeight));
 
 				sprite.setPosition(j * tieldWidth, i * tieldHeight);//по сути раскидывает квадратики, превращая в карту. то есть задает каждому из них позицию. если убрать, то вся карта нарисуется в одном квадрате 32*32 и мы увидим один квадрат
 
