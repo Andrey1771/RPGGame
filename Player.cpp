@@ -39,14 +39,31 @@ void Player::MoveHero()
 		this->move(speed * mainTime, 0);
 		this->x += speed * mainTime;
 	}
-	setCoordinationCamera(this->x, this->y);
+	setCoordinationCamera(0, 0, 40*64, 64*25);
 
 }
 
-void Player::setCoordinationCamera(float x, float y)
+void Player::setCoordinationCamera(float x0, float y0, float width, float height)
 {
-	camera->setCenter(sprite->getPosition().x + sprite->getTextureRect().width/2.0, sprite->getPosition().y + sprite->getTextureRect().height/2.0);
+	float lastX = camera->getCenter().x, lastY = camera->getCenter().y;
+
 	
+	camera->setCenter(sprite->getPosition().x + sprite->getTextureRect().width/2.0, sprite->getPosition().y + sprite->getTextureRect().height/2.0);
+	 
+	if (camera->getCenter().x - camera->getSize().x / 2 < x0 || camera->getCenter().x + camera->getSize().x / 2 > x0 + width)
+	{
+		camera->setCenter(lastX, camera->getCenter().y);
+	}
+	if (camera->getCenter().y - camera->getSize().y / 2 < y0 || camera->getCenter().y + camera->getSize().y / 2 > y0 + height)
+	{
+		camera->setCenter(camera->getCenter().x, lastY);
+	}
+
+
+
+
+	//if ((camera->getCenter().x - camera->getSize().x / 2 < x0 || camera->getCenter().y - camera->getSize().y / 2 < y0) || (camera->getCenter().x + camera->getSize().x / 2 > x0 + width || camera->getCenter().y + camera->getSize().y / 2 > y0 + height))
+		//camera->setCenter(lastX, lastY);
 }
 
 void Player::animation(int direction)// 1 - left, 2 - right, 3 - up, 4 - down

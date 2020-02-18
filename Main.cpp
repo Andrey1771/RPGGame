@@ -47,7 +47,7 @@ int main()
 	//camera->setSize(verticalHeight, horizontalHeight);
 	
 	//sf::View view = const_cast<sf::View&> (window.getView());
-	Player player(*camera, "resource\\devil.png", 2, 4, 100, 100, speedPlayer);
+	Player player(*camera, "resource\\devil.png", 2, 4, 500, 500, speedPlayer);
 	//player.setMaxFrames(4, 4);
 	Map map("resource\\Map_Tileds\\Dungeon\\Hell.png", 25, 40, 9);//C:\Users\Andrey\Desktop\RPGGame\resource\Map_Tileds\Dungeon
 	map.setMap(level, 25, 40);
