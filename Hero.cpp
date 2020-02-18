@@ -36,7 +36,7 @@ sf::Sprite Hero::getSprite()
 {
 	return *sprite;
 }
-bool Hero::setPos(int x,int y)
+bool Hero::setPos(double x, double y)
 {
 	sprite->setPosition(x, y);
 	return true;
@@ -47,7 +47,7 @@ bool Hero::setMaxFrames(int countX, int countY)
 	this->maxFrameY = countY;
 	return true;
 }
-void Hero::move(int x, int y)
+void Hero::move(double x, double y)
 {
 	sprite->move(x,y);
 }

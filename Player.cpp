@@ -10,16 +10,203 @@ Player::~Player()
 {
 
 }
-void Player::MoveHero()
+void Player::MoveHero(sf::Event& event)
 {
-	//sf::Event event;
-	//event.type == sf::Event::KeyReleased;
 	
+	//event.type == sf::Event::KeyReleased;
+	//event.key == sf::Keyboard::W;
+	/*
+	if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::W)
+	{
+		this->setPos(0, 0);
+	}
+	*/
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	{
+		
+		
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		{
+			//this->animation(1);
+			this->move(-speed * mainTime/sqrt(2), 0);
+			this->x -= speed * mainTime/sqrt(2);
+
+			this->animation(3);
+
+			this->move(0, -speed * mainTime/ sqrt(2));
+			this->y -= speed * mainTime/ sqrt(2);
+
+			setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
+			return;
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		{
+			//this->animation(2);
+			this->move(speed * mainTime/ sqrt(2), 0);
+			this->x += speed * mainTime/ sqrt(2);
+
+			this->animation(3);
+
+			this->move(0, -speed * mainTime/ sqrt(2));
+			this->y -= speed * mainTime/ sqrt(2);
+
+			setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
+			return;
+		}
+
+		this->animation(3);
+		this->move(0, -speed * mainTime);
+		this->y -= speed * mainTime;
+
+		setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
+		return;
+
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	{
+		
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		{
+			//this->animation(1);
+			this->move(-speed * mainTime/sqrt(2), 0);
+			this->x -= speed * mainTime/sqrt(2);
+
+			this->animation(4);
+			this->move(0, speed * mainTime/sqrt(2));
+			this->y += speed * mainTime/sqrt(2);
+			setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
+			return;
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		{
+			//this->animation(2);
+			this->move(speed * mainTime/sqrt(2), 0);
+			this->x += speed * mainTime/sqrt(2);
+
+			this->animation(4);
+			this->move(0, speed * mainTime/sqrt(2));
+			this->y += speed * mainTime/sqrt(2);
+			setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
+			return;
+
+		}
+
+		this->animation(4);
+		this->move(0, speed * mainTime);
+		this->y += speed * mainTime;
+		setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
+		return;
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	{
+		this->animation(1);
+		this->move(-speed * mainTime, 0);
+		this->x -= speed * mainTime;
+		setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
+		return;
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	{
+		this->animation(2);
+		this->move(speed * mainTime, 0);
+		this->x += speed * mainTime;
+		setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
+		return;
+	}
+
+
+	/*
+	if (sf::Keyboard::isKeyPressed)
+	{
+		switch ()
+		{
+			
+		case(sf::Keyboard::W):
+		{
+			this->animation(3);
+			this->move(0, -speed * mainTime);
+			this->y -= speed * mainTime;
+			
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+			{
+				this->animation(1);
+				this->move(-speed * mainTime, 0);
+				this->x -= speed * mainTime;
+			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+			{
+				this->animation(2);
+				this->move(speed * mainTime, 0);
+				this->x += speed * mainTime;
+			}
+			
+			break;
+		}
+
+		case(sf::Keyboard::S):
+		{
+			this->animation(4);
+			this->move(0, speed * mainTime);
+			this->y += speed * mainTime;
+			
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+			{
+				this->animation(1);
+				this->move(-speed * mainTime, 0);
+				this->x -= speed * mainTime;
+			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+			{
+				this->animation(2);
+				this->move(speed * mainTime, 0);
+				this->x += speed * mainTime;
+			}
+			
+			break;
+		}
+
+		case(sf::Keyboard::A):
+		{
+			this->animation(1);
+			this->move(-speed * mainTime, 0);
+			this->x -= speed * mainTime;
+
+			break;
+		}
+
+		case(sf::Keyboard::D):
+		{
+			this->animation(2);
+			this->move(speed * mainTime, 0);
+			this->x += speed * mainTime;
+			break;
+		}
+
+		}
+		
+		
+	}
+	*/
+	/*
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
 		this->animation(3);
 		this->move(0, -speed * mainTime);
 		this->y -= speed * mainTime;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		{
+			this->animation(1);
+			this->move(-speed * mainTime, 0);
+			this->x -= speed * mainTime;
+		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
@@ -39,7 +226,8 @@ void Player::MoveHero()
 		this->move(speed * mainTime, 0);
 		this->x += speed * mainTime;
 	}
-	setCoordinationCamera(0, 0, 40*64, 64*25);
+	*/
+	//setCoordinationCamera(0, 0, 40*64, 64*25);
 
 }
 

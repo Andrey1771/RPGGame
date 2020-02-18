@@ -71,7 +71,7 @@ int main()
 			}
 		}
 		window.setView(*camera);
-		player.MoveHero();
+		player.MoveHero(event);
 		window.clear();
 		map.updateMap(&window);
 		window.draw(map.getSprite());
