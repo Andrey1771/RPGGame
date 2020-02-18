@@ -10,7 +10,7 @@ private:
 public:
 	Player(sf::View& view, sf::String ImageFile, int maxFrameX, int maxFrameY, float x, float y, float speed = 0);
 	~Player();
-	void MoveHero(sf::Event& event);
+	void MoveHero();
 	void setCoordinationCamera(float x0, float y0, float width, float height);
 
 	// Унаследовано через Hero
