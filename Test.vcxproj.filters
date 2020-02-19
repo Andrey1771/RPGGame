@@ -55,10 +55,13 @@
     <Image Include="resource\SpaceShipGG.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="resource\devil.png">
+    <Image Include="resource\Map_Tileds\Dungeon\Hell.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="resource\Map_Tileds\Dungeon\Hell.png">
+    <Image Include="resource\Enemy\Dungeon\Projectile\devilAttack.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resource\Enemy\Dungeon\Character\devil.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
   </ItemGroup>

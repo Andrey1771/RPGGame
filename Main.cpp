@@ -9,6 +9,7 @@ int horizontalHeight = 800;
 float mainTime;
 double speedAnimation = 9 * pow(10, -6);//Реализовать зависимость скоросити анимации от скорости
 double speedPlayer = 0.00033;//
+double speedPlayerAttack = 0.00033;
 
 sf::String level[] = {
 	"0000000000000000000000000000000000000000",
@@ -47,7 +48,7 @@ int main()
 	//camera->setSize(verticalHeight, horizontalHeight);
 	
 	//sf::View view = const_cast<sf::View&> (window.getView());
-	Player player(*camera, "resource\\devil.png", 2, 4, 500, 500, speedPlayer);
+	Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
 	//player.setMaxFrames(4, 4);
 	Map map("resource\\Map_Tileds\\Dungeon\\Hell.png", 25, 40, 9);//C:\Users\Andrey\Desktop\RPGGame\resource\Map_Tileds\Dungeon
 	map.setMap(level, 25, 40);
@@ -71,7 +72,8 @@ int main()
 			}
 		}
 		window.setView(*camera);
-		player.MoveHero();
+		//player.MoveHero();
+		player.update(event);
 		window.clear();
 		map.updateMap(&window);
 		window.draw(map.getSprite());
