@@ -17,8 +17,8 @@ public:
 	virtual void update(sf::Event event) override;
 	
 private:
-	void moveHero(sf::Event event);
-	void attackHero();
+	bool moveHero(sf::Event event);
+	void attackHero(sf::Event event, bool ok);
 	// Унаследовано через Hero
 	virtual void animation(int direction) override;
 

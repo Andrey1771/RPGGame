@@ -9,15 +9,15 @@ int horizontalHeight = 800;
 float mainTime;
 double speedAnimation = 9 * pow(10, -6);//Реализовать зависимость скоросити анимации от скорости
 double speedPlayer = 0.00033;//
-double speedPlayerAttack = 0.00033;
+double speedPlayerAttack = 0.5;
 
 sf::String level[] = {
 	"0000000000000000000000000000000000000000",
 	"0                                      0",
 	"0   3                                  0",
 	"0                                      0",
-	"0                                      0",
-	"0                                      0",
+	"0                   51                 0",
+	"0                   23                 0",
 	"0                                      0",
 	"0                                      0",
 	"0                                      0",
