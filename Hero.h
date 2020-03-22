@@ -7,18 +7,18 @@
 class Hero : public Object
 {
 public:
-	Hero(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, int maxFrameAttackX, int maxFrameAttackY, double x, double y, double speed = 0, double attackTime = 0, double attackRange = 0, double attackSpeed = 0);
+	Hero(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, double speed = 0, double attackTime = 0, double attackRange = 0, double attackSpeed = 0);
 	~Hero();
 private:
 	float currentFrameAttackX{ 0 }; float currentFrameAttackY{ 0 };
 	
-	struct textureData attackTexture;
 	bool temp{ false };
 	int numberTield{ 1 };
 	sf::Clock clock;
 	double speedOneFrame;
 protected:
 	double attackTime{ 0 }; double attackRange{ 0 }; double attackSpeed{ 0 };
+	double healthPoints;
 public:
 	// Унаследовано через Object
 	virtual bool animation(int direction) override;

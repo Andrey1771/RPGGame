@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Map.h"
 #include "Shell.h"
+#include "Enemy.h"
 #include <iostream>
 //void start(sf::RenderWindow& window, Hero& hero);
 int verticalHeight = 1200;
@@ -44,6 +45,12 @@ sf::String level[] = {
 };
 
 std::vector<Shell*> shells;
+std::vector<Enemy*> enemies;
+
+
+void updateShells(const sf::Event& event, sf::RenderWindow& window);
+void updateEnemies(const sf::Event& event, sf::RenderWindow& window);
+void updateIntersects(Player& player);
 
 int main()
 {
@@ -53,7 +60,8 @@ int main()
 	//camera->setSize(verticalHeight, horizontalHeight);
 
 	//sf::View view = const_cast<sf::View&> (window.getView());
-	Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed);
+	Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 500, 500, speedPlayer, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed);
+	enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 500, 500, speedPlayer, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed));
 	//player.setMaxFrames(4, 4);
 	Map map("resource\\Map_Tileds\\Dungeon\\Hell.png", 25, 40, 9);//C:\Users\Andrey\Desktop\RPGGame\resource\Map_Tileds\Dungeon
 	map.setMap(level, 25, 40);
@@ -80,29 +88,78 @@ int main()
 		//player.MoveHero();
 		player.update(event);
 
-
-
 		window.clear();
 		map.updateMap(&window);
 		window.draw(map.getSprite());
 		window.draw(player.getSprite());
 
-		for (int i = 0; i < shells.size(); ++i)
-		{
-			if (shells.at(i)->update(event) == -1)
-			{
-				delete shells[i];
-				shells.erase(shells.begin() + i);
-				continue;
-			}
-			window.draw(shells.at(i)->getSprite());
-		}
+		updateIntersects(player);
+		updateShells(event, window);
+		updateEnemies(event, window);
+		
 		window.display();
 	}
 
 	return 0;
 }
 
+void updateShells(const sf::Event& event, sf::RenderWindow& window)
+{
+	for (int i = 0; i < shells.size(); ++i)
+	{
+		if (shells.at(i)->update(event) == -1)
+		{
+			delete shells[i];
+			shells.erase(shells.begin() + i);
+			continue;
+		}
+		window.draw(shells.at(i)->getSprite());
+	}
+}
+
+void updateEnemies(const sf::Event& event, sf::RenderWindow& window)
+{
+	for (int i = 0; i < enemies.size(); ++i)
+	{
+		if (enemies.at(i)->update(event) == -1)
+		{
+			delete enemies[i];
+			enemies.erase(enemies.begin() + i);
+			continue;
+		}
+
+		window.draw(enemies.at(i)->getSprite());
+	}
+}
+
+void updateIntersects(Player& player)
+{
+	sf::IntRect rect(player.getSprite().getPosition().x, player.getSprite().getPosition().y, player.getSprite().getLocalBounds().width, player.getSprite().getLocalBounds().height);
+	sf::IntRect rect2;
+	sf::IntRect rect3;
+	for (int i = 0; i < enemies.size(); ++i) // O(n^2) Можно оптимизировать в будущем
+	{
+		rect2.left = enemies[i]->getSprite().getPosition().x;
+		rect2.top = enemies[i]->getSprite().getPosition().y;
+		rect2.width = enemies[i]->getSprite().getLocalBounds().width;
+		rect2.height = enemies[i]->getSprite().getLocalBounds().height;
+		for (int j = 0; j < shells.size(); ++j)
+		{
+			rect3.left = shells[j]->getSprite().getPosition().x;
+			rect3.top = shells[j]->getSprite().getPosition().y;
+			rect3.width = shells[j]->getSprite().getLocalBounds().width;
+			rect3.height = shells[j]->getSprite().getLocalBounds().height;
+			if (rect3.intersects(rect2))
+			{
+				delete enemies[i];
+				enemies.erase(enemies.begin() + i);
+				break;
+			}
+		}
+		
+	}
+	//std::cout << "intersects: " << rect.intersects(rect2) << std::endl;
+}
 
 
 /*void start(sf::RenderWindow &window, Hero &hero)

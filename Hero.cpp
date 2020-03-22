@@ -3,7 +3,7 @@
 #include <iostream>
 extern float mainTime;
 extern double speedAnimation;
-Hero::Hero(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, int maxFrameAttackX, int maxFrameAttackY, double x, double y, double speed, double attackTime, double attackRange, double attackSpeed) : Object(ImageFile, maxFrameX, maxFrameY, speed)
+Hero::Hero(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, double speed, double attackTime, double attackRange, double attackSpeed) : Object(ImageFile, maxFrameX, maxFrameY, speed)
 {
 	this->attackTime = attackTime;
 	this->attackRange = attackRange;

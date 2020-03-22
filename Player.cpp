@@ -7,7 +7,7 @@ extern float mainTime;
 extern double speedAnimation;
 extern std::vector<Shell*> shells;
 
-Player::Player(sf::View& view, sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, int maxFrameAttackX, int maxFrameAttackY, double x, double y, double speed, double attackTime, double attackRange, double attackSpeed) :Hero(ImageFile, ImageFileAttack, maxFrameX, maxFrameY, maxFrameAttackX, maxFrameAttackY, x, y, speed, attackTime, attackRange, attackSpeed)
+Player::Player(sf::View& view, sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, double speed, double attackTime, double attackRange, double attackSpeed) :Hero(ImageFile, ImageFileAttack, maxFrameX, maxFrameY, x, y, speed, attackTime, attackRange, attackSpeed)
 {
 	camera = &view;
 }
