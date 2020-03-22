@@ -1,11 +1,14 @@
 #include "Player.h"
+#include "Shell.h"
 
+#include <iostream>
+#include "Header.h"
 extern float mainTime;
 extern double speedAnimation;
-Player::Player(sf::View& view, sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, int maxFrameAttackX, int maxFrameAttackY, double x, double y, double speed, double attackTime):Hero(ImageFile, ImageFileAttack, maxFrameX, maxFrameY, maxFrameAttackX, maxFrameAttackY, x, y, speed, attackTime)
-{
-	//sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, int maxFrameAttackX, int maxFrameAttackY, double x, double y, double speed, double attackTime)
+extern std::vector<Shell*> shells;
 
+Player::Player(sf::View& view, sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, int maxFrameAttackX, int maxFrameAttackY, double x, double y, double speed, double attackTime, double attackRange, double attackSpeed) :Hero(ImageFile, ImageFileAttack, maxFrameX, maxFrameY, maxFrameAttackX, maxFrameAttackY, x, y, speed, attackTime, attackRange, attackSpeed)
+{
 	camera = &view;
 }
 Player::~Player()
@@ -25,15 +28,12 @@ bool Player::moveHero(sf::Event event)
 		if (event.key.code == sf::Keyboard::D)
 			dx = 0;
 	}
-	
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
 			move(-speed * mainTime / sqrt(2), -speed * mainTime / sqrt(2));
-			y -= speed * mainTime / sqrt(2);
-			x -= speed * mainTime / sqrt(2);
 
 			if (!(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 				animation(3);
@@ -48,8 +48,6 @@ bool Player::moveHero(sf::Event event)
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		{
 			move(speed * mainTime / sqrt(2), -speed * mainTime / sqrt(2));
-			y -= speed * mainTime / sqrt(2);
-			x += speed * mainTime / sqrt(2);
 
 			if (!(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 				animation(3);
@@ -64,7 +62,6 @@ bool Player::moveHero(sf::Event event)
 		if (!(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 			animation(3);
 		move(0, -speed * mainTime);
-		y -= speed * mainTime;
 
 		dy = -speed * mainTime;
 
@@ -79,8 +76,6 @@ bool Player::moveHero(sf::Event event)
 		{
 
 			move(-speed * mainTime / sqrt(2), speed * mainTime / sqrt(2));
-			y += speed * mainTime / sqrt(2);
-			x -= speed * mainTime / sqrt(2);
 
 			if (!(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 				animation(4);
@@ -95,8 +90,6 @@ bool Player::moveHero(sf::Event event)
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		{
 			move(speed * mainTime / sqrt(2), speed * mainTime / sqrt(2));
-			y += speed * mainTime / sqrt(2);
-			x += speed * mainTime / sqrt(2);
 
 			if (!(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 				animation(4);
@@ -112,7 +105,6 @@ bool Player::moveHero(sf::Event event)
 		if (!(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 			animation(4);
 		move(0, speed * mainTime);
-		y += speed * mainTime;
 
 		dy = speed * mainTime;
 
@@ -124,7 +116,6 @@ bool Player::moveHero(sf::Event event)
 	{
 
 		move(-speed * mainTime, 0);
-		x -= speed * mainTime;
 		if (!(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 			animation(1);
 		dx = -speed * mainTime;
@@ -136,7 +127,6 @@ bool Player::moveHero(sf::Event event)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
 		move(speed * mainTime, 0);
-		x += speed * mainTime;
 
 		if (!(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 			animation(2);
@@ -150,29 +140,50 @@ bool Player::moveHero(sf::Event event)
 }
 void Player::attackHero(sf::Event event, bool ok)
 {
+	if (event.type == sf::Event::EventType::KeyReleased && (event.key.code == sf::Keyboard::Key::Left || event.key.code == sf::Keyboard::Key::Right || event.key.code == sf::Keyboard::Key::Up || event.key.code == sf::Keyboard::Key::Down))
+	{
+		resetAnimationAttack();
+	}
 
 	//if(dx < 0)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		animation(8);//8 - attack left
+		if (animation(8))//8 - attack left
+		{
+			shells.push_back(new Shell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
+			shells.back()->startShot((this->movementTexture.sprite->getPosition().x - this->getSizeXY().sizeX) , this->movementTexture.sprite->getPosition().y, 1, attackRange, attackSpeed);
+		}
 		return;
 	}
 	//if (dx > 0)
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))//2
 	{
-		animation(9);//9 - attack right
+		if (animation(9))//9 - attack right
+		{
+			shells.push_back(new Shell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
+			shells.back()->startShot((this->movementTexture.sprite->getPosition().x + this->getSizeXY().sizeX), this->movementTexture.sprite->getPosition().y, 2, attackRange, attackSpeed);
+			resetAnimationAttack();
+		}
 		return;
 	}
 	//if (dy > 0)
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))//3
 	{
-		animation(10);//10 - attack up
+		if (animation(10))//10 - attack up
+		{
+			shells.push_back(new Shell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
+			shells.back()->startShot(this->movementTexture.sprite->getPosition().x, (this->movementTexture.sprite->getPosition().y - this->getSizeXY().sizeY), 3, attackRange, attackSpeed);
+		}
 		return;
 	}
 	//if (dy <= 0)
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))//4
 	{
-		animation(7);//7 - attack down
+		if (animation(7))//7 - attack down
+		{
+			shells.push_back(new Shell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
+			shells.back()->startShot(this->movementTexture.sprite->getPosition().x, (this->movementTexture.sprite->getPosition().y + this->getSizeXY().sizeY), 4, attackRange, attackSpeed);
+		}
 		return;
 	}
 
@@ -181,39 +192,21 @@ void Player::attackHero(sf::Event event, bool ok)
 		animation(5);
 		return;
 	}
-
-	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-	{
-		if (dx > 0)
-			animation(9);//9 - attack right
-		return;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-	{
-		if(dy > 0)
-			animation(10);//10 - attack up
-		return;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-	{
-		if(dy <= 0)
-			animation(7);//7 - attack down
-		return;
-	}*/
 }
 
-void Player::update(sf::Event event)
+int Player::update(sf::Event event)
 {
 	attackHero(event, moveHero(event));
+	return 0;
 }
 
 void Player::setCoordinationCamera(float x0, float y0, float width, float height)
 {
 	float lastX = camera->getCenter().x, lastY = camera->getCenter().y;
 
-	
-	camera->setCenter(movementTexture.sprite->getPosition().x + movementTexture.sprite->getTextureRect().width/2.0, movementTexture.sprite->getPosition().y + movementTexture.sprite->getTextureRect().height/2.0);
-	 
+
+	camera->setCenter(movementTexture.sprite->getPosition().x + movementTexture.sprite->getTextureRect().width / 2.0, movementTexture.sprite->getPosition().y + movementTexture.sprite->getTextureRect().height / 2.0);
+
 	if (camera->getCenter().x - camera->getSize().x / 2 < x0 || camera->getCenter().x + camera->getSize().x / 2 > x0 + width)
 	{
 		camera->setCenter(lastX, camera->getCenter().y);
@@ -224,7 +217,7 @@ void Player::setCoordinationCamera(float x0, float y0, float width, float height
 	}
 }
 
-void Player::animation(int direction)// 1 - left, 2 - right, 3 - up, 4 - down
+bool Player::animation(int direction)// 1 - left, 2 - right, 3 - up, 4 - down
 {
-	Hero::animation(direction);
+	return Hero::animation(direction);
 }

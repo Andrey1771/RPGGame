@@ -3,7 +3,7 @@
 extern float mainTime;
 extern double speedAnimation;
 
-Object::Object(sf::String ImageFile, int maxFrameX, int maxFrameY, double x, double y, double speed)
+Object::Object(sf::String ImageFile, int maxFrameX, int maxFrameY, double speed)
 {
 	//Movement
 	movementTexture.image = new sf::Image;
@@ -15,20 +15,17 @@ Object::Object(sf::String ImageFile, int maxFrameX, int maxFrameY, double x, dou
 	movementTexture.sprite->setTexture(*movementTexture.texture);
 
 
-	int sizeX = movementTexture.image->getSize().x / maxFrameX;// Можно оптимизировать
-	int sizeY = movementTexture.image->getSize().y / maxFrameY;//
-	movementTexture.sprite->setTextureRect(sf::IntRect((sizeX) * int(currentFrameX), 0, sizeX, sizeY));
+	valueSizeXY.sizeX = movementTexture.image->getSize().x / maxFrameX;// Можно оптимизировать
+	valueSizeXY.sizeY = movementTexture.image->getSize().y / maxFrameY;//
+	movementTexture.sprite->setTextureRect(sf::IntRect((valueSizeXY.sizeX) * int(currentFrameX), 0, valueSizeXY.sizeX, valueSizeXY.sizeY));
 
 	movementTexture.maxFrameX = maxFrameX;
 	movementTexture.maxFrameY = maxFrameY;
 	//Movement
 
-	this->x = x;//пересмотреть
-	this->y = y;//
 	this->speed = speed;
 	//this->dx = dx;//
 	//this->dy = dy;//
-	this->setPos(x, y);
 }
 Object::~Object()
 {
@@ -56,6 +53,18 @@ void Object::move(double x, double y)
 	movementTexture.sprite->move(x, y);
 }
 
-void Object::update(sf::Event event)
+int Object::update(sf::Event event)
 {
+	return 0;
+}
+
+const sf::Vector2f& Object::getPosition()
+{
+	return this->movementTexture.sprite->getPosition();
+}
+
+
+const sizeXY& Object::getSizeXY()
+{
+	return valueSizeXY;
 }
