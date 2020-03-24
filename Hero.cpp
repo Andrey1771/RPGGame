@@ -10,6 +10,7 @@ Hero::Hero(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int 
 	this->attackSpeed = attackSpeed;
 	speedOneFrame = attackTime / movementTexture.maxFrameX;
 	this->setPos(x, y);
+	resetAnimationAttack();
 }
 Hero::~Hero()
 {
@@ -26,6 +27,11 @@ void Hero::resetAnimationAttack()
 	numberTield = 1;
 	currentFrameAttackX = 0;
 	currentFrameAttackY = 0;
+}
+
+double Hero::getSpeed()
+{
+	return speed;
 }
 
 bool Hero::animation(int direction)// 1 - left, 2 - right, 3 - up, 4 - down

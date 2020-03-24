@@ -15,7 +15,6 @@ public:
 
 	// Унаследовано через Hero
 	virtual int update(sf::Event event) override;
-	
 private:
 	bool moveHero(sf::Event event);
 	void attackHero(sf::Event event, bool ok);

@@ -5,8 +5,10 @@
 class Shell : public Object
 {
 public:
-	Shell(sf::String ImageFileAttack, int maxFrameAttackX, int maxFrameAttackY, double speed = 0);
+	Shell(sf::String ImageFileAttack, int maxFrameAttackX, int maxFrameAttackY, double speed = 0, bool enemyKill = false);
 	~Shell();
+	bool enemyKill{ false };
+
 private:
 	int directionAttack; float range; double speed; double x0; double y0;
 	int numberTield{ 1 };

@@ -34,7 +34,7 @@ public:
 	bool setPos(double x, double y);
 	bool setMaxFrames(int countX, int countY);
 	virtual void move(double x, double y);
-	virtual bool animation(int direction) = 0;
+	virtual bool animation(int direction) = 0;// Выбор анимации
 	virtual int update(sf::Event) = 0;
 	const sf::Vector2f& getPosition();
 

@@ -51,6 +51,7 @@ std::vector<Enemy*> enemies;
 void updateShells(const sf::Event& event, sf::RenderWindow& window);
 void updateEnemies(const sf::Event& event, sf::RenderWindow& window);
 void updateIntersects(Player& player);
+void funRandomizer(int countEnemies, Player& player);
 
 int main()
 {
@@ -61,8 +62,9 @@ int main()
 
 	//sf::View view = const_cast<sf::View&> (window.getView());
 	Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 500, 500, speedPlayer, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed);
-	enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 500, 500, speedPlayer, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed));
+	//enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 500, 500, speedPlayer/2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed, &player));
 	//player.setMaxFrames(4, 4);
+	funRandomizer(1, player);
 	Map map("resource\\Map_Tileds\\Dungeon\\Hell.png", 25, 40, 9);//C:\Users\Andrey\Desktop\RPGGame\resource\Map_Tileds\Dungeon
 	map.setMap(level, 25, 40);
 	map.setPosBG(verticalHeight, horizontalHeight);
@@ -149,7 +151,7 @@ void updateIntersects(Player& player)
 			rect3.top = shells[j]->getSprite().getPosition().y;
 			rect3.width = shells[j]->getSprite().getLocalBounds().width;
 			rect3.height = shells[j]->getSprite().getLocalBounds().height;
-			if (rect3.intersects(rect2))
+			if (rect3.intersects(rect2) && shells[j]->enemyKill)// Есть куча способов и идей по оптимизации всего этого и того, что выше
 			{
 				delete enemies[i];
 				enemies.erase(enemies.begin() + i);
@@ -160,6 +162,23 @@ void updateIntersects(Player& player)
 	}
 	//std::cout << "intersects: " << rect.intersects(rect2) << std::endl;
 }
+
+
+void funRandomizer(int countEnemies, Player& player)
+{
+	int positionX;
+	int positionY;
+	srand(0);
+	for (int i = 0; i < countEnemies; ++i)
+	{
+		
+		positionX = rand() % 1000;
+		positionY = rand() % 1000;
+		enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, positionX, positionY, speedPlayer / 2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed * 2, &player));
+
+	}
+}
+
 
 
 /*void start(sf::RenderWindow &window, Hero &hero)

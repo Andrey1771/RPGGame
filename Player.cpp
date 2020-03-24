@@ -150,8 +150,9 @@ void Player::attackHero(sf::Event event, bool ok)
 	{
 		if (animation(8))//8 - attack left
 		{
-			shells.push_back(new Shell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
+			shells.push_back(new Shell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, true));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
 			shells.back()->startShot((this->movementTexture.sprite->getPosition().x - this->getSizeXY().sizeX) , this->movementTexture.sprite->getPosition().y, 1, attackRange, attackSpeed);
+			resetAnimationAttack();
 		}
 		return;
 	}
@@ -160,7 +161,7 @@ void Player::attackHero(sf::Event event, bool ok)
 	{
 		if (animation(9))//9 - attack right
 		{
-			shells.push_back(new Shell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
+			shells.push_back(new Shell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, true));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
 			shells.back()->startShot((this->movementTexture.sprite->getPosition().x + this->getSizeXY().sizeX), this->movementTexture.sprite->getPosition().y, 2, attackRange, attackSpeed);
 			resetAnimationAttack();
 		}
@@ -171,8 +172,9 @@ void Player::attackHero(sf::Event event, bool ok)
 	{
 		if (animation(10))//10 - attack up
 		{
-			shells.push_back(new Shell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
+			shells.push_back(new Shell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, true));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
 			shells.back()->startShot(this->movementTexture.sprite->getPosition().x, (this->movementTexture.sprite->getPosition().y - this->getSizeXY().sizeY), 3, attackRange, attackSpeed);
+			resetAnimationAttack();
 		}
 		return;
 	}
@@ -181,8 +183,9 @@ void Player::attackHero(sf::Event event, bool ok)
 	{
 		if (animation(7))//7 - attack down
 		{
-			shells.push_back(new Shell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
+			shells.push_back(new Shell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, true));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
 			shells.back()->startShot(this->movementTexture.sprite->getPosition().x, (this->movementTexture.sprite->getPosition().y + this->getSizeXY().sizeY), 4, attackRange, attackSpeed);
+			resetAnimationAttack();
 		}
 		return;
 	}

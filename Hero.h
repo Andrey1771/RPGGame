@@ -20,6 +20,8 @@ protected:
 	double attackTime{ 0 }; double attackRange{ 0 }; double attackSpeed{ 0 };
 	double healthPoints;
 public:
+
+	double getSpeed();
 	// Унаследовано через Object
 	virtual bool animation(int direction) override;
 	virtual int update(sf::Event) override;

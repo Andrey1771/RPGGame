@@ -4,8 +4,9 @@
 #include "Hero.h"
 extern float mainTime;
 extern double speedAnimation;
-Shell::Shell(sf::String ImageFileAttack, int maxFrameAttackX, int maxFrameAttackY, double speed) : Object(ImageFileAttack, maxFrameAttackX, maxFrameAttackY, speed)
+Shell::Shell(sf::String ImageFileAttack, int maxFrameAttackX, int maxFrameAttackY, double speed, bool enemyKill) : Object(ImageFileAttack, maxFrameAttackX, maxFrameAttackY, speed)
 {
+	this->enemyKill = enemyKill;
 }
 
 Shell::~Shell()
