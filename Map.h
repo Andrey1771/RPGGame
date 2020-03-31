@@ -17,7 +17,9 @@ public:
 	
 	void setMap(sf::String* tieldMaps, int sizeWidht, int sizeHeight);
 	sf::Sprite getSprite();
+	std::vector<sf::Sprite> magicTieldsVector;
 private:
 	void tieldsSettings(int amountTieldsMap);
+	
 };
 

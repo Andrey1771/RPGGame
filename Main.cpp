@@ -14,7 +14,7 @@ double speedPlayer = 0.00033;//
 double speedPlayerAttack = 1.5;
 double attackPlayerRange = 400;
 double attackPlayerSpeed = 3;
-
+double repulsiveForce = 1;
 
 sf::String level[] = {
 	"0000000000000000000000000000000000000000",
@@ -47,11 +47,14 @@ sf::String level[] = {
 std::vector<Shell*> shells;
 std::vector<Enemy*> enemies;
 
+Map map("resource\\Map_Tileds\\Dungeon\\Hell.png", 25, 40, 9);//C:\Users\Andrey\Desktop\RPGGame\resource\Map_Tileds\Dungeon
 
 void updateShells(const sf::Event& event, sf::RenderWindow& window);
 void updateEnemies(const sf::Event& event, sf::RenderWindow& window);
 void updateIntersects(Player& player);
 void funRandomizer(int countEnemies, Player& player);
+int updateIntersectsWalls(Player&);
+int updateIntersectsHeroes(Player& player);
 
 int main()
 {
@@ -64,8 +67,8 @@ int main()
 	Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 500, 500, speedPlayer, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed);
 	//enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 500, 500, speedPlayer/2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed, &player));
 	//player.setMaxFrames(4, 4);
-	funRandomizer(1, player);
-	Map map("resource\\Map_Tileds\\Dungeon\\Hell.png", 25, 40, 9);//C:\Users\Andrey\Desktop\RPGGame\resource\Map_Tileds\Dungeon
+	funRandomizer(25, player);
+
 	map.setMap(level, 25, 40);
 	map.setPosBG(verticalHeight, horizontalHeight);
 
@@ -98,7 +101,9 @@ int main()
 		updateIntersects(player);
 		updateShells(event, window);
 		updateEnemies(event, window);
-		
+		updateIntersectsWalls(player);
+		updateIntersectsHeroes(player);
+
 		window.display();
 	}
 
@@ -113,6 +118,7 @@ void updateShells(const sf::Event& event, sf::RenderWindow& window)
 		{
 			delete shells[i];
 			shells.erase(shells.begin() + i);
+			--i;
 			continue;
 		}
 		window.draw(shells.at(i)->getSprite());
@@ -136,7 +142,7 @@ void updateEnemies(const sf::Event& event, sf::RenderWindow& window)
 
 void updateIntersects(Player& player)
 {
-	sf::IntRect rect(player.getSprite().getPosition().x, player.getSprite().getPosition().y, player.getSprite().getLocalBounds().width, player.getSprite().getLocalBounds().height);
+	sf::IntRect rect(player.getSprite().getPosition().x, player.getSprite().getPosition().y, player.getSprite().getLocalBounds().width, player.getSprite().getLocalBounds().height);//пока отключил
 	sf::IntRect rect2;
 	sf::IntRect rect3;
 	for (int i = 0; i < enemies.size(); ++i) // O(n^2) Можно оптимизировать в будущем
@@ -158,22 +164,152 @@ void updateIntersects(Player& player)
 				break;
 			}
 		}
-		
+
 	}
 	//std::cout << "intersects: " << rect.intersects(rect2) << std::endl;
 }
 
+int updateIntersectsWalls(Player& player)
+{
+	/*std::vector<Object*> vect;
+	vect.push_back(&player);
+	Object::IntersectsWalls(vect);
+	vect.clear();
+
+	for (Object *var : shells)
+		vect.push_back(var);
+	Object::IntersectsWalls(vect);
+	vect.clear();
+
+	for (Object* var : enemies)
+		vect.push_back(var);
+	Object::IntersectsWalls(vect);
+	vect.clear();*/
+
+	sf::IntRect rect(player.getSprite().getPosition().x, player.getSprite().getPosition().y, player.getSprite().getLocalBounds().width, player.getSprite().getLocalBounds().height);
+	sf::IntRect rect2;
+	sf::IntRect rect3;
+
+	for (sf::Sprite var : map.magicTieldsVector)
+	{
+		rect3.left = var.getPosition().x;
+		rect3.top = var.getPosition().y;
+		rect3.width = var.getLocalBounds().width;
+		rect3.height = var.getLocalBounds().height;
+		if (rect3.intersects(rect))
+		{
+			player.move(-(player.dx * repulsiveForce), -(player.dy * repulsiveForce));
+			break;
+		}
+	}
+
+	for (int i = 0; i < enemies.size(); ++i) // O(n^2) Можно оптимизировать в будущем
+	{
+		rect2.left = enemies[i]->getSprite().getPosition().x;
+		rect2.top = enemies[i]->getSprite().getPosition().y;
+		rect2.width = enemies[i]->getSprite().getLocalBounds().width;
+		rect2.height = enemies[i]->getSprite().getLocalBounds().height;
+
+		for (sf::Sprite var : map.magicTieldsVector)
+		{
+			rect3.left = var.getPosition().x;
+			rect3.top = var.getPosition().y;
+			rect3.width = var.getLocalBounds().width;
+			rect3.height = var.getLocalBounds().height;
+			if (rect3.intersects(rect2))
+			{
+				enemies[i]->move(-(enemies[i]->dx * repulsiveForce), -(enemies[i]->dy * repulsiveForce));
+				break;
+			}
+		}
+	}
+
+	for (int i = 0; i < shells.size(); ++i) // O(n^2) Можно оптимизировать в будущем
+	{
+		rect2.left = shells[i]->getSprite().getPosition().x;
+		rect2.top = shells[i]->getSprite().getPosition().y;
+		rect2.width = shells[i]->getSprite().getLocalBounds().width;
+		rect2.height = shells[i]->getSprite().getLocalBounds().height;
+
+		for (sf::Sprite var : map.magicTieldsVector)
+		{
+			rect3.left = var.getPosition().x;
+			rect3.top = var.getPosition().y;
+			rect3.width = var.getLocalBounds().width;
+			rect3.height = var.getLocalBounds().height;
+			if (rect3.intersects(rect2))
+			{
+				delete shells[i];
+				shells.erase(shells.begin() + i);
+				--i;
+				break;
+			}
+		}
+	}
+
+	return 0;
+	//std::cout << "intersects: " << rect.intersects(rect2) << std::endl;
+}
+
+int updateIntersectsHeroes(Player& player)
+{
+	sf::IntRect rect(player.getSprite().getPosition().x, player.getSprite().getPosition().y, player.getSprite().getLocalBounds().width, player.getSprite().getLocalBounds().height);
+	sf::IntRect rect2;
+	sf::IntRect rect3;
+
+	for (int i = 0; i < enemies.size(); ++i) // O(n) Можно оптимизировать в будущем
+	{
+		rect2.left = enemies[i]->getSprite().getPosition().x;
+		rect2.top = enemies[i]->getSprite().getPosition().y;
+		rect2.width = enemies[i]->getSprite().getLocalBounds().width;
+		rect2.height = enemies[i]->getSprite().getLocalBounds().height;
+
+		if (rect.intersects(rect2))
+		{
+			enemies[i]->move(-enemies[i]->dx, -enemies[i]->dy);
+			player.move(-(player.dx * repulsiveForce), -(player.dy * repulsiveForce));
+			break;// не уверен в этом немного
+		}
+	}
+
+	for (int i = 0; i < enemies.size(); ++i) // O(n^2) Можно оптимизировать в будущем
+	{
+		rect2.left = enemies[i]->getSprite().getPosition().x;
+		rect2.top = enemies[i]->getSprite().getPosition().y;
+		rect2.width = enemies[i]->getSprite().getLocalBounds().width;
+		rect2.height = enemies[i]->getSprite().getLocalBounds().height;
+
+		for (int j = 0; j < enemies.size(); ++j)
+		{
+			if (j == i)
+				continue;
+			rect3.left = enemies[j]->getSprite().getPosition().x;
+			rect3.top = enemies[j]->getSprite().getPosition().y;
+			rect3.width = enemies[j]->getSprite().getLocalBounds().width;
+			rect3.height = enemies[j]->getSprite().getLocalBounds().height;
+
+			if (rect3.intersects(rect2))
+			{
+				enemies[i]->move(-(enemies[i]->dx * repulsiveForce), -(enemies[i]->dy * repulsiveForce));
+				enemies[j]->move(-(enemies[j]->dx * repulsiveForce), -(enemies[j]->dy * repulsiveForce));
+				break;// не уверен в этом немного
+			}
+		}
+	}
+	return 0;
+}
 
 void funRandomizer(int countEnemies, Player& player)
 {
 	int positionX;
 	int positionY;
-	srand(0);
+	//srand();
+	srand(time_t(0));
 	for (int i = 0; i < countEnemies; ++i)
 	{
-		
-		positionX = rand() % 1000;
-		positionY = rand() % 1000;
+
+		positionX = rand() % 1000 + 200;
+		positionY = rand() % 1000 + 200;
 		enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, positionX, positionY, speedPlayer / 2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed * 2, &player));
 
 	}

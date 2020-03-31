@@ -20,7 +20,7 @@ Map::~Map()
 bool Map::setPosBG(int w, int h)
 {
 	//this->sprite.setPosition(w - image.getSize().x / 2, h - image.getSize().y / 2);
-	this->sprite.setPosition(w - 8192/2, h - 4096/2);
+	this->sprite.setPosition(w - 8192 / 2, h - 4096 / 2);
 	return true;
 }
 
@@ -31,29 +31,48 @@ void Map::loadLevel(const sf::String& mapTiledsPosition, const sf::String& tiled
 	this->sprite.setTexture(this->texture);//заливаем текстуру спрайтом
 }
 
-void Map::updateMap(sf::RenderWindow *window)
+void Map::updateMap(sf::RenderWindow* window)
 {
 	//tieldsSettings(7);
-	
+	magicTieldsVector.clear();
 		/////////////////////////////Рисуем карту/////////////////////
-		for (int i = 0; i < heightMap; i++)
-			for (int j = 0; j < widthMap; j++)
-			{
-				
-				if (tieldMaps[i][j] == '5')  sprite.setTextureRect(sf::IntRect(0, 0, tieldWidth, tieldHeight)); 
-				if (tieldMaps[i][j] == '1')  sprite.setTextureRect(sf::IntRect(tieldWidth, 0, tieldWidth, tieldHeight));
-				if ((tieldMaps[i][j] == '2')) sprite.setTextureRect(sf::IntRect(tieldWidth*2, 0, tieldWidth, tieldHeight));
-				if (tieldMaps[i][j] == '3')  sprite.setTextureRect(sf::IntRect(tieldWidth*3, 0, tieldWidth, tieldHeight));
-				if (tieldMaps[i][j] == '4')  sprite.setTextureRect(sf::IntRect(tieldWidth*4, 0, tieldWidth, tieldHeight));
-				if ((tieldMaps[i][j] == ' ')) sprite.setTextureRect(sf::IntRect(tieldWidth * 5, 0, tieldWidth, tieldHeight));
-				if (tieldMaps[i][j] == '0')  sprite.setTextureRect(sf::IntRect(tieldWidth*6, 0, tieldWidth, tieldHeight)); 
-				if (tieldMaps[i][j] == '7')  sprite.setTextureRect(sf::IntRect(tieldWidth*7, 0, tieldWidth, tieldHeight));
-				if ((tieldMaps[i][j] == '8')) sprite.setTextureRect(sf::IntRect(tieldWidth * 8, 0, tieldWidth, tieldHeight));
+	for (int i = 0; i < heightMap; i++)
+		for (int j = 0; j < widthMap; j++)
+		{
 
+			if (tieldMaps[i][j] == '5')  sprite.setTextureRect(sf::IntRect(0, 0, tieldWidth, tieldHeight));
+			if (tieldMaps[i][j] == '1')  sprite.setTextureRect(sf::IntRect(tieldWidth, 0, tieldWidth, tieldHeight));
+			if ((tieldMaps[i][j] == '2')) sprite.setTextureRect(sf::IntRect(tieldWidth * 2, 0, tieldWidth, tieldHeight));
+			if (tieldMaps[i][j] == '3')  sprite.setTextureRect(sf::IntRect(tieldWidth * 3, 0, tieldWidth, tieldHeight));
+			if (tieldMaps[i][j] == '4')  sprite.setTextureRect(sf::IntRect(tieldWidth * 4, 0, tieldWidth, tieldHeight));
+			if ((tieldMaps[i][j] == ' ')) sprite.setTextureRect(sf::IntRect(tieldWidth * 5, 0, tieldWidth, tieldHeight));
+			if (tieldMaps[i][j] == '0') 
+			{ 
+				sprite.setTextureRect(sf::IntRect(tieldWidth * 6, 0, tieldWidth, tieldHeight));
+				//sprite.setPosition(j * tieldWidth, i * tieldHeight);//по сути раскидывает квадратики, превращая в карту. то есть задает каждому из них позицию. если убрать, то вся карта нарисуется в одном квадрате 32*32 и мы увидим один квадрат
+				//window->draw(sprite);//рисуем квадратики на экран
+				/*if (magicTieldsVector.empty())
+				{
+					magicTieldsVector.push_back(std::pair<int, int>(j * tieldWidth, i * tieldHeight));
+					magicTieldsVector.push_back(std::pair<int, int>(j * tieldWidth, i * tieldHeight));
+					return;
+				}
+				if (magicTieldsVector.back().second != i * tieldHeight)
+				{
+
+				}
+				return;*/
 				sprite.setPosition(j * tieldWidth, i * tieldHeight);//по сути раскидывает квадратики, превращая в карту. то есть задает каждому из них позицию. если убрать, то вся карта нарисуется в одном квадрате 32*32 и мы увидим один квадрат
-
-				window->draw(sprite);//рисуем квадратики на экран
+				magicTieldsVector.push_back(sprite);// Эм, один и тот же объект?
+				window->draw(sprite);
+				continue;
 			}
+			if (tieldMaps[i][j] == '7')  sprite.setTextureRect(sf::IntRect(tieldWidth * 7, 0, tieldWidth, tieldHeight));
+			if ((tieldMaps[i][j] == '8')) sprite.setTextureRect(sf::IntRect(tieldWidth * 8, 0, tieldWidth, tieldHeight));
+
+			sprite.setPosition(j * tieldWidth, i * tieldHeight);//по сути раскидывает квадратики, превращая в карту. то есть задает каждому из них позицию. если убрать, то вся карта нарисуется в одном квадрате 32*32 и мы увидим один квадрат
+			window->draw(sprite);//рисуем квадратики на экран
+		}
 }
 
 void Map::setSizeMap(int heightMap, int widthMap)
@@ -64,8 +83,8 @@ void Map::setSizeMap(int heightMap, int widthMap)
 
 void Map::tieldsSettings(int amountTieldsMap)
 {
-	tieldWidth = texture.getSize().x/amountTieldsMap;
-	tieldHeight = texture.getSize().y/1;
+	tieldWidth = texture.getSize().x / amountTieldsMap;
+	tieldHeight = texture.getSize().y / 1;
 }
 
 void Map::setMap(sf::String* tieldMaps, int sizeWidht, int sizeHeight)

@@ -38,8 +38,8 @@ bool Player::moveHero(sf::Event event)
 			if (!(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 				animation(3);
 
-			dx = -speed * mainTime / sqrt(2);
-			dy = -speed * mainTime / sqrt(2);
+			//dx = -speed * mainTime / sqrt(2);
+			//dy = -speed * mainTime / sqrt(2);
 
 			setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
 			return true;
@@ -52,8 +52,8 @@ bool Player::moveHero(sf::Event event)
 			if (!(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 				animation(3);
 
-			dx = speed * mainTime / sqrt(2);
-			dy = -speed * mainTime / sqrt(2);
+			//dx = speed * mainTime / sqrt(2);
+			//dy = -speed * mainTime / sqrt(2);
 
 			setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
 			return true;
@@ -63,7 +63,7 @@ bool Player::moveHero(sf::Event event)
 			animation(3);
 		move(0, -speed * mainTime);
 
-		dy = -speed * mainTime;
+		//dy = -speed * mainTime;
 
 		setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
 		return true;
@@ -80,8 +80,8 @@ bool Player::moveHero(sf::Event event)
 			if (!(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 				animation(4);
 
-			dx = -speed * mainTime / sqrt(2);
-			dy = speed * mainTime / sqrt(2);
+			//dx = -speed * mainTime / sqrt(2);
+			//dy = speed * mainTime / sqrt(2);
 
 			setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
 			return true;
@@ -94,8 +94,8 @@ bool Player::moveHero(sf::Event event)
 			if (!(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 				animation(4);
 
-			dx = speed * mainTime / sqrt(2);
-			dy = speed * mainTime / sqrt(2);
+			//dx = speed * mainTime / sqrt(2);
+			//dy = speed * mainTime / sqrt(2);
 
 			setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
 			return true;
@@ -106,7 +106,7 @@ bool Player::moveHero(sf::Event event)
 			animation(4);
 		move(0, speed * mainTime);
 
-		dy = speed * mainTime;
+		//dy = speed * mainTime;
 
 		setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
 		return true;
@@ -118,7 +118,7 @@ bool Player::moveHero(sf::Event event)
 		move(-speed * mainTime, 0);
 		if (!(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 			animation(1);
-		dx = -speed * mainTime;
+		//dx = -speed * mainTime;
 
 		setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
 		return true;
@@ -130,7 +130,7 @@ bool Player::moveHero(sf::Event event)
 
 		if (!(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 			animation(2);
-		dx = speed * mainTime;
+		//dx = speed * mainTime;
 
 		setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
 		return true;
@@ -193,6 +193,7 @@ void Player::attackHero(sf::Event event, bool ok)
 	if (event.type == sf::Event::EventType::KeyReleased && !ok)
 	{
 		animation(5);
+		resetAnimationAttack();
 		return;
 	}
 }

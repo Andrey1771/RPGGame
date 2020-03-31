@@ -21,12 +21,12 @@ class Object
 {
 protected:
 
-	double dx, dy, speed;
+	double speed;
 	int countX{ 1 }; int countY{ 1 }; int x0{ 0 }; int y0{ 0 };
 	float currentFrameX{ 0 }; float currentFrameY{ 0 };
 	textureData movementTexture; sizeXY valueSizeXY;
 public:
-	
+	double dx, dy;
 
 	Object(sf::String ImageFile, int maxFrameX, int maxFrameY, double speed = 0);
 	~Object();
@@ -39,5 +39,6 @@ public:
 	const sf::Vector2f& getPosition();
 
 	const sizeXY& getSizeXY();
+	//static void IntersectsWalls(std::vector<Object*> &vector);
 };
 

@@ -1,5 +1,8 @@
 #include "Object.h"
+#include "Map.h"
+#include <iostream>
 
+extern Map map;
 extern float mainTime;
 extern double speedAnimation;
 
@@ -51,6 +54,8 @@ bool Object::setMaxFrames(int countX, int countY)
 }
 void Object::move(double x, double y)
 {
+	dx = x;
+	dy = y;
 	movementTexture.sprite->move(x, y);
 }
 
@@ -69,3 +74,30 @@ const sizeXY& Object::getSizeXY()
 {
 	return valueSizeXY;
 }
+
+//void Object::IntersectsWalls(std::vector<Object*>& vector)
+//{
+//	sf::IntRect rect2;
+//	sf::IntRect rect3;
+//
+//	for (int i = 0; i < vector.size(); ++i) // O(n^2) Можно оптимизировать в будущем
+//	{
+//		rect2.left = vector[i]->getSprite().getPosition().x;
+//		rect2.top = vector[i]->getSprite().getPosition().y;
+//		rect2.width = vector[i]->getSprite().getLocalBounds().width;
+//		rect2.height = vector[i]->getSprite().getLocalBounds().height;
+//
+//		for (sf::Sprite var : map.magicTieldsVector)
+//		{
+//			rect3.left = var.getPosition().x;
+//			rect3.top = var.getPosition().y;
+//			rect3.width = var.getLocalBounds().width;
+//			rect3.height = var.getLocalBounds().height;
+//			if (rect3.intersects(rect2))
+//			{
+//				vector[i]->move(-vector[i]->dx, -vector[i]->dy);
+//				break;
+//			}
+//		}
+//	}
+//}

@@ -1,8 +1,9 @@
 #include "Hero.h"
-
 #include <iostream>
+
 extern float mainTime;
 extern double speedAnimation;
+
 Hero::Hero(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, double speed, double attackTime, double attackRange, double attackSpeed) : Object(ImageFile, maxFrameX, maxFrameY, speed)
 {
 	this->attackTime = attackTime;
@@ -10,7 +11,7 @@ Hero::Hero(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int 
 	this->attackSpeed = attackSpeed;
 	speedOneFrame = attackTime / movementTexture.maxFrameX;
 	this->setPos(x, y);
-	resetAnimationAttack();
+	//resetAnimationAttack();
 }
 Hero::~Hero()
 {
@@ -183,3 +184,4 @@ bool Hero::animation(int direction)// 1 - left, 2 - right, 3 - up, 4 - down
 	return false;
 
 }
+

@@ -25,7 +25,6 @@ public:
 	// Унаследовано через Object
 	virtual bool animation(int direction) override;
 	virtual int update(sf::Event) override;
-
 	void resetAnimationAttack();
 	//static bool attackAnimation(bool& temp, sf::Clock& clock, int& tempK, float& currentFrameAttackX, float& currentFrameAttackY, double attackTime, textureData& movementTexture, int& sizeX, int& sizeY, int direction);
 };
