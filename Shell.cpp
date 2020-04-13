@@ -43,37 +43,25 @@ int Shell::update(sf::Event)
 	case 1:// 1 - left
 	{
 		this->move(-(speed), 0);
-		if (animation(1))
-		{
-			return -1;
-		}
+		animation(1);
 		break;
 	}
 	case 2:// 2 - right
 	{
 		this->move(speed, 0);
-		if (animation(2))
-		{
-			return -1;
-		}
+		animation(2);
 		break;
 	}
 	case 3://3 - up
 	{
 		this->move(0, -(speed));
-		if (animation(3))
-		{
-			return -1;
-		}
+		animation(3);
 		break;
 	}
 	case 4://4 - down
 	{
 		this->move(0, speed);
-		if (animation(4))
-		{
-			return -1;
-		}
+		animation(4);
 		break;
 	}
 	default:
