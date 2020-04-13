@@ -7,6 +7,7 @@ extern double speedAnimation;
 Shell::Shell(sf::String ImageFileAttack, int maxFrameAttackX, int maxFrameAttackY, double speed, bool enemyKill) : Object(ImageFileAttack, maxFrameAttackX, maxFrameAttackY, speed)
 {
 	this->enemyKill = enemyKill;
+	this->setCollisionFlag(1);
 }
 
 Shell::~Shell()
@@ -42,31 +43,28 @@ int Shell::update(sf::Event)
 	{
 	case 1:// 1 - left
 	{
-		this->move(-(speed), 0);
 		animation(1);
-		break;
+		return this->move(-(speed), 0);
 	}
 	case 2:// 2 - right
 	{
-		this->move(speed, 0);
 		animation(2);
-		break;
+		return this->move(speed, 0);
 	}
 	case 3://3 - up
 	{
-		this->move(0, -(speed));
 		animation(3);
-		break;
+		return this->move(0, -(speed));
 	}
 	case 4://4 - down
 	{
-		this->move(0, speed);
 		animation(4);
-		break;
+		return this->move(0, speed);
 	}
 	default:
 		break;
 	}
+	return 0;
 }
 
 /*1

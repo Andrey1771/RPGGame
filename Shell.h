@@ -14,6 +14,8 @@ private:
 	int numberTield{ 1 };
 	sf::Clock clock;
 	double currentFrameAttackX; double currentFrameAttackY; double attackTime{3};
+	
+	
 
 public:
 	void startShot(double x0, double y0, int directionAttack, double range, double speed);
