@@ -115,8 +115,8 @@ bool Enemy::artificialIntelligence(std::string action)
 		{
 			//std::cout << correlationX << "  " << correlationY << std::endl;
 			double distance = attackRange - attackTime * player->getSpeed();
-			std::cout << distance << std::endl;
-			std::cout << player->getSpeed() << std::endl;
+			//std::cout << distance << std::endl;
+			//std::cout << player->getSpeed() << std::endl;
 			if ((difference < distance - (distance / attackSpeed))/* && (attackRange >= distance)*/)
 				return false;
 			if (abs(correlationX) >= abs(correlationY))// 1 - left, 2 - right, 3 - up, 4 - down

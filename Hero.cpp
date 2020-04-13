@@ -11,6 +11,7 @@ Hero::Hero(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int 
 	this->attackSpeed = attackSpeed;
 	speedOneFrame = attackTime / movementTexture.maxFrameX;
 	this->setPos(x, y);
+	
 	//resetAnimationAttack();
 }
 Hero::~Hero()
