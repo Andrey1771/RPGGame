@@ -6,7 +6,7 @@ extern Map map;
 extern float mainTime;
 extern double speedAnimation;
 
-const int bad = 15;// разобратьс€ с этим Shit-ом в будущем
+const int bad = 15 * 2;// разобратьс€ с этим Shit-ом в будущем
 
 Object::Object(sf::String ImageFile, int maxFrameX, int maxFrameY, double speed)
 {
@@ -150,13 +150,13 @@ int Object::move(double x, double y)
 		{
 			ok = checkManyTieldsIntersection(speedXY, i, j, 0);
 		}
-		
+
 	}
 	dx = speedXY.x; dy = speedXY.y;
 	//std::cout << "ok = " << ok << std::endl;
 	checkObjectsCollision(speedXY);
 	movementTexture.sprite->move(speedXY.x, speedXY.y);
-	
+
 
 	if (ok)
 		return actionCollisionTields();
@@ -299,104 +299,33 @@ bool Object::checkObjectsCollision(SpeedXY& speedXY)
 			rect2.width = var->getSprite().getLocalBounds().width;
 			rect2.height = var->getSprite().getLocalBounds().height;
 
-			
-
 			if (rect.intersects(rect2))
 			{
-				/*if (speedXY.x == 0)
-				{*/
-					if (rect.left > rect2.left)
-					{
-					//	//rect.left + rect.width;
-						if (rect.top <= rect2.top)
-						{
-							//rect.top + rect.height;
-							if ((rect.top == rect.left) && (speedXY.x == speedXY.y)) // Ќа деле скорость всегда равна
-							{
-								changeIntersection(speedXY, rect, rect2, 0);
-								continue;// ¬ообще, тут уже можно выходить
-							}
-							if (rect.top < rect.left)
-							{
-								changeIntersection(speedXY, rect, rect2, 1);
-							}
-							else
-							{
-								changeIntersection(speedXY, rect, rect2, 2);
-							}
-							
-						}
-						else
-						{
-							//rect2.top + rect2.height;
-							if ((rect.top == rect.left) && (speedXY.x == speedXY.y)) // Ќа деле скорость всегда равна
-							{
-								changeIntersection(speedXY, rect, rect2, 0);
-								continue;// ¬ообще, тут уже можно выходить
-							}
-							if (rect.top < rect.left)
-							{
-								changeIntersection(speedXY, rect, rect2, 1);
-							}
-							else
-							{
-								changeIntersection(speedXY, rect, rect2, 2);
-							}
-						}
-					}
-					else
-					{
-						//rect2.left + rect2.width;
-						if (rect.top <= rect2.top)
-						{
-							//rect.top + rect.height;
-						}
-						else
-						{
-							//rect2.top + rect2.height;
-						}
-					}
-			/*		continue;*/
-				/*}*/
-				/*if (speedXY.y == 0)
+				if (speedXY.x == 0)
 				{
-					ok = checkTieldsIntersection(speedXY, rect, rect2, number, 2);
+					changeIntersection(speedXY, rect, rect2, 1);
 					continue;
 				}
-				changeIntersection(speedXY, rect, rect2, 0);
-				if (speedXY.x > 0 && speedXY.y > 0)
+				if (speedXY.y == 0)
 				{
-					ok = checkManyTieldsIntersection(speedXY, i, j, 1);
+					changeIntersection(speedXY, rect, rect2, 2);
 					continue;
 				}
-				if (speedXY.x < 0 && speedXY.y > 0)
+				if (abs(rect.top - rect2.top) == abs(rect.left - rect2.left))
 				{
-					ok = checkManyTieldsIntersection(speedXY, i, j, 2);
-					continue;
+					changeIntersection(speedXY, rect, rect2, 0);
 				}
-				if (speedXY.x > 0 && speedXY.y < 0)
+
+				if (abs(rect.top - rect2.top) > abs(rect.left - rect2.left))
 				{
-					ok = checkManyTieldsIntersection(speedXY, i, j, 3);
-					continue;
+					changeIntersection(speedXY, rect, rect2, 1);
 				}
-				if (speedXY.x < 0 && speedXY.y < 0)
+				if (abs(rect.top - rect2.top) < abs(rect.left - rect2.left)/* && speedXY.y > 0*/)
 				{
-					ok = checkManyTieldsIntersection(speedXY, i, j, 0);
-					continue;
-				}*/
+					changeIntersection(speedXY, rect, rect2, 2);
+				}
 			}
 		}
-
-
-
-
-
-
-
-
-
-
-		//changeIntersection(speedXY, rect, rect2, directionFlag);
 		break;
 	}
 	default:
@@ -423,6 +352,14 @@ void Object::changeIntersection(SpeedXY& speedXY, sf::IntRect rect, sf::IntRect 
 		newY = 0;
 	switch (directionFlag)
 	{
+	case 0:
+	{
+		if (rangeY <= bad)
+			newY = 0;
+		if (rangeX <= bad)
+			newX = 0;
+		break;
+	}
 	case 1:
 	{
 		if (rangeY <= bad)
