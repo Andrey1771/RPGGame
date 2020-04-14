@@ -186,3 +186,7 @@ bool Hero::animation(int direction)// 1 - left, 2 - right, 3 - up, 4 - down
 
 }
 
+int Hero::actionCollisionObjects()
+{
+	return 0;
+}

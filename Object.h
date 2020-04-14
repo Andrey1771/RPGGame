@@ -32,7 +32,8 @@ protected:
 	float currentFrameX{ 0 }; float currentFrameY{ 0 };
 	TextureData movementTexture; SizeXY valueSizeXY;
 
-	virtual int actionCollisionObject();
+	virtual int actionCollisionTields();
+	virtual int actionCollisionObjects() = 0;
 public:
 	double dx, dy;
 
@@ -48,12 +49,18 @@ public:
 
 	const SizeXY& getSizeXY();
 	//static void IntersectsWalls(std::vector<Object*> &vector);
-	void setCollisionFlag(int collisionFlag);
-	const int getCollisionFlag();
+	void setCollisionTieldsFlag(const int collisionTieldsFlag);
+	const int getCollisionTieldsFlag();
+	void setCollisionObjectsFlag(const int collisionObjectsFlag);
+	const int getCollisionObjectsFlag();
 	
+	static std::vector<Object*> objectsAll;
 private:
 	bool checkManyTieldsIntersection(SpeedXY& speedXY, int i, int j, int direction);
 	bool checkTieldsIntersection(SpeedXY &speedXY, sf::IntRect rect, sf::IntRect rect2, int number, int directionFlag/*0 - не блокирует координаты, 1 - блокирует X, 2 - блокирует Y*/);
-	int collisionFlag;
+	int collisionTieldsFlag, collisionObjectsFlag;
+	
+	bool checkObjectsCollision(SpeedXY& speedXY);
+	void changeIntersection(SpeedXY& speedXY, sf::IntRect rect, sf::IntRect rect2, int directionFlag/*0 - не блокирует координаты, 1 - блокирует X, 2 - блокирует Y*/);
 };
 

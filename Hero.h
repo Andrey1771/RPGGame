@@ -16,6 +16,8 @@ private:
 	int numberTield{ 1 };
 	sf::Clock clock;
 	double speedOneFrame;
+
+	virtual int actionCollisionObjects() override;
 protected:
 	double attackTime{ 0 }; double attackRange{ 0 }; double attackSpeed{ 0 };
 	double healthPoints;
@@ -26,6 +28,7 @@ public:
 	virtual bool animation(int direction) override;
 	virtual int update(sf::Event) override;
 	void resetAnimationAttack();
+
 	//static bool attackAnimation(bool& temp, sf::Clock& clock, int& tempK, float& currentFrameAttackX, float& currentFrameAttackY, double attackTime, textureData& movementTexture, int& sizeX, int& sizeY, int direction);
 };
 

@@ -19,7 +19,6 @@ Object::Object(sf::String ImageFile, int maxFrameX, int maxFrameY, double speed)
 	movementTexture.texture->loadFromImage(*movementTexture.image);
 	movementTexture.sprite->setTexture(*movementTexture.texture);
 
-
 	valueSizeXY.sizeX = movementTexture.image->getSize().x / maxFrameX;// Можно оптимизировать
 	valueSizeXY.sizeY = movementTexture.image->getSize().y / maxFrameY;//
 	movementTexture.sprite->setTextureRect(sf::IntRect((valueSizeXY.sizeX) * int(currentFrameX), 0, valueSizeXY.sizeX, valueSizeXY.sizeY));
@@ -31,10 +30,21 @@ Object::Object(sf::String ImageFile, int maxFrameX, int maxFrameY, double speed)
 	this->speed = speed;
 	//this->dx = dx;//
 	//this->dy = dy;//
-	this->setCollisionFlag(0);
+	this->setCollisionTieldsFlag(0);
+	this->setCollisionObjectsFlag(1);
+	objectsAll.push_back(this);
 }
 Object::~Object()
 {
+	for (int j = 0; j < Object::objectsAll.size(); ++j)
+	{
+		if (this == Object::objectsAll[j])
+		{
+			Object::objectsAll.erase(Object::objectsAll.begin() + j);
+			break;
+		}
+	}
+
 	delete movementTexture.sprite;
 	delete movementTexture.texture;
 	delete movementTexture.image;
@@ -99,7 +109,7 @@ int Object::move(double x, double y)
 	}
 	//std::cout << "i = " << i << " j = " << j << std::endl;
 
-	int number ; //+ ((map.magicTieldsVector.size() - 1) * (j - 1));
+	int number; //+ ((map.magicTieldsVector.size() - 1) * (j - 1));
 	SpeedXY speedXY(x, y);
 	bool ok = false;
 	if (x == 0 || y == 0)
@@ -111,7 +121,7 @@ int Object::move(double x, double y)
 		rect2.top = map.magicTieldsVector.at(number).first.getPosition().y;
 		rect2.width = map.magicTieldsVector.at(number).first.getLocalBounds().width;
 		rect2.height = map.magicTieldsVector.at(number).first.getLocalBounds().height;
-		
+
 		if (x == 0)
 		{
 			ok = checkTieldsIntersection(speedXY, rect, rect2, number, 1);
@@ -120,7 +130,7 @@ int Object::move(double x, double y)
 		{
 			ok = checkTieldsIntersection(speedXY, rect, rect2, number, 2);
 		}
-		movementTexture.sprite->move(speedXY.x, speedXY.y);
+		//movementTexture.sprite->move(speedXY.x, speedXY.y);
 	}
 	else
 	{
@@ -140,12 +150,16 @@ int Object::move(double x, double y)
 		{
 			ok = checkManyTieldsIntersection(speedXY, i, j, 0);
 		}
-		movementTexture.sprite->move(speedXY.x, speedXY.y);
+		
 	}
 	dx = speedXY.x; dy = speedXY.y;
 	//std::cout << "ok = " << ok << std::endl;
-	if(ok)
-		return actionCollisionObject();
+	checkObjectsCollision(speedXY);
+	movementTexture.sprite->move(speedXY.x, speedXY.y);
+	
+
+	if (ok)
+		return actionCollisionTields();
 }
 
 bool Object::checkManyTieldsIntersection(SpeedXY& speedXY, int i, int j, int direction)
@@ -247,7 +261,7 @@ bool Object::checkManyTieldsIntersection(SpeedXY& speedXY, int i, int j, int dir
 	return ok;
 }
 
-bool Object::checkTieldsIntersection(SpeedXY &speedXY, sf::IntRect rect, sf::IntRect rect2, int number, int directionFlag/*0 - не блокирует координаты, 1 - блокирует X, 2 - блокирует Y*/)
+bool Object::checkTieldsIntersection(SpeedXY& speedXY, sf::IntRect rect, sf::IntRect rect2, int number, int directionFlag/*0 - не блокирует координаты, 1 - блокирует X, 2 - блокирует Y*/)
 {
 	if ((!rect2.intersects(rect)) || (map.magicTieldsVector.at(number).second != 1))
 	{
@@ -255,45 +269,179 @@ bool Object::checkTieldsIntersection(SpeedXY &speedXY, sf::IntRect rect, sf::Int
 	}
 	else
 	{
-		double newX, newY;
-		double rangeX, rangeY;
-		rangeX = abs(abs(rect2.left - rect.left) - rect2.width);
-		rangeY = abs(abs(rect2.top - rect.top) - rect2.height);
-		//std::cout << "RangeX = " << rangeX << " RangeY = " << rangeY << std::endl;
-		// Скрытая ошибка с размерами, но тк размеры игрока и тайлов одинаковые, она не проявляется
-		newX = std::min(rangeX, abs(speedXY.x)) * (speedXY.x / abs(speedXY.x));//rect3.top
-		newY = std::min(rangeY, abs(speedXY.y)) * (speedXY.y / abs(speedXY.y));
-		if (speedXY.x == 0)
-			newX = 0;
-		if (speedXY.y == 0)
-			newY = 0;
-		switch (directionFlag)
-		{
-		case 1:
-		{
-			if (rangeY <= bad)
-				newY = 0;
-			break;
-		}
-		case 2:
-		{
-			if (rangeX <= bad)
-				newX = 0;
-			break;
-		}
-		default:
-		{
-			break;
-		}
-		}
-
-		speedXY.x = newX;
-		speedXY.y = newY;
-
-		//std::cout << "newX = " << newX << " newY = " << newY << " X = " << speedXY.x << " Y = " << speedXY.y << std::endl;
+		changeIntersection(speedXY, rect, rect2, directionFlag);
 		return true;
 	}
-	
+
+}
+
+bool Object::checkObjectsCollision(SpeedXY& speedXY)
+{
+	switch (collisionObjectsFlag)
+	{
+	case 0:// Пересечение разрешено
+	{
+		break;
+	}
+	case 1:// Пересечение запрещено
+	{
+
+		sf::IntRect rect(getSprite().getPosition().x + speedXY.x, getSprite().getPosition().y + speedXY.y, getSprite().getLocalBounds().width, getSprite().getLocalBounds().height);
+		sf::IntRect rect2;
+
+		for (Object* var : objectsAll) // O(n) Можно оптимизировать в будущем
+		{
+			if (var == this || var->collisionObjectsFlag == 0)
+				continue;
+
+			rect2.left = var->getSprite().getPosition().x;
+			rect2.top = var->getSprite().getPosition().y;
+			rect2.width = var->getSprite().getLocalBounds().width;
+			rect2.height = var->getSprite().getLocalBounds().height;
+
+			
+
+			if (rect.intersects(rect2))
+			{
+				/*if (speedXY.x == 0)
+				{*/
+					if (rect.left > rect2.left)
+					{
+					//	//rect.left + rect.width;
+						if (rect.top <= rect2.top)
+						{
+							//rect.top + rect.height;
+							if ((rect.top == rect.left) && (speedXY.x == speedXY.y)) // На деле скорость всегда равна
+							{
+								changeIntersection(speedXY, rect, rect2, 0);
+								continue;// Вообще, тут уже можно выходить
+							}
+							if (rect.top < rect.left)
+							{
+								changeIntersection(speedXY, rect, rect2, 1);
+							}
+							else
+							{
+								changeIntersection(speedXY, rect, rect2, 2);
+							}
+							
+						}
+						else
+						{
+							//rect2.top + rect2.height;
+							if ((rect.top == rect.left) && (speedXY.x == speedXY.y)) // На деле скорость всегда равна
+							{
+								changeIntersection(speedXY, rect, rect2, 0);
+								continue;// Вообще, тут уже можно выходить
+							}
+							if (rect.top < rect.left)
+							{
+								changeIntersection(speedXY, rect, rect2, 1);
+							}
+							else
+							{
+								changeIntersection(speedXY, rect, rect2, 2);
+							}
+						}
+					}
+					else
+					{
+						//rect2.left + rect2.width;
+						if (rect.top <= rect2.top)
+						{
+							//rect.top + rect.height;
+						}
+						else
+						{
+							//rect2.top + rect2.height;
+						}
+					}
+			/*		continue;*/
+				/*}*/
+				/*if (speedXY.y == 0)
+				{
+					ok = checkTieldsIntersection(speedXY, rect, rect2, number, 2);
+					continue;
+				}
+				changeIntersection(speedXY, rect, rect2, 0);
+				if (speedXY.x > 0 && speedXY.y > 0)
+				{
+					ok = checkManyTieldsIntersection(speedXY, i, j, 1);
+					continue;
+				}
+				if (speedXY.x < 0 && speedXY.y > 0)
+				{
+					ok = checkManyTieldsIntersection(speedXY, i, j, 2);
+					continue;
+				}
+				if (speedXY.x > 0 && speedXY.y < 0)
+				{
+					ok = checkManyTieldsIntersection(speedXY, i, j, 3);
+					continue;
+				}
+				if (speedXY.x < 0 && speedXY.y < 0)
+				{
+					ok = checkManyTieldsIntersection(speedXY, i, j, 0);
+					continue;
+				}*/
+			}
+		}
+
+
+
+
+
+
+
+
+
+
+		//changeIntersection(speedXY, rect, rect2, directionFlag);
+		break;
+	}
+	default:
+	{
+		break;
+	}
+	}
+	return false;
+}
+
+void Object::changeIntersection(SpeedXY& speedXY, sf::IntRect rect, sf::IntRect rect2, int directionFlag/*0 - не блокирует координаты, 1 - блокирует X, 2 - блокирует Y*/)//, int actionType /*0 - move, 1 - interaction*/
+{
+	double newX, newY;
+	double rangeX, rangeY;
+	rangeX = abs(abs(rect2.left - rect.left) - rect2.width);
+	rangeY = abs(abs(rect2.top - rect.top) - rect2.height);
+	//std::cout << "RangeX = " << rangeX << " RangeY = " << rangeY << std::endl;
+	// Скрытая ошибка с размерами, но тк размеры игрока и тайлов одинаковые, она не проявляется
+	newX = std::min(rangeX, abs(speedXY.x)) * (speedXY.x / abs(speedXY.x));//rect3.top
+	newY = std::min(rangeY, abs(speedXY.y)) * (speedXY.y / abs(speedXY.y));
+	if (speedXY.x == 0)
+		newX = 0;
+	if (speedXY.y == 0)
+		newY = 0;
+	switch (directionFlag)
+	{
+	case 1:
+	{
+		if (rangeY <= bad)
+			newY = 0;
+		break;
+	}
+	case 2:
+	{
+		if (rangeX <= bad)
+			newX = 0;
+		break;
+	}
+	default:
+	{
+		break;
+	}
+	}
+	speedXY.x = newX;
+	speedXY.y = newY;
 }
 
 
@@ -313,9 +461,9 @@ const SizeXY& Object::getSizeXY()
 	return valueSizeXY;
 }
 
-int Object::actionCollisionObject()
+int Object::actionCollisionTields()
 {
-	switch (collisionFlag)
+	switch (collisionTieldsFlag)
 	{
 	case 0:// Ничего
 	{
@@ -332,12 +480,22 @@ int Object::actionCollisionObject()
 	}
 }
 
-void Object::setCollisionFlag(int collisionFlag)
+void Object::setCollisionTieldsFlag(const int collisionTieldsFlag)
 {
-	this->collisionFlag = collisionFlag;
+	this->collisionTieldsFlag = collisionTieldsFlag;
 }
 
-const int Object::getCollisionFlag()
+const int Object::getCollisionTieldsFlag()
 {
-	return collisionFlag;
+	return collisionTieldsFlag;
+}
+
+void Object::setCollisionObjectsFlag(const int collisionObjectsFlag)
+{
+	this->collisionObjectsFlag = collisionObjectsFlag;
+}
+
+const int Object::getCollisionObjectsFlag()
+{
+	return collisionObjectsFlag;
 }

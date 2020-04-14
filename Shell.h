@@ -14,7 +14,7 @@ private:
 	int numberTield{ 1 };
 	sf::Clock clock;
 	double currentFrameAttackX; double currentFrameAttackY; double attackTime{3};
-	
+	virtual int actionCollisionObjects() override;
 	
 
 public:

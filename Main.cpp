@@ -46,7 +46,7 @@ sf::String level[] = {// Перенести на файл
 
 std::vector<Shell*> shells;
 std::vector<Enemy*> enemies;
-
+std::vector<Object*> Object::objectsAll;
 Map map("resource\\Map_Tileds\\Dungeon\\Hell.png", 25, 40, 9);//C:\Users\Andrey\Desktop\RPGGame\resource\Map_Tileds\Dungeon
 
 void updateShells(const sf::Event& event, sf::RenderWindow& window);
@@ -64,10 +64,11 @@ int main()
 	//camera->setSize(verticalHeight, horizontalHeight);
 
 	//sf::View view = const_cast<sf::View&> (window.getView());
+	
 	Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 500, 500, speedPlayer, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed);
 	//enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 500, 500, speedPlayer/2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed, &player));
 	//player.setMaxFrames(4, 4);
-	funRandomizer(25, player);
+	funRandomizer(1, player);
 
 	map.setMap(level, 25, 40);
 	map.setPosBG(verticalHeight, horizontalHeight);
@@ -101,7 +102,7 @@ int main()
 		updateIntersects(player);
 		updateShells(event, window);
 		updateEnemies(event, window);
-		updateIntersectsHeroes(player);
+		//updateIntersectsHeroes(player);
 
 		window.display();
 	}
@@ -117,6 +118,7 @@ void updateShells(const sf::Event& event, sf::RenderWindow& window)
 		{
 			delete shells[i];
 			shells.erase(shells.begin() + i);
+			
 			--i;
 			continue;
 		}

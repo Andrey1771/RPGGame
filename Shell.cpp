@@ -7,7 +7,8 @@ extern double speedAnimation;
 Shell::Shell(sf::String ImageFileAttack, int maxFrameAttackX, int maxFrameAttackY, double speed, bool enemyKill) : Object(ImageFileAttack, maxFrameAttackX, maxFrameAttackY, speed)
 {
 	this->enemyKill = enemyKill;
-	this->setCollisionFlag(1);
+	this->setCollisionTieldsFlag(1);
+	this->setCollisionObjectsFlag(0);
 }
 
 Shell::~Shell()
@@ -118,4 +119,9 @@ bool Shell::animation(int direction)
 	}
 	}
 	return false;
+}
+
+int Shell::actionCollisionObjects()
+{
+	return 0;
 }
