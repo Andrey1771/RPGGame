@@ -82,5 +82,11 @@
     <Image Include="resource\Enemy\Dungeon\Character\devil.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="resource\Enemy\Dungeon\Character\devil2.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resource\Map_Tileds\Dungeon\Hell2.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
 </Project>

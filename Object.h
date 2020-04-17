@@ -57,10 +57,11 @@ public:
 	static std::vector<Object*> objectsAll;
 private:
 	bool checkManyTieldsIntersection(SpeedXY& speedXY, int i, int j, int direction);
-	bool checkTieldsIntersection(SpeedXY &speedXY, sf::IntRect rect, sf::IntRect rect2, int number, int directionFlag/*0 - не блокирует координаты, 1 - блокирует X, 2 - блокирует Y*/);
+	bool checkTieldsIntersection(SpeedXY &speedXY, sf::FloatRect rect, sf::FloatRect rect2, int number, int directionFlag/*0 - не блокирует координаты, 1 - блокирует X, 2 - блокирует Y*/);
 	int collisionTieldsFlag, collisionObjectsFlag;
 	
 	bool checkObjectsCollision(SpeedXY& speedXY);
-	void changeIntersection(SpeedXY& speedXY, sf::IntRect rect, sf::IntRect rect2, int directionFlag/*0 - не блокирует координаты, 1 - блокирует X, 2 - блокирует Y*/);
+	void changeIntersection(SpeedXY& speedXY, sf::FloatRect rect2, int directionFlag/*0 - не блокирует координаты, 1 - блокирует X, 2 - блокирует Y*/);
+	void mLG(SpeedXY& speedXY, sf::FloatRect rect, sf::FloatRect rect2);
 };
 

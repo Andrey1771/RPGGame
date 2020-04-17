@@ -19,20 +19,20 @@ double repulsiveForce = 1;
 sf::String level[] = {// Перенести на файл
 	"0000000000000000000000000000000000000000",
 	"0                                      0",
-	"0   3                                  0",
+	"0   3        0                         0",
 	"0                                      0",
 	"0                   51                 0",
-	"0                   23                 0",
+	"0        0          23                 0",
 	"0                                      0",
-	"0                                      0",
-	"0                                      0",
-	"0                                      0",
+	"0            0                         0",
+	"0                   0                  0",
+	"0       0       0                      0",
 	"0                                      0",
 	"0                      6               0",
+	"0       0                              0",
 	"0                                      0",
-	"0                                      0",
-	"0                            5         0",
-	"0                                      0",
+	"0            000             5         0",
+	"0             0                        0",
 	"0                                      0",
 	"0                                      0",
 	"0                                      0",
@@ -47,7 +47,7 @@ sf::String level[] = {// Перенести на файл
 std::vector<Shell*> shells;
 std::vector<Enemy*> enemies;
 std::vector<Object*> Object::objectsAll;
-Map map("resource\\Map_Tileds\\Dungeon\\Hell.png", 25, 40, 9);//C:\Users\Andrey\Desktop\RPGGame\resource\Map_Tileds\Dungeon
+Map map("resource\\Map_Tileds\\Dungeon\\Hell2.png", 25, 40, 9);//C:\Users\Andrey\Desktop\RPGGame\resource\Map_Tileds\Dungeon
 
 void updateShells(const sf::Event& event, sf::RenderWindow& window);
 void updateEnemies(const sf::Event& event, sf::RenderWindow& window);
@@ -55,7 +55,6 @@ void updateIntersects(Player& player);
 void funRandomizer(int countEnemies, Player& player);
 int updateIntersectsWalls(Player&);
 int updateIntersectsHeroes(Player& player);
-
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(verticalHeight, horizontalHeight), "SFMLwork");
@@ -103,7 +102,6 @@ int main()
 		updateShells(event, window);
 		updateEnemies(event, window);
 		//updateIntersectsHeroes(player);
-
 		window.display();
 	}
 

@@ -162,8 +162,10 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\Enemy\Dungeon\Character\devil.png" />
+    <Image Include="resource\Enemy\Dungeon\Character\devil2.png" />
     <Image Include="resource\Enemy\Dungeon\Projectile\devilAttack.png" />
     <Image Include="resource\Map_Tileds\Dungeon\Hell.png" />
+    <Image Include="resource\Map_Tileds\Dungeon\Hell2.png" />
     <Image Include="resource\SpaceShipGG.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

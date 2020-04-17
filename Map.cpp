@@ -50,23 +50,6 @@ void Map::loadMap()
 			if (tieldMaps[i][j] == '0')
 			{
 				sprite.setTextureRect(sf::IntRect(tieldWidth * 6, 0, tieldWidth, tieldHeight));
-				//sprite.setPosition(j * tieldWidth, i * tieldHeight);//по сути раскидывает квадратики, превращая в карту. то есть задает каждому из них позицию. если убрать, то вся карта нарисуется в одном квадрате 32*32 и мы увидим один квадрат
-				//window->draw(sprite);//рисуем квадратики на экран
-				/*if (magicTieldsVector.empty())
-				{
-					magicTieldsVector.push_back(std::pair<int, int>(j * tieldWidth, i * tieldHeight));
-					magicTieldsVector.push_back(std::pair<int, int>(j * tieldWidth, i * tieldHeight));
-					return;
-				}
-				if (magicTieldsVector.back().second != i * tieldHeight)
-				{
-
-				}
-				return;*/
-				//sprite.setPosition(j * tieldWidth, i * tieldHeight);//по сути раскидывает квадратики, превращая в карту. то есть задает каждому из них позицию. если убрать, то вся карта нарисуется в одном квадрате 32*32 и мы увидим один квадрат
-				//vect.push_back(sprite);
-				//magicTieldsVector.push_back();// Эм, один и тот же объект?//std::pair<sf::Sprite, std::pair<int, int>>(sprite, std::pair<int, int>(i, j))
-				//continue;
 				sprite.setPosition(j * tieldWidth, i * tieldHeight);
 				magicTieldsVector.push_back(std::pair<sf::Sprite, int>(sprite, 1));
 				continue;
@@ -76,16 +59,12 @@ void Map::loadMap()
 			sprite.setPosition(j * tieldWidth, i * tieldHeight);
 			magicTieldsVector.push_back(std::pair<sf::Sprite, int> (sprite, 0));
 		}
-		//magicTieldsVector.push_back(vect);
 	}
 }
-
 
 void Map::updateMap(sf::RenderWindow* window)
 {
 		/////////////////////////////Рисуем карту///////////////////// sprite.setPosition(j * tieldWidth, i * tieldHeight);//по сути раскидывает квадратики, превращая в карту. то есть задает каждому из них позицию. если убрать, то вся карта нарисуется в одном квадрате 32*32 и мы увидим один квадрат
-	//window->draw(sprite);//рисуем квадратики на экран
-
 	std::vector<std::pair<sf::Sprite, int>>::iterator tieldsIter = magicTieldsVector.begin();
 	for (int i = 0; i < heightMap; i++)
 		for (int j = 0; j < widthMap; j++)
