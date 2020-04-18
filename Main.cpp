@@ -4,6 +4,8 @@
 #include "Map.h"
 #include "Shell.h"
 #include "Enemy.h"
+#include "Camera.h"
+
 #include <iostream>
 //void start(sf::RenderWindow& window, Hero& hero);
 int verticalHeight = 1200;
@@ -15,6 +17,9 @@ double speedPlayerAttack = 1.5;
 double attackPlayerRange = 400;
 double attackPlayerSpeed = 3;
 double repulsiveForce = 1;
+int tieldsWidth = 64;
+int tieldsHeight = 64;
+int levelHeight = 25;
 
 sf::String level[] = {// Перенести на файл
 	"0000000000000000000000000000000000000000",
@@ -59,12 +64,20 @@ int main()
 {
 	sf::RenderWindow window(sf::VideoMode(verticalHeight, horizontalHeight), "SFMLwork");
 	window.setVerticalSyncEnabled(true); // запустите это один раз, после создания окна
-	sf::View* camera = new sf::View;
+	//sf::View* camera = new sf::View;
 	//camera->setSize(verticalHeight, horizontalHeight);
 
 	//sf::View view = const_cast<sf::View&> (window.getView());
 	
-	Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 500, 500, speedPlayer, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed);
+	Player player("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 500, 500, speedPlayer, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed);
+	Camera camera(&player, new sf::View, tieldsWidth, tieldsHeight, level[0].getSize() * tieldsWidth, levelHeight * tieldsHeight);//dynamic_cast<Hero*>(&player)
+	camera.setMapXYAndSize(0, 0, level[0].getSize() * tieldsWidth, levelHeight * tieldsHeight);
+
+
+	//int x = 40 * 64;// да-да-да, я знааю, что потом придется менять
+	//int y = 64 * 25;
+
+
 	//enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 500, 500, speedPlayer/2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed, &player));
 	//player.setMaxFrames(4, 4);
 	funRandomizer(1, player);
@@ -77,7 +90,7 @@ int main()
 
 	while (window.isOpen())
 	{
-		sf::Event event;
+		sf::Event event;//setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
 
 		mainTime = clock.getElapsedTime().asMicroseconds();
 		clock.restart();
@@ -89,18 +102,25 @@ int main()
 				window.close();
 			}
 		}
-		window.setView(*camera);
+		window.setView(*(camera.getView()));
 		//player.MoveHero();
 		player.update(event);
-
+		camera.update();
 		window.clear();
 		map.updateMap(&window);
 		window.draw(map.getSprite());
+
+		for (sf::Sprite var : camera.getProgressBar()->getSpritesBar())
+			window.draw(var);
+
 		window.draw(player.getSprite());
+
+		
 
 		updateIntersects(player);
 		updateShells(event, window);
 		updateEnemies(event, window);
+
 		//updateIntersectsHeroes(player);
 		window.display();
 	}

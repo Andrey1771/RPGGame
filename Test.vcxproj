@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="LevelTileds.cpp" />
@@ -147,9 +148,11 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="Shell.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Header.h" />
     <ClInclude Include="Hero.h" />
@@ -157,6 +160,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Shell.h" />
   </ItemGroup>
@@ -166,6 +170,7 @@
     <Image Include="resource\Enemy\Dungeon\Projectile\devilAttack.png" />
     <Image Include="resource\Map_Tileds\Dungeon\Hell.png" />
     <Image Include="resource\Map_Tileds\Dungeon\Hell2.png" />
+    <Image Include="resource\Player\ProgressBar\hearts.png" />
     <Image Include="resource\SpaceShipGG.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

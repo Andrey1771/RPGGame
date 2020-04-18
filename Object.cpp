@@ -26,7 +26,6 @@ Object::Object(sf::String ImageFile, int maxFrameX, int maxFrameY, double speed)
 	movementTexture.maxFrameX = maxFrameX;
 	movementTexture.maxFrameY = maxFrameY;
 	//Movement
-
 	this->speed = speed;
 	//this->dx = dx;//
 	//this->dy = dy;//

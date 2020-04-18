@@ -1,28 +1,6 @@
 #pragma once
 #include "Header.h"
 
-#include <SFML/Graphics.hpp>
-
-struct TextureData
-{
-	sf::Image* image;
-	sf::Texture* texture;
-	sf::Sprite* sprite;
-	int maxFrameX{ 1 };
-	int maxFrameY{ 1 };
-};
-struct SizeXY
-{
-	int sizeX;
-	int sizeY;
-};
-struct SpeedXY
-{
-	double x;
-	double y;
-	SpeedXY(const double x = 0, const double y = 0) { this->x = x; this->y = y; };
-	SpeedXY(const SpeedXY& speedXY) { this->x = speedXY.x; this->y = speedXY.y; };
-};
 class Object
 {
 protected:
@@ -62,6 +40,5 @@ private:
 	
 	bool checkObjectsCollision(SpeedXY& speedXY);
 	void changeIntersection(SpeedXY& speedXY, sf::FloatRect rect2, int directionFlag/*0 - не блокирует координаты, 1 - блокирует X, 2 - блокирует Y*/);
-	void mLG(SpeedXY& speedXY, sf::FloatRect rect, sf::FloatRect rect2);
 };
 

@@ -1,15 +1,14 @@
 #include "Player.h"
 #include "Shell.h"
-
+#include "ProgressBar.h"
 #include <iostream>
 #include "Header.h"
 extern float mainTime;
 extern double speedAnimation;
 extern std::vector<Shell*> shells;
 
-Player::Player(sf::View& view, sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, double speed, double attackTime, double attackRange, double attackSpeed) :Hero(ImageFile, ImageFileAttack, maxFrameX, maxFrameY, x, y, speed, attackTime, attackRange, attackSpeed)
+Player::Player(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, double speed, double attackTime, double attackRange, double attackSpeed) :Hero(ImageFile, ImageFileAttack, maxFrameX, maxFrameY, x, y, speed, attackTime, attackRange, attackSpeed)
 {
-	camera = &view;
 }
 Player::~Player()
 {
@@ -41,7 +40,6 @@ bool Player::moveHero(sf::Event event)
 			//dx = -speed * mainTime / sqrt(2);
 			//dy = -speed * mainTime / sqrt(2);
 
-			setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
 			return true;
 		}
 
@@ -55,7 +53,6 @@ bool Player::moveHero(sf::Event event)
 			//dx = speed * mainTime / sqrt(2);
 			//dy = -speed * mainTime / sqrt(2);
 
-			setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
 			return true;
 		}
 
@@ -65,7 +62,6 @@ bool Player::moveHero(sf::Event event)
 
 		//dy = -speed * mainTime;
 
-		setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
 		return true;
 
 	}
@@ -83,7 +79,6 @@ bool Player::moveHero(sf::Event event)
 			//dx = -speed * mainTime / sqrt(2);
 			//dy = speed * mainTime / sqrt(2);
 
-			setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
 			return true;
 		}
 
@@ -97,7 +92,6 @@ bool Player::moveHero(sf::Event event)
 			//dx = speed * mainTime / sqrt(2);
 			//dy = speed * mainTime / sqrt(2);
 
-			setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
 			return true;
 
 		}
@@ -108,7 +102,6 @@ bool Player::moveHero(sf::Event event)
 
 		//dy = speed * mainTime;
 
-		setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
 		return true;
 	}
 
@@ -120,7 +113,6 @@ bool Player::moveHero(sf::Event event)
 			animation(1);
 		//dx = -speed * mainTime;
 
-		setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
 		return true;
 	}
 
@@ -132,7 +124,6 @@ bool Player::moveHero(sf::Event event)
 			animation(2);
 		//dx = speed * mainTime;
 
-		setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
 		return true;
 	}
 
@@ -204,22 +195,6 @@ int Player::update(sf::Event event)
 	return 0;
 }
 
-void Player::setCoordinationCamera(float x0, float y0, float width, float height)
-{
-	float lastX = camera->getCenter().x, lastY = camera->getCenter().y;
-
-
-	camera->setCenter(movementTexture.sprite->getPosition().x + movementTexture.sprite->getTextureRect().width / 2.0, movementTexture.sprite->getPosition().y + movementTexture.sprite->getTextureRect().height / 2.0);
-
-	if (camera->getCenter().x - camera->getSize().x / 2 < x0 || camera->getCenter().x + camera->getSize().x / 2 > x0 + width)
-	{
-		camera->setCenter(lastX, camera->getCenter().y);
-	}
-	if (camera->getCenter().y - camera->getSize().y / 2 < y0 || camera->getCenter().y + camera->getSize().y / 2 > y0 + height)
-	{
-		camera->setCenter(camera->getCenter().x, lastY);
-	}
-}
 
 bool Player::animation(int direction)// 1 - left, 2 - right, 3 - up, 4 - down
 {
