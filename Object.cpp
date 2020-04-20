@@ -65,6 +65,17 @@ bool Object::setMaxFrames(int countX, int countY)
 }
 int Object::move(double x, double y)
 {
+	bool ok = false;
+	int i0 = movementTexture.sprite->getPosition().x / map.getTieldWidth();
+	int j0 = movementTexture.sprite->getPosition().y / map.getTieldHeight();
+	if ((i0 <= 0 || j0 <= 0) || (i0 >= map.getWidthMap() - 1 || j0 >= map.getHeightMap() - 1)) // Обработка исключения, когда какой-то объект выходит за пределы карты
+	{
+		ok = true;// Для удаления снаряда вышедшего за пределы карты
+		if (ok)
+			return actionCollisionTields();
+		return -10;
+	}
+
 	float iObject = (movementTexture.sprite->getPosition().x + x) / map.getTieldWidth();
 	float jObject = (movementTexture.sprite->getPosition().y + y) / map.getTieldHeight();
 	int i = iObject;
@@ -89,7 +100,7 @@ int Object::move(double x, double y)
 
 	int number; //+ ((map.magicTieldsVector.size() - 1) * (j - 1));
 	SpeedXY speedXY(x, y);
-	bool ok = false;
+	
 	if (x == 0 || y == 0)
 	{
 		number = i + (map.getWidthMap() * j); //+ ((map.magicTieldsVector.size() - 1) * (j - 1));

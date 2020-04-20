@@ -52,34 +52,22 @@ sf::String level[] = {// Перенести на файл
 std::vector<Shell*> shells;
 std::vector<Enemy*> enemies;
 std::vector<Object*> Object::objectsAll;
-Map map("resource\\Map_Tileds\\Dungeon\\Hell2.png", 25, 40, 9);//C:\Users\Andrey\Desktop\RPGGame\resource\Map_Tileds\Dungeon
+Map map("resource\\Map_Tileds\\Dungeon\\Hell.png", 25, 40, 9);//C:\Users\Andrey\Desktop\RPGGame\resource\Map_Tileds\Dungeon
 
 void updateShells(const sf::Event& event, sf::RenderWindow& window);
 void updateEnemies(const sf::Event& event, sf::RenderWindow& window);
 void updateIntersects(Player& player);
 void funRandomizer(int countEnemies, Player& player);
 int updateIntersectsWalls(Player&);
-int updateIntersectsHeroes(Player& player);
+
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(verticalHeight, horizontalHeight), "SFMLwork");
 	window.setVerticalSyncEnabled(true); // запустите это один раз, после создания окна
-	//sf::View* camera = new sf::View;
-	//camera->setSize(verticalHeight, horizontalHeight);
-
-	//sf::View view = const_cast<sf::View&> (window.getView());
-	
-	Player player("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 500, 500, speedPlayer, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed);
-	Camera camera(&player, new sf::View, tieldsWidth, tieldsHeight, level[0].getSize() * tieldsWidth, levelHeight * tieldsHeight);//dynamic_cast<Hero*>(&player)
+	Stats statsPlayer(speedPlayer, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed, 6, 5);
+	Player player("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 500, 500, statsPlayer);
+	Camera camera(&player, new sf::View, tieldsWidth, tieldsHeight, verticalHeight, horizontalHeight);//dynamic_cast<Hero*>(&player)
 	camera.setMapXYAndSize(0, 0, level[0].getSize() * tieldsWidth, levelHeight * tieldsHeight);
-
-
-	//int x = 40 * 64;// да-да-да, я знааю, что потом придется менять
-	//int y = 64 * 25;
-
-
-	//enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 500, 500, speedPlayer/2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed, &player));
-	//player.setMaxFrames(4, 4);
 	funRandomizer(1, player);
 
 	map.setMap(level, 25, 40);
@@ -102,11 +90,13 @@ int main()
 				window.close();
 			}
 		}
+
 		window.setView(*(camera.getView()));
 		//player.MoveHero();
 		player.update(event);
 		camera.update();
 		window.clear();
+
 		map.updateMap(&window);
 		window.draw(map.getSprite());
 
@@ -114,8 +104,6 @@ int main()
 			window.draw(var);
 
 		window.draw(player.getSprite());
-
-		
 
 		updateIntersects(player);
 		updateShells(event, window);
@@ -178,62 +166,33 @@ void updateIntersects(Player& player)
 			rect3.height = shells[j]->getSprite().getLocalBounds().height;
 			if (rect3.intersects(rect2) && shells[j]->enemyKill)// Есть куча способов и идей по оптимизации всего этого и того, что выше
 			{
-				delete enemies[i];
-				enemies.erase(enemies.begin() + i);
+				//delete enemies[i];
+				//enemies.erase(enemies.begin() + i);
+				enemies[i]->setHealthPoints(enemies[i]->getHealthPoints() - shells[j]->getDamage());
 				break;
 			}
 		}
 
 	}
+	for (int j = 0; j < shells.size(); ++j)
+	{
+		rect3.left = shells[j]->getSprite().getPosition().x;
+		rect3.top = shells[j]->getSprite().getPosition().y;
+		rect3.width = shells[j]->getSprite().getLocalBounds().width;
+		rect3.height = shells[j]->getSprite().getLocalBounds().height;
+		if (rect3.intersects(rect) && !shells[j]->enemyKill)// Есть куча способов и идей по оптимизации всего этого и того, что выше
+		{
+			//delete enemies[i];
+			//enemies.erase(enemies.begin() + i);
+			player.setHealthPoints(player.getHealthPoints() - shells[j]->getDamage());
+			delete shells[j];
+			shells.erase(shells.begin() + j);
+
+			--j;
+			//break;
+		}
+	}
 	//std::cout << "intersects: " << rect.intersects(rect2) << std::endl;
-}
-
-int updateIntersectsHeroes(Player& player)
-{
-	sf::IntRect rect(player.getSprite().getPosition().x, player.getSprite().getPosition().y, player.getSprite().getLocalBounds().width, player.getSprite().getLocalBounds().height);
-	sf::IntRect rect2;
-	sf::IntRect rect3;
-
-	for (int i = 0; i < enemies.size(); ++i) // O(n) Можно оптимизировать в будущем
-	{
-		rect2.left = enemies[i]->getSprite().getPosition().x;
-		rect2.top = enemies[i]->getSprite().getPosition().y;
-		rect2.width = enemies[i]->getSprite().getLocalBounds().width;
-		rect2.height = enemies[i]->getSprite().getLocalBounds().height;
-
-		if (rect.intersects(rect2))
-		{
-			enemies[i]->move(-enemies[i]->dx, -enemies[i]->dy);
-			player.move(-(player.dx * repulsiveForce), -(player.dy * repulsiveForce));
-			break;// не уверен в этом немного
-		}
-	}
-
-	for (int i = 0; i < enemies.size(); ++i) // O(n^2) Можно оптимизировать в будущем
-	{
-		rect2.left = enemies[i]->getSprite().getPosition().x;
-		rect2.top = enemies[i]->getSprite().getPosition().y;
-		rect2.width = enemies[i]->getSprite().getLocalBounds().width;
-		rect2.height = enemies[i]->getSprite().getLocalBounds().height;
-
-		for (int j = 0; j < enemies.size(); ++j)
-		{
-			if (j == i)
-				continue;
-			rect3.left = enemies[j]->getSprite().getPosition().x;
-			rect3.top = enemies[j]->getSprite().getPosition().y;
-			rect3.width = enemies[j]->getSprite().getLocalBounds().width;
-			rect3.height = enemies[j]->getSprite().getLocalBounds().height;
-
-			if (rect3.intersects(rect2))
-			{
-				enemies[i]->move(-(enemies[i]->dx * repulsiveForce), -(enemies[i]->dy * repulsiveForce));
-				enemies[j]->move(-(enemies[j]->dx * repulsiveForce), -(enemies[j]->dy * repulsiveForce));
-				break;// не уверен в этом немного
-			}
-		}
-	}
-	return 0;
 }
 
 void funRandomizer(int countEnemies, Player& player)
@@ -247,11 +206,10 @@ void funRandomizer(int countEnemies, Player& player)
 
 		positionX = rand() % 1000 + 200;
 		positionY = rand() % 1000 + 200;
-		enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, positionX, positionY, speedPlayer / 2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed * 2, &player));
+		enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, positionX, positionY, Stats(speedPlayer / 2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed * 2), &player));
 
 	}
 }
-
 
 
 /*void start(sf::RenderWindow &window, Hero &hero)

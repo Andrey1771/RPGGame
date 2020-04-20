@@ -28,3 +28,21 @@ struct XY
 	int x, y;
 	XY(int x = 0, int y = 0) { this->x = x, this->y = y; };
 };
+struct Stats
+{
+	double speed, attackTime, attackRange, attackSpeed;
+	int maxHealthPoints, healthPoints;
+
+	Stats(double speed = 0, double attackTime = 0, double attackRange = 0, double attackSpeed = 0, int maxHealthPoints = 0, int healthPoints = 0) 
+	{
+		this->speed = speed; this->attackTime = attackTime; this->attackRange = attackRange;
+		this->attackSpeed = attackSpeed; this->maxHealthPoints = maxHealthPoints; this->healthPoints = healthPoints;
+	};
+
+	Stats& operator=(const Stats& stats)
+	{
+		this->speed = stats.speed; this->attackTime = stats.attackTime; this->attackRange = stats.attackRange;
+		this->attackSpeed = stats.attackSpeed; this->maxHealthPoints = stats.maxHealthPoints; this->healthPoints = stats.healthPoints;
+		return *this;
+	}
+};

@@ -4,12 +4,10 @@
 extern float mainTime;
 extern double speedAnimation;
 
-Hero::Hero(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, double speed, double attackTime, double attackRange, double attackSpeed) : Object(ImageFile, maxFrameX, maxFrameY, speed)
+Hero::Hero(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, const Stats& stats) : Object(ImageFile, maxFrameX, maxFrameY, stats.speed)
 {
-	this->attackTime = attackTime;
-	this->attackRange = attackRange;
-	this->attackSpeed = attackSpeed;
-	speedOneFrame = attackTime / movementTexture.maxFrameX;
+	this->stats = stats;
+	speedOneFrame = stats.attackTime / movementTexture.maxFrameX;
 	this->setPos(x, y);
 	
 	//resetAnimationAttack();
@@ -25,7 +23,9 @@ int Hero::update(sf::Event event)
 
 void Hero::resetAnimationAttack()
 {
-	clock.restart();//currentFrameAttackY += speedAnimation * mainTime;
+	//clock.restart();//currentFrameAttackY += speedAnimation * mainTime;
+	delete clock;
+	clock = nullptr;
 	numberTield = 1;
 	currentFrameAttackX = 0;
 	currentFrameAttackY = 0;
@@ -87,13 +87,16 @@ bool Hero::animation(int direction)// 1 - left, 2 - right, 3 - up, 4 - down
 	}
 	case 7://7 - attack down
 	{
-		if (clock.getElapsedTime().asSeconds() < numberTield * speedOneFrame)
+		if (clock == nullptr)
+			clock = new sf::Clock;
+
+		if (clock->getElapsedTime().asSeconds() < numberTield * speedOneFrame)
 		{
 			movementTexture.sprite->setTextureRect(sf::IntRect((getSizeXY().sizeX) * int(numberTield - 1), 6 * getSizeXY().sizeX, getSizeXY().sizeX, getSizeXY().sizeY));
 		}
 		else
 		{
-			if (clock.getElapsedTime().asSeconds() > attackTime)
+			if (clock->getElapsedTime().asSeconds() > stats.attackTime)
 			{
 				resetAnimationAttack();
 				return true;
@@ -108,13 +111,16 @@ bool Hero::animation(int direction)// 1 - left, 2 - right, 3 - up, 4 - down
 	}
 	case 8://8 - attack left
 	{
-		if (clock.getElapsedTime().asSeconds() < numberTield * speedOneFrame)
+		if (clock == nullptr)
+			clock = new sf::Clock;
+
+		if (clock->getElapsedTime().asSeconds() < numberTield * speedOneFrame)
 		{
 			movementTexture.sprite->setTextureRect(sf::IntRect((getSizeXY().sizeX) * int(numberTield - 1), 7 * getSizeXY().sizeX, getSizeXY().sizeX, getSizeXY().sizeY));
 		}
 		else
 		{
-			if (clock.getElapsedTime().asSeconds() > attackTime)
+			if (clock->getElapsedTime().asSeconds() > stats.attackTime)
 			{
 				resetAnimationAttack();
 				return true;
@@ -129,13 +135,16 @@ bool Hero::animation(int direction)// 1 - left, 2 - right, 3 - up, 4 - down
 	}
 	case 9://9 - attack right
 	{
-		if (clock.getElapsedTime().asSeconds() < numberTield * speedOneFrame)
+		if (clock == nullptr)
+			clock = new sf::Clock;
+
+		if (clock->getElapsedTime().asSeconds() < numberTield * speedOneFrame)
 		{
 			movementTexture.sprite->setTextureRect(sf::IntRect((getSizeXY().sizeX) * int(numberTield - 1), 8 * getSizeXY().sizeX, getSizeXY().sizeX, getSizeXY().sizeY));
 		}
 		else
 		{
-			if (clock.getElapsedTime().asSeconds() > attackTime)
+			if (clock->getElapsedTime().asSeconds() > stats.attackTime)
 			{
 				resetAnimationAttack();
 				return true;
@@ -151,13 +160,16 @@ bool Hero::animation(int direction)// 1 - left, 2 - right, 3 - up, 4 - down
 	}
 	case 10://10 - attack up
 	{
-		if (clock.getElapsedTime().asSeconds() < numberTield * speedOneFrame)
+		if (clock == nullptr)
+			clock = new sf::Clock;
+
+		if (clock->getElapsedTime().asSeconds() < numberTield * speedOneFrame)
 		{
 			movementTexture.sprite->setTextureRect(sf::IntRect((getSizeXY().sizeX) * int(numberTield - 1), 9 * getSizeXY().sizeX, getSizeXY().sizeX, getSizeXY().sizeY));
 		}
 		else
 		{
-			if (clock.getElapsedTime().asSeconds() > attackTime)
+			if (clock->getElapsedTime().asSeconds() > stats.attackTime)
 			{
 				resetAnimationAttack();
 				return true;

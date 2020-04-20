@@ -51,9 +51,7 @@ void ProgressBar::updatePosition()
 		movementTexture.sprite->setTextureRect(sf::IntRect((movementTexture.image->getSize().x * 2) / movementTexture.maxFrameX, 0, movementTexture.image->getSize().x / movementTexture.maxFrameX, movementTexture.image->getSize().y / movementTexture.maxFrameY));
 		spritesBar.push_back(*(movementTexture.sprite));
 	}
-	std::cout << spritesBar.size() << std::endl;
 }
-
 
 void ProgressBar::setValue(int newValue)
 {
@@ -62,6 +60,12 @@ void ProgressBar::setValue(int newValue)
 
 int ProgressBar::update()
 {
+	if (hero != nullptr)
+	{
+		range = hero->getMaxHealthPoints();
+		value = hero->getHealthPoints();
+	}
+
 	updatePosition();
 	return 0;
 }
@@ -74,4 +78,10 @@ const std::vector<sf::Sprite>& ProgressBar::getSpritesBar()
 void ProgressBar::setView(sf::View* view)
 {
 	this->view = view;
+}
+
+void ProgressBar::setSizeXY(const SizeXY& sizeXY)
+{
+	xy.x = sizeXY.sizeX;
+	xy.y = sizeXY.sizeY;
 }
