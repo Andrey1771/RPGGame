@@ -19,5 +19,6 @@ private:
 	// Унаследовано через Hero
 	virtual bool animation(int direction) override;
 
+	static std::vector<Player*> players;
 };
 

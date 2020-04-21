@@ -2,7 +2,7 @@
 #include <iostream>
 
 extern float mainTime;
-extern std::vector<Shell*> shells;
+//extern const int distanceAttackingObject;
 
 Enemy::Enemy(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, const Stats& stats, Player* player) : Hero(ImageFile, ImageFileAttack, maxFrameX, maxFrameY, x, y, stats)
 {
@@ -40,8 +40,7 @@ bool Enemy::artificialIntelligence(std::string action)
 				{
 					if (animation(9))//9 - attack right
 					{
-						shells.push_back(new Shell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
-						shells.back()->startShot((this->movementTexture.sprite->getPosition().x + this->getSizeXY().sizeX), this->movementTexture.sprite->getPosition().y, 2, stats.attackRange, stats.attackSpeed);
+						Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false, *this, 2);
 						resetAnimationAttack();
 					}
 				}
@@ -49,8 +48,7 @@ bool Enemy::artificialIntelligence(std::string action)
 				{
 					if (animation(8))//8 - attack left
 					{
-						shells.push_back(new Shell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
-						shells.back()->startShot((this->movementTexture.sprite->getPosition().x - this->getSizeXY().sizeX), this->movementTexture.sprite->getPosition().y, 1, stats.attackRange, stats.attackSpeed);
+						Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false, *this, 1);
 						resetAnimationAttack();
 					}
 				}
@@ -61,8 +59,7 @@ bool Enemy::artificialIntelligence(std::string action)
 				{
 					if (animation(7))//7 - attack down
 					{
-						shells.push_back(new Shell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
-						shells.back()->startShot(this->movementTexture.sprite->getPosition().x, (this->movementTexture.sprite->getPosition().y + this->getSizeXY().sizeY), 4, stats.attackRange, stats.attackSpeed);
+						Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false, *this, 4);
 						resetAnimationAttack();
 					}
 				}
@@ -70,8 +67,7 @@ bool Enemy::artificialIntelligence(std::string action)
 				{
 					if (animation(10))//10 - attack up
 					{
-						shells.push_back(new Shell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
-						shells.back()->startShot(this->movementTexture.sprite->getPosition().x, (movementTexture.sprite->getPosition().y - getSizeXY().sizeY), 3, stats.attackRange, stats.attackSpeed);
+						Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false, *this, 3);
 						resetAnimationAttack();
 					}
 				}
@@ -143,7 +139,8 @@ bool Enemy::artificialIntelligence(std::string action)
 
 int Enemy::update(sf::Event event)
 {
+	int temp = Hero::update(event);
 	artificialIntelligence("move"); //attack
 	artificialIntelligence("attack");
-	return Hero::update(event);
+	return temp;
 }

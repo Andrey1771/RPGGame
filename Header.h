@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 //#include <SFML/>
+extern const int distanceAttackingObject;
 struct TextureData
 {
 	sf::Image* image{ nullptr };

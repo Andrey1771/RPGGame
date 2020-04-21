@@ -9,7 +9,6 @@ Hero::Hero(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int 
 	this->stats = stats;
 	speedOneFrame = stats.attackTime / movementTexture.maxFrameX;
 	this->setPos(x, y);
-	
 	//resetAnimationAttack();
 }
 Hero::~Hero()
@@ -18,6 +17,12 @@ Hero::~Hero()
 
 int Hero::update(sf::Event event)
 {
+	if (stats.healthPoints <= 0 && deathResolution)
+	{
+		if (animation(11))
+			return -1;
+		return -2;
+	}
 	return 0;
 }
 
@@ -31,12 +36,21 @@ void Hero::resetAnimationAttack()
 	currentFrameAttackY = 0;
 }
 
+void Hero::changeHealthPoints(int addHP)
+{
+	stats.healthPoints += addHP;
+	if (stats.healthPoints > stats.maxHealthPoints)
+		stats.healthPoints = stats.maxHealthPoints;
+	if (stats.healthPoints < 0)
+		stats.healthPoints = 0;
+}
+
 double Hero::getSpeed()
 {
 	return speed;
 }
-
-bool Hero::animation(int direction)// 1 - left, 2 - right, 3 - up, 4 - down
+// 1 - left, 2 - right, 3 - up, 4 - down
+bool Hero::animation(int direction)
 {
 	switch (direction)
 	{
@@ -187,7 +201,10 @@ bool Hero::animation(int direction)// 1 - left, 2 - right, 3 - up, 4 - down
 	{
 		currentFrameY += speedAnimation * mainTime;
 		if (currentFrameY > movementTexture.maxFrameX)
+		{
 			currentFrameY -= movementTexture.maxFrameX;
+			return true;
+		}
 		movementTexture.sprite->setTextureRect(sf::IntRect((getSizeXY().sizeX) * int(currentFrameY), 10 * getSizeXY().sizeX, getSizeXY().sizeX, getSizeXY().sizeY));
 		break;
 	}

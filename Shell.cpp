@@ -35,38 +35,56 @@ void Shell::startShot(double x0, double y0, int directionAttack, double range, d
 }
 
 int Shell::update(sf::Event)
-{// speed * range
-	//double attackTime = 3;
-	double way = sqrt(pow(getPosition().x - x0, 2) + pow(getPosition().y - y0, 2));
-	if (way > range)
-		return -1;
-	// Да, проверка именно здесь, чтобы игрок увидел, последний показывающийся спрайт
-	switch (directionAttack)
+{
+	
+	return updateAnimation();
+}
+
+
+void Shell::makeShell(sf::String ImageFileAttack, int maxFrameAttackX, int maxFrameAttackY, double speed, int damage, bool enemyKill, Hero& hero, int direction)
+{
+	shells.push_back(new Shell(ImageFileAttack, maxFrameAttackX, maxFrameAttackY, speed, damage, enemyKill));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
+	switch (direction)
 	{
-	case 1:// 1 - left
+	case 1:// left
 	{
-		animation(1);
-		return this->move(-(speed), 0);
+		shells.back()->startShot((hero.getSprite().getPosition().x - hero.getSizeXY().sizeX + distanceAttackingObject), hero.getSprite().getPosition().y, 1, hero.getStats().attackRange, hero.getStats().attackSpeed);
+		break;
 	}
-	case 2:// 2 - right
+	case 2:// right
 	{
-		animation(2);
-		return this->move(speed, 0);
+		shells.back()->startShot((hero.getSprite().getPosition().x + hero.getSizeXY().sizeX - distanceAttackingObject), hero.getSprite().getPosition().y, 2, hero.getStats().attackRange, hero.getStats().attackSpeed);
+		break;
 	}
-	case 3://3 - up
+	case 3:// up
 	{
-		animation(3);
-		return this->move(0, -(speed));
+		shells.back()->startShot(hero.getSprite().getPosition().x, (hero.getSprite().getPosition().y - hero.getSizeXY().sizeY + distanceAttackingObject), 3, hero.getStats().attackRange, hero.getStats().attackSpeed);
+		break;
 	}
-	case 4://4 - down
+	case 4:// down
 	{
-		animation(4);
-		return this->move(0, speed);
+		shells.back()->startShot(hero.getSprite().getPosition().x, (hero.getSprite().getPosition().y + hero.getSizeXY().sizeY - distanceAttackingObject), 4, hero.getStats().attackRange, hero.getStats().attackSpeed);
+		break;
 	}
 	default:
 		break;
 	}
-	return 0;
+	
+}
+
+void Shell::checkIntersectsObjectsUpdate(const sf::Event& event)
+{
+	for (int i = 0; i < shells.size(); ++i)
+	{
+		if (shells.at(i)->update(event) == -1)
+		{
+			delete shells[i];
+			shells.erase(shells.begin() + i);
+
+			--i;
+			continue;
+		}
+	}
 }
 
 /*1
@@ -125,4 +143,40 @@ bool Shell::animation(int direction)
 int Shell::actionCollisionObjects()
 {
 	return 0;
+}
+
+int Shell::updateAnimation()
+{
+	// speed * range
+	//double attackTime = 3;
+	double way = sqrt(pow(getPosition().x - x0, 2) + pow(getPosition().y - y0, 2));
+	if (way > range)
+		return -1;
+	// Да, проверка именно здесь, чтобы игрок увидел, последний показывающийся спрайт
+	switch (directionAttack)
+	{
+	case 1:// 1 - left
+	{
+		animation(1);
+		return this->move(-(speed), 0);
+	}
+	case 2:// 2 - right
+	{
+		animation(2);
+		return this->move(speed, 0);
+	}
+	case 3://3 - up
+	{
+		animation(3);
+		return this->move(0, -(speed));
+	}
+	case 4://4 - down
+	{
+		animation(4);
+		return this->move(0, speed);
+	}
+	default:
+		break;
+	}
+	return -100;
 }

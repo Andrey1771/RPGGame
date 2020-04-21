@@ -5,11 +5,10 @@
 #include "Header.h"
 extern float mainTime;
 extern double speedAnimation;
-extern std::vector<Shell*> shells;
 
-const int distanceAttackingObject = 10;
 Player::Player(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, const Stats& stats) : Hero(ImageFile, ImageFileAttack, maxFrameX, maxFrameY, x, y, stats)
 {
+	players.push_back(this);
 }
 
 Player::~Player()
@@ -144,8 +143,7 @@ void Player::attackHero(sf::Event event, bool ok)
 	{
 		if (animation(8))//8 - attack left
 		{
-			shells.push_back(new Shell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, true));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
-			shells.back()->startShot((this->movementTexture.sprite->getPosition().x - this->getSizeXY().sizeX + distanceAttackingObject) , this->movementTexture.sprite->getPosition().y, 1, stats.attackRange, stats.attackSpeed);
+			Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, true, *this, 1);
 			resetAnimationAttack();
 		}
 		return;
@@ -155,8 +153,7 @@ void Player::attackHero(sf::Event event, bool ok)
 	{
 		if (animation(9))//9 - attack right
 		{
-			shells.push_back(new Shell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, true));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
-			shells.back()->startShot((this->movementTexture.sprite->getPosition().x + this->getSizeXY().sizeX - distanceAttackingObject), this->movementTexture.sprite->getPosition().y, 2, stats.attackRange, stats.attackSpeed);
+			Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, true, *this, 2);
 			resetAnimationAttack();
 		}
 		return;
@@ -166,8 +163,7 @@ void Player::attackHero(sf::Event event, bool ok)
 	{
 		if (animation(10))//10 - attack up
 		{
-			shells.push_back(new Shell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, true));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
-			shells.back()->startShot(this->movementTexture.sprite->getPosition().x, (this->movementTexture.sprite->getPosition().y - this->getSizeXY().sizeY + distanceAttackingObject), 3, stats.attackRange, stats.attackSpeed);
+			Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, true, *this, 3);
 			resetAnimationAttack();
 		}
 		return;
@@ -177,8 +173,7 @@ void Player::attackHero(sf::Event event, bool ok)
 	{
 		if (animation(7))//7 - attack down
 		{
-			shells.push_back(new Shell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, true));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
-			shells.back()->startShot(this->movementTexture.sprite->getPosition().x, (this->movementTexture.sprite->getPosition().y + this->getSizeXY().sizeY - distanceAttackingObject), 4, stats.attackRange, stats.attackSpeed);
+			Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, true, *this, 4);
 			resetAnimationAttack();
 		}
 		return;
@@ -194,12 +189,19 @@ void Player::attackHero(sf::Event event, bool ok)
 
 int Player::update(sf::Event event)
 {
-	attackHero(event, moveHero(event));
-	return 0;
+	int temp = Hero::update(event);
+	if (temp == -1)
+	{
+		this->~Player();
+		return temp;
+	}
+	if(temp != -2)
+		attackHero(event, moveHero(event));
+	return temp;
 }
 
-
-bool Player::animation(int direction)// 1 - left, 2 - right, 3 - up, 4 - down
+// 1 - left, 2 - right, 3 - up, 4 - down
+bool Player::animation(int direction)
 {
 	return Hero::animation(direction);
 }

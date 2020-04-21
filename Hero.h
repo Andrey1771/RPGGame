@@ -22,7 +22,7 @@ private:
 
 protected:
 	Stats stats;
-
+	bool deathResolution{ true };
 public:
 
 	double getSpeed();
@@ -30,10 +30,11 @@ public:
 	virtual bool animation(int direction) override;
 	virtual int update(sf::Event) override;
 	void resetAnimationAttack();
-
+	const Stats& getStats() { return stats; };
 	void setMaxHealthPoints(const int maxHP) { this->stats.maxHealthPoints = maxHP; };
 	void setHealthPoints(const int hp) { this->stats.healthPoints = hp; };
 	const int getHealthPoints() { return stats.healthPoints; };
 	const int getMaxHealthPoints() { return stats.maxHealthPoints; };
+	void changeHealthPoints(int addHP);
 };
 
