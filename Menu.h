@@ -1,18 +1,21 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include "Header.h"
 
 using namespace sf;
-constexpr auto C=14;
+constexpr auto C = 14;
 constexpr auto keyDelay = 1;
 constexpr auto numOfMonstres = 4;
 constexpr auto numOfButton = 3;
 constexpr auto numOfDisplay = 6;
 
-class Menu 
+class Menu
 {
+	double cameraOffsetX, cameraOffsetY;
 	double kX, kY;
-	Vector2u startDisplay;
+	double resizeMistakeX, resizeMistakeY;
+	bool isNewDisplay;
 	int whatDisplay;
 	std::vector<std::pair< Text, std::pair<int, int>>>displayVector;
 	std::pair< String, std::pair<int, int>> displayArray[numOfDisplay]
@@ -28,7 +31,7 @@ class Menu
 	Font font;  // Шрифт
 	std::vector<std::pair<Text, String>> textVector;  // Вектор <Текст пунка меню (Text), К какому меню относится> 
 	std::pair<String, String> nameArray[C] =  // Массив <Текст пункта меню (String), К какому меню относится>
-	{ 
+	{
 		std::pair < String, String>(L"Новая игра", L"mainMenu"),
 		std::pair < String, String>(L"Бестиарий", L"mainMenu"),
 		std::pair < String, String>(L"Выход из игры" , L"mainMenu"),
@@ -47,7 +50,6 @@ class Menu
 
 	Music bestiaryMusic;
 	Font bestiaryFont;
-	Font bestiaryFont_1;
 	std::pair<String, String> bestiaryArray[numOfMonstres] =
 	{
 		std::pair < String, String>(L"Раб", L"Самый обыкновенный служитель\nпреисподней. Ничего необычного"),
@@ -64,24 +66,15 @@ class Menu
 	};
 	std::vector<Text> buttonVector;
 
-	std::vector<Texture> bestiaryTextureVec;  
+	std::vector<Texture> bestiaryTextureVec;
 	std::vector<Sprite> bestiarySpriteVec;
 
 	int whatMonster;
 
-	struct textureData
-	{
-		sf::Image* image;
-		sf::Texture* texture;
-		sf::Sprite* sprite;
-		int maxFrameX{ 1 };
-		int maxFrameY{ 1 };
-	}movementTexture;
-
 	Texture aboutTexture;
 	Sprite about;
 	Window window;  // Окно
-	
+
 	Music mainMenuMusic; // Музыка Главного Меню
 	Event event;  // Событие
 	std::vector<Texture> textureVec;  // Вектор текстур бэкграунда Главного Меню
@@ -95,7 +88,7 @@ class Menu
 
 	bool isMenu;  // Индикатор работы меню (да/нет)
 	int key;  // Номер текущей кнопки
-	Clock clock;  // Часы
+	Clock clock2;  // Часы
 	float CurrentFrame;  // Таймер для анимации бэкграунда 
 	float menuTimer;  // Таймер для нажатия клавиш
 
@@ -104,14 +97,18 @@ class Menu
 	int volValue = 4;  // Текущее значение громкости (0 - 0%, 1 - 25%, 2 - 50%, 3 - 75%, 4 - 100%)
 	int oldValue = 0;  // Старое значение звука (для сохранения при выключении звука/выходе в игру)
 	bool musicFlag = 0;  // Индикатор работы музыки (Да/Нет)
+	
+	sf::View* camera{ nullptr };
 
 public:
-	Menu(RenderWindow& window, Music& music);  // Конструктор - ВАЖНО: ЗАГРУЖАЕТ ВСЕ НЕОБХОДИМЫЕ ФАЙЛЫ В ОПЕРАТИВКУ
+	Menu(RenderWindow& window, Music& music, sf::View* camera);  // Конструктор - ВАЖНО: ЗАГРУЖАЕТ ВСЕ НЕОБХОДИМЫЕ ФАЙЛЫ В ОПЕРАТИВКУ
 	~Menu();  // Деструктор
 	void mainMenu(RenderWindow& window, Music& musicToStop);  // Главное Меню
 	void pauseMenu(RenderWindow& window, Music& music);  // Меню Паузы
 	void settingsMenu(RenderWindow& window, Music& music);  // Меню настройки
 	void bestiary(RenderWindow& window, Music& musicToStop);  // Бестиарий
 	void updateSize();
+	void setView(sf::View* camera) { this->camera = camera; };
+	bool isMenuOn() { return isMenu; };
 };
 

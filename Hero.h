@@ -2,37 +2,39 @@
 #include "Header.h"
 
 #include <SFML/Graphics.hpp>
+#include "Object.h"
 
-
-class Hero
+class Hero : public Object
 {
-protected:
-	struct textureData
-	{
-		sf::Image* image;
-		sf::Texture* texture;
-		sf::Sprite* sprite;
-		int maxFrameX{ 1 };
-		int maxFrameY{ 1 };
-	}movementTexture, attackTexture;
-	
-	//sf::Image* imageAttack;
-	//sf::Texture* textureAttack;
-	//sf::Sprite* spriteAttack;
-
-	double x, y, dx, dy, speed, attackTime;
-	float currentFrameX{ 0 }; float currentFrameY{ 0 }; float currentFrameAttackX{ 0 }; float currentFrameAttackY{ 0 }; int countX{ 1 }; int countY{ 1 }; int x0{ 0 }; int y0{ 0 };
-
 public:
-	Hero(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, int maxFrameAttackX, int maxFrameAttackY, double x, double y, double speed = 0, double attackTime = 0);
+	Hero(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, const Stats& stats);
 	~Hero();
-	sf::Sprite getSprite();
-	bool setPos(double x, double y);
-	bool setMaxFrames(int countX, int countY);
-	virtual void move(double x, double y);
-	virtual void animation(int direction);
-	virtual void attack(int direction);
-	virtual void update(sf::Event) = 0;
 
+private:
+	float currentFrameAttackX{ 0 }; float currentFrameAttackY{ 0 };
+	
+	bool temp{ false };
+	int numberTield{ 1 };
+	sf::Clock* clock{ nullptr };
+	double speedOneFrame;
+	
+	virtual int actionCollisionObjects() override;
+
+protected:
+	Stats stats;
+	bool deathResolution{ true };
+public:
+
+	double getSpeed();
+	// Унаследовано через Object
+	virtual bool animation(int direction) override;
+	virtual int update(sf::Event) override;
+	void resetAnimationAttack();
+	const Stats& getStats() { return stats; };
+	void setMaxHealthPoints(const int maxHP) { this->stats.maxHealthPoints = maxHP; };
+	void setHealthPoints(const int hp) { this->stats.healthPoints = hp; };
+	const int getHealthPoints() { return stats.healthPoints; };
+	const int getMaxHealthPoints() { return stats.maxHealthPoints; };
+	void changeHealthPoints(int addHP);
 };
 

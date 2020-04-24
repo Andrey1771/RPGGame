@@ -9,7 +9,7 @@ public:
 private:
 
 	int height, widthMap;
-	sf::String* tileMap{nullptr};
+	sf::String* tileMap{ nullptr };
 
 };
 
