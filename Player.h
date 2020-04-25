@@ -10,7 +10,7 @@ private:
 public:
 	Player(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, const Stats& stats);
 	~Player();
-	
+	static std::vector<Player*> players;
 	// Унаследовано через Hero
 	virtual int update(sf::Event event) override;
 private:
@@ -19,6 +19,6 @@ private:
 	// Унаследовано через Hero
 	virtual bool animation(int direction) override;
 
-	static std::vector<Player*> players;
+	
 };
 

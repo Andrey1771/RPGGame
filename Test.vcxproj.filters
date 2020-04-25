@@ -45,6 +45,9 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="AnimatedTield.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Hero.h">
@@ -80,6 +83,9 @@
     <ClInclude Include="Camera.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="AnimatedTield.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\SpaceShipGG.png">
@@ -101,6 +107,30 @@
       <Filter>Файлы ресурсов</Filter>
     </Image>
     <Image Include="resource\Player\ProgressBar\hearts.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\animatedCorner.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\animatedWall.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\boiler.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\coffin.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\gallows.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\guillotine.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\hellTree.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\jesus.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
   </ItemGroup>

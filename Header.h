@@ -10,6 +10,7 @@ struct TextureData
 	sf::Sprite* sprite{ nullptr };
 	int maxFrameX{ 1 };
 	int maxFrameY{ 1 };
+	//TextureData(const TextureData& texDat){}
 };
 struct SizeXY
 {

@@ -348,7 +348,7 @@ bool Object::checkManyTieldsIntersection(SpeedXY& speedXY, int i, int j, int dir
 
 bool Object::checkTieldsIntersection(SpeedXY& speedXY, sf::FloatRect rect, sf::FloatRect rect2, int number, int directionFlag/*0 - не блокирует координаты, 1 - блокирует X, 2 - блокирует Y*/)
 {
-	if ((!rect2.intersects(rect)) || (map.magicTieldsVector.at(number).second != 1))
+	if ((!rect2.intersects(rect)) || (map.magicTieldsVector.at(number).second >> 1 != 1))
 	{
 
 		return false;

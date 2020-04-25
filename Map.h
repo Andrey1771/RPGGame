@@ -1,12 +1,15 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Header.h"
+#include "AnimatedTield.h"
 class Map
 {
 private:
 	sf::Image image; sf::Texture texture; sf::Sprite sprite;
 	int heightMap, widthMap;
 	int tieldWidth, tieldHeight;
-	sf::String *tieldMaps;
+	sf::String* tieldMaps{ nullptr };
+	std::vector<AnimatedTield*> animatedTields;
 public:
 	Map(sf::String ImageFolder, int heightMap, int widthMap, int amountTiledsMap);
 	~Map();
@@ -25,7 +28,7 @@ public:
 private:
 	void tieldsSettings(int amountTieldsMap);
 	void loadMap();
-
+	void animationTields(sf::RenderWindow* window);
 	
 };
 

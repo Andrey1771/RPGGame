@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimatedTield.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Hero.cpp" />
@@ -152,6 +153,7 @@
     <ClCompile Include="Shell.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimatedTield.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Header.h" />
@@ -168,6 +170,14 @@
     <Image Include="resource\Enemy\Dungeon\Character\devil.png" />
     <Image Include="resource\Enemy\Dungeon\Character\devil2.png" />
     <Image Include="resource\Enemy\Dungeon\Projectile\devilAttack.png" />
+    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\animatedCorner.png" />
+    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\animatedWall.png" />
+    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\boiler.png" />
+    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\coffin.png" />
+    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\gallows.png" />
+    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\guillotine.png" />
+    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\hellTree.png" />
+    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\jesus.png" />
     <Image Include="resource\Map_Tileds\Dungeon\Hell.png" />
     <Image Include="resource\Map_Tileds\Dungeon\Hell2.png" />
     <Image Include="resource\Player\ProgressBar\hearts.png" />

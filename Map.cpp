@@ -36,6 +36,22 @@ void Map::loadMap()
 	magicTieldsVector.clear();
 	/////////////////////////////Рисуем карту/////////////////////
 	std::vector<sf::Sprite> vect;
+	//temp
+	TextureData movementTexture0;
+
+	movementTexture0.image = new sf::Image;
+	movementTexture0.texture = new sf::Texture;
+	movementTexture0.sprite = new sf::Sprite;
+
+	movementTexture0.image->loadFromFile("resource\\Map_Tileds\\Dungeon\\Animation_Objects\\boiler.png");//sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, int maxFrameAttackX, int maxFrameAttackY, double x, double y, double speed, double attackTime)
+	movementTexture0.texture->loadFromImage(*movementTexture0.image);
+	movementTexture0.sprite->setTexture(*movementTexture0.texture);
+
+	movementTexture0.maxFrameX = 4;
+	movementTexture0.maxFrameY = 1;
+
+	SizeXY sizeXY(movementTexture0.texture->getSize().x/movementTexture0.maxFrameX, movementTexture0.texture->getSize().y / movementTexture0.maxFrameY);
+	//temp
 	for (int i = 0; i < heightMap; i++)
 	{
 		for (int j = 0; j < widthMap; j++)
@@ -49,9 +65,12 @@ void Map::loadMap()
 			if ((tieldMaps[i][j] == ' ')) sprite.setTextureRect(sf::IntRect(tieldWidth * 5, 0, tieldWidth, tieldHeight));
 			if (tieldMaps[i][j] == '0')
 			{
-				sprite.setTextureRect(sf::IntRect(tieldWidth * 6, 0, tieldWidth, tieldHeight));
+				sprite.setTextureRect(sf::IntRect(tieldWidth * 5, 0, tieldWidth, tieldHeight));
 				sprite.setPosition(j * tieldWidth, i * tieldHeight);
-				magicTieldsVector.push_back(std::pair<sf::Sprite, int>(sprite, 1));
+				magicTieldsVector.push_back(std::pair<sf::Sprite, int>(sprite, 2));
+
+				movementTexture0.sprite->setPosition(j * tieldWidth, i * tieldHeight);
+				animatedTields.push_back(new AnimatedTield(movementTexture0, sizeXY, 0));
 				continue;
 			}
 			if (tieldMaps[i][j] == '7')  sprite.setTextureRect(sf::IntRect(tieldWidth * 7, 0, tieldWidth, tieldHeight));
@@ -62,19 +81,34 @@ void Map::loadMap()
 	}
 }
 
+void Map::animationTields(sf::RenderWindow* window)
+{
+	for (AnimatedTield* var : animatedTields)
+	{
+		var->update();
+		window->draw(var->getSprite());
+	}
+}
+
 void Map::updateMap(sf::RenderWindow* window)
 {
 		/////////////////////////////Рисуем карту///////////////////// sprite.setPosition(j * tieldWidth, i * tieldHeight);//по сути раскидывает квадратики, превращая в карту. то есть задает каждому из них позицию. если убрать, то вся карта нарисуется в одном квадрате 32*32 и мы увидим один квадрат
 	std::vector<std::pair<sf::Sprite, int>>::iterator tieldsIter = magicTieldsVector.begin();
 	for (int i = 0; i < heightMap; i++)
+	{
 		for (int j = 0; j < widthMap; j++)
 		{
-			
-			window->draw((*tieldsIter).first);//рисуем квадратики на экран
+
+			if(!((*tieldsIter).second & 1))
+				window->draw((*tieldsIter).first);//рисуем квадратики на экран
 			if ((i == heightMap - 1) && (j == widthMap - 1))
-				return;
+				break;
 			tieldsIter++;
 		}
+		if ((i == heightMap - 1))
+			break;
+	}
+	animationTields(window);
 }
 
 void Map::setSizeMap(int heightMap, int widthMap)

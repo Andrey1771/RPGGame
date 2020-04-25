@@ -13,7 +13,7 @@ Player::Player(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, 
 
 Player::~Player()
 {
-
+	players.clear();
 }
 
 bool Player::moveHero(sf::Event event)

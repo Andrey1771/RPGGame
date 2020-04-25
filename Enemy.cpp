@@ -140,7 +140,27 @@ bool Enemy::artificialIntelligence(std::string action)
 int Enemy::update(sf::Event event)
 {
 	int temp = Hero::update(event);
-	artificialIntelligence("move"); //attack
-	artificialIntelligence("attack");
+	if (temp == -1)
+	{
+		//this->~Enemy();
+		return temp;
+	}
+	if (temp != -2)
+	{
+		artificialIntelligence("move"); //attack
+		artificialIntelligence("attack");
+	}
 	return temp;
+
+	/*
+	int temp = Hero::update(event);
+	if (temp == -1)
+	{
+		this->~Player();
+		return temp;
+	}
+	if(temp != -2)
+		attackHero(event, moveHero(event));
+	return temp;
+	*/
 }

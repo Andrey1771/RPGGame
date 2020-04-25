@@ -65,14 +65,17 @@ int updateIntersectsWalls(Player&);
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(verticalHeight, horizontalHeight), "SFMLwork");
+	sf::VideoMode vid = sf::VideoMode(verticalHeight, horizontalHeight);
+	sf::RenderWindow window(vid, "SFMLwork");
+	
 	window.setVerticalSyncEnabled(true); // запустите это один раз, после создания окна
 	Stats statsPlayer(speedPlayer, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed, 6, 5);
+	
 	Player player("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 500, 500, statsPlayer);
 	Camera camera(&player, new sf::View, tieldsWidth, tieldsHeight, verticalHeight, horizontalHeight);//dynamic_cast<Hero*>(&player)
 	camera.setMapXYAndSize(0, 0, level[0].getSize() * tieldsWidth, levelHeight * tieldsHeight);
 	funRandomizer(1, player);
-
+	
 	map.setMap(level, 25, 40);
 	map.setPosBG(verticalHeight, horizontalHeight);
 
@@ -85,33 +88,34 @@ int main()
 
 		mainTime = clock.getElapsedTime().asMicroseconds();
 		clock.restart();
-		//time /= 800;
 
 		while (window.pollEvent(event))
 		{
-			if (event.type == sf::Event::Closed) {
+			if (event.type == sf::Event::Closed) 
+			{
+				//window.create(vid, "SFMLwork", sf::Style::Fullscreen);
 				window.close();
 			}
 		}
 
 		window.setView(*(camera.getView()));
 		//player.MoveHero();
-		if(&player != nullptr)
-			player.update(event);
+		for (Player* var : Player::players)
+			var->update(event);
 		camera.update();
 		window.clear();
 
 		map.updateMap(&window);
-		window.draw(map.getSprite());
+		//window.draw(map.getSprite());
 
 		for (sf::Sprite var : camera.getProgressBar()->getSpritesBar())
 			window.draw(var);
 
-		if (&player != nullptr)
-			window.draw(player.getSprite());
-
-		updateIntersects(player);
-		//updateShells(event, window);
+		for (Player* var : Player::players)
+		{
+			window.draw(var->getSprite());
+			updateIntersects(*var);
+		}
 		
 		updateEnemies(event, window);
 		Shell::checkIntersectsObjectsUpdate(event);
