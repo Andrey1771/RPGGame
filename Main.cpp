@@ -74,7 +74,7 @@ int main()
 	Player player("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 500, 500, statsPlayer);
 	Camera camera(&player, new sf::View, tieldsWidth, tieldsHeight, verticalHeight, horizontalHeight);//dynamic_cast<Hero*>(&player)
 	camera.setMapXYAndSize(0, 0, level[0].getSize() * tieldsWidth, levelHeight * tieldsHeight);
-	funRandomizer(5, player);
+	funRandomizer(1, player);
 
 	map.setMap(level, 25, 40);
 	map.setPosBG(verticalHeight, horizontalHeight);

@@ -4,7 +4,7 @@
 #include "Header.h"
 
 using namespace sf;
-constexpr auto C = 14;
+constexpr auto numOfMenuButtons = 17;
 constexpr auto keyDelay = 1;
 constexpr auto numOfMonstres = 4;
 constexpr auto numOfButton = 3;
@@ -30,7 +30,7 @@ class Menu
 
 	Font font;  // Шрифт
 	std::vector<std::pair<Text, String>> textVector;  // Вектор <Текст пунка меню (Text), К какому меню относится> 
-	std::pair<String, String> nameArray[C] =  // Массив <Текст пункта меню (String), К какому меню относится>
+	std::pair<String, String> nameArray[numOfMenuButtons] =  // Массив <Текст пункта меню (String), К какому меню относится>
 	{
 		std::pair < String, String>(L"Новая игра", L"mainMenu"),
 		std::pair < String, String>(L"Бестиарий", L"mainMenu"),
@@ -45,7 +45,10 @@ class Menu
 		std::pair < String, String>(L"Звук: Выкл", L"settingsMenu"),
 		std::pair < String, String>(L"Громкость", L"settingsMenu"),
 		std::pair < String, String>(L"Назад", L"settingsMenu"),
-		std::pair < String, String>(L"Разрешение экрана:", L"settingsMenu")
+		std::pair < String, String>(L"Разрешение экрана:", L"settingsMenu"),
+		std::pair < String, String>(L"Продолжить", L"mainMenu"),
+		std::pair < String, String>(L"Настройки", L"mainMenu"),
+		std::pair < String, String>(L"Авторы", L"mainMenu")
 	};
 
 	Music bestiaryMusic;
@@ -93,12 +96,25 @@ class Menu
 	float menuTimer;  // Таймер для нажатия клавиш
 
 	bool isDisp = 1;  // Индикатор полноэкранного режима (Да/Нет)
-	bool isVol = 0;  // Индикатор работы звука (Да/Нет)
+	bool isVol = 1;  // Индикатор работы звука (Да/Нет)
 	int volValue = 4;  // Текущее значение громкости (0 - 0%, 1 - 25%, 2 - 50%, 3 - 75%, 4 - 100%)
-	int oldValue = 0;  // Старое значение звука (для сохранения при выключении звука/выходе в игру)
-	bool musicFlag = 0;  // Индикатор работы музыки (Да/Нет)
 	
 	sf::View* camera{ nullptr };
+	void closeMainMenu(Music& musicToStop);
+	void openBestiary(RenderWindow& window, Music& musicToStop);
+	void closeGame(RenderWindow& window);
+	void chooseMonster(bool leftArrow);
+	void closeBestiary(RenderWindow& window, Music& musicToStop);
+	void openMainMenu(RenderWindow& window, Music& musicToStop);
+	void openSettingsMenu(RenderWindow& window, Music& musicToStop);
+	void closePauseMenu();
+	void screenModes(RenderWindow& window);
+	void screenResolutions(RenderWindow& window, bool leftArrow);
+	void onOffMusic(Music& music);
+	void closeSettingsMenu(RenderWindow& window, Music& music);
+	void frameCreator(RenderWindow& window);
+	void chooseVolume(Music& music, bool leftArrow);
+	void createKeys(int numOfKeys);
 
 public:
 	Menu(RenderWindow& window, Music& music, sf::View* camera);  // Конструктор - ВАЖНО: ЗАГРУЖАЕТ ВСЕ НЕОБХОДИМЫЕ ФАЙЛЫ В ОПЕРАТИВКУ
