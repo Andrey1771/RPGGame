@@ -11,7 +11,7 @@ private:
 	sf::String* tieldMaps{ nullptr };
 	std::vector<AnimatedTield*> animatedTields;
 public:
-	Map(sf::String ImageFolder, int heightMap, int widthMap, int amountTiledsMap);
+	Map(const sf::String& ImageFolder, int heightMap, int widthMap, int amountTiledsMap);
 	~Map();
 	bool setPosBG(int w, int h);
 	void loadLevel(const sf::String& mapTiledsPosition, const sf::String& tileds);

@@ -1,6 +1,6 @@
 #include "Map.h"
 #include <vector>
-Map::Map(sf::String ImageFolder, int heightMap, int widthMap, int amountTiledsMap)
+Map::Map(const sf::String& ImageFolder, int heightMap, int widthMap, int amountTiledsMap)
 {
 	this->image.loadFromFile(ImageFolder);
 	this->texture.loadFromImage(this->image);

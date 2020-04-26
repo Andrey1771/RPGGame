@@ -15,7 +15,7 @@ private:
 	int numberTield{ 1 }; int damage;
 	sf::Clock clock;
 	double currentFrameAttackX; double currentFrameAttackY; double attackTime{3};
-	virtual int actionCollisionObjects() override;
+	virtual int actionCollisionObjects(Object* obj) override;
 	int updateAnimation();
 public:
 	void startShot(double x0, double y0, int directionAttack, double range, double speed);

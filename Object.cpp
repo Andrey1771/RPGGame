@@ -1,14 +1,14 @@
 #include "Object.h"
 #include "Map.h"
 #include <iostream>
-
+#include "Item.h"
 extern Map map;
 extern float mainTime;
 extern double speedAnimation;
 
 const int minDistance = 0;
 
-Object::Object(sf::String ImageFile, int maxFrameX, int maxFrameY, double speed)
+Object::Object(const sf::String& ImageFile, int maxFrameX, int maxFrameY, double speed)
 {
 	//Movement
 	movementTexture.image = new sf::Image;
@@ -386,6 +386,17 @@ bool Object::checkObjectsCollision(SpeedXY& speedXY)
 
 			if (rect.intersects(rect2))
 			{
+
+				Item* item = dynamic_cast<Item*>(var);
+				if (item != nullptr)
+				{
+					int temp = item->actionCollisionObjects(this);// dynamic_cast?
+					if (temp == -1)
+					{
+						continue;
+					}
+				}
+
 				if (speedXY.x == 0)
 				{
 					changeIntersection(speedXY, rect2, 1);
@@ -530,7 +541,6 @@ const sf::Vector2f& Object::getPosition()
 {
 	return this->movementTexture.sprite->getPosition();
 }
-
 
 const SizeXY& Object::getSizeXY()
 {

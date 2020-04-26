@@ -143,7 +143,9 @@
     <ClCompile Include="AnimatedTield.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="HealthBottle.cpp" />
     <ClCompile Include="Hero.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="LevelTileds.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -157,7 +159,9 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Header.h" />
+    <ClInclude Include="HealthBottle.h" />
     <ClInclude Include="Hero.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="LevelTileds.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Object.h" />
@@ -168,8 +172,8 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\Enemy\Dungeon\Character\devil.png" />
-    <Image Include="resource\Enemy\Dungeon\Character\devil2.png" />
     <Image Include="resource\Enemy\Dungeon\Projectile\devilAttack.png" />
+    <Image Include="resource\Items\Star.png" />
     <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\animatedCorner.png" />
     <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\animatedWall.png" />
     <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\boiler.png" />
@@ -179,9 +183,7 @@
     <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\hellTree.png" />
     <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\jesus.png" />
     <Image Include="resource\Map_Tileds\Dungeon\Hell.png" />
-    <Image Include="resource\Map_Tileds\Dungeon\Hell2.png" />
     <Image Include="resource\Player\ProgressBar\hearts.png" />
-    <Image Include="resource\SpaceShipGG.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

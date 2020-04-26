@@ -11,11 +11,11 @@ protected:
 	TextureData movementTexture; SizeXY valueSizeXY;
 
 	virtual int actionCollisionTields();
-	virtual int actionCollisionObjects() = 0;
+	virtual int actionCollisionObjects(Object* obj) = 0;
 public:
 	double dx, dy;
 
-	Object(sf::String ImageFile, int maxFrameX, int maxFrameY, double speed = 0);
+	Object(const sf::String& ImageFile, int maxFrameX, int maxFrameY, double speed = 0);
 	~Object();
 	sf::Sprite getSprite();
 	bool setPos(double x, double y);

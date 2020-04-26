@@ -18,7 +18,7 @@ private:
 	sf::Clock* clock{ nullptr };
 	double speedOneFrame;
 	
-	virtual int actionCollisionObjects() override;
+	virtual int actionCollisionObjects(Object* obj) override;
 
 protected:
 	Stats stats;

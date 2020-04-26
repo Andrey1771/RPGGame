@@ -215,7 +215,7 @@ bool Hero::animation(int direction)
 
 }
 
-int Hero::actionCollisionObjects()
+int Hero::actionCollisionObjects(Object* obj)
 {
 	return 0;
 }

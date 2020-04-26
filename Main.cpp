@@ -5,6 +5,8 @@
 #include "Shell.h"
 #include "Enemy.h"
 #include "Camera.h"
+#include "Item.h"
+#include "HealthBottle.h"
 
 #include <iostream>
 //void start(sf::RenderWindow& window, Hero& hero);
@@ -54,7 +56,7 @@ std::vector<Shell*> Shell::shells;
 std::vector<Enemy*> enemies;
 std::vector<Object*> Object::objectsAll;
 std::vector<Player*> Player::players;
-
+std::vector<Item*> Item::items;
 Map map("resource\\Map_Tileds\\Dungeon\\Hell.png", 25, 40, 9);//C:\Users\Andrey\Desktop\RPGGame\resource\Map_Tileds\Dungeon
 
 //void updateShells(const sf::Event& event, sf::RenderWindow& window);
@@ -75,7 +77,7 @@ int main()
 	Camera camera(&player, new sf::View, tieldsWidth, tieldsHeight, verticalHeight, horizontalHeight);//dynamic_cast<Hero*>(&player)
 	camera.setMapXYAndSize(0, 0, level[0].getSize() * tieldsWidth, levelHeight * tieldsHeight);
 	funRandomizer(1, player);
-	
+	HealthBottle hPBottle(250, 250, 2);
 	map.setMap(level, 25, 40);
 	map.setPosBG(verticalHeight, horizontalHeight);
 
@@ -107,6 +109,12 @@ int main()
 
 		map.updateMap(&window);
 		//window.draw(map.getSprite());
+
+		for (Item* var : Item::items)
+		{
+			var->update(event);
+			window.draw(var->getSprite());
+		}
 
 		for (sf::Sprite var : camera.getProgressBar()->getSpritesBar())
 			window.draw(var);

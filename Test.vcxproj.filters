@@ -13,125 +13,182 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Исходные файлы\Basic">
+      <UniqueIdentifier>{690e3dc9-70e5-41db-87ee-523f74199335}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Basic">
+      <UniqueIdentifier>{8f5b2c74-ad94-4f64-b6b6-593b0b682ac5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Basic\Map">
+      <UniqueIdentifier>{7c1b78d1-1a24-4b02-a832-8e9816c12daa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Basic\Map">
+      <UniqueIdentifier>{14033716-ef14-41bf-93b1-455e4c53c9fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Basic\Heroes">
+      <UniqueIdentifier>{fa8fecf3-1037-48d7-90b1-985e428b5705}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Basic\GUI">
+      <UniqueIdentifier>{dbe30ce3-e6f6-4fb5-816f-c4c9674f8e52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Basic\Heroes">
+      <UniqueIdentifier>{ca4e7da3-3ee3-4e8c-a279-6a8e5a83435b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Basic\Objects">
+      <UniqueIdentifier>{cca3f88f-85cf-4295-97cc-cb039cf768f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Basic\GUI">
+      <UniqueIdentifier>{26072386-1db3-46d9-81eb-2ff52f4a92c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Basic\Objects">
+      <UniqueIdentifier>{8fe0d083-eb99-47c0-98c9-10a0377728e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\Map">
+      <UniqueIdentifier>{b85ae6cc-5d43-4dc2-976b-b111a4148ae8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\GUI">
+      <UniqueIdentifier>{6d5fb6bc-9b2e-4795-b746-5be38f254576}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\Heroes">
+      <UniqueIdentifier>{b7328bd9-8db9-40b8-90cf-8c56238daf96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\Items">
+      <UniqueIdentifier>{4cb6383b-c5b0-40ce-b71a-b0a8f1f59b79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\Objects">
+      <UniqueIdentifier>{2ecaefc6-be67-4ed5-94d7-9ad931b67f32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Basic\Items">
+      <UniqueIdentifier>{8d7fc1bb-b3ed-4659-a5fb-106c6907e387}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Basic\Items">
+      <UniqueIdentifier>{033ed8df-a86c-4815-8f6b-1c5f14e70e76}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Hero.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Исходные файлы</Filter>
+    <ClCompile Include="AnimatedTield.cpp">
+      <Filter>Исходные файлы\Basic\Map</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\Basic\Map</Filter>
     </ClCompile>
     <ClCompile Include="LevelTileds.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\Basic\Map</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Shell.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\Basic\Heroes</Filter>
     </ClCompile>
-    <ClCompile Include="ProgressBar.cpp">
-      <Filter>Исходные файлы</Filter>
+    <ClCompile Include="Hero.cpp">
+      <Filter>Исходные файлы\Basic\Heroes</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Исходные файлы\Basic\Heroes</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\Basic\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="AnimatedTield.cpp">
-      <Filter>Исходные файлы</Filter>
+    <ClCompile Include="ProgressBar.cpp">
+      <Filter>Исходные файлы\Basic\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Исходные файлы\Basic\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Shell.cpp">
+      <Filter>Исходные файлы\Basic\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Исходные файлы\Basic\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthBottle.cpp">
+      <Filter>Исходные файлы\Basic\Items</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Hero.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Header.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\Basic</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelTileds.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Shell.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ProgressBar.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\Basic</Filter>
     </ClInclude>
     <ClInclude Include="AnimatedTield.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\Basic\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelTileds.h">
+      <Filter>Файлы заголовков\Basic\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Файлы заголовков\Basic\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Файлы заголовков\Basic\Heroes</Filter>
+    </ClInclude>
+    <ClInclude Include="Hero.h">
+      <Filter>Файлы заголовков\Basic\Heroes</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Файлы заголовков\Basic\Heroes</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgressBar.h">
+      <Filter>Файлы заголовков\Basic\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Файлы заголовков\Basic\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Файлы заголовков\Basic\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Shell.h">
+      <Filter>Файлы заголовков\Basic\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Файлы заголовков\Basic\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthBottle.h">
+      <Filter>Файлы заголовков\Basic\Items</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="resource\SpaceShipGG.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="resource\Map_Tileds\Dungeon\Hell.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="resource\Enemy\Dungeon\Projectile\devilAttack.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="resource\Enemy\Dungeon\Character\devil.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="resource\Enemy\Dungeon\Character\devil2.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="resource\Map_Tileds\Dungeon\Hell2.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="resource\Player\ProgressBar\hearts.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\animatedCorner.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\animatedWall.png">
-      <Filter>Файлы ресурсов</Filter>
+    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\coffin.png">
+      <Filter>Файлы ресурсов\Map</Filter>
     </Image>
     <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\boiler.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\coffin.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\gallows.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\guillotine.png">
-      <Filter>Файлы ресурсов</Filter>
-    </Image>
-    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\hellTree.png">
-      <Filter>Файлы ресурсов</Filter>
+      <Filter>Файлы ресурсов\Map</Filter>
     </Image>
     <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\jesus.png">
-      <Filter>Файлы ресурсов</Filter>
+      <Filter>Файлы ресурсов\Map</Filter>
+    </Image>
+    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\hellTree.png">
+      <Filter>Файлы ресурсов\Map</Filter>
+    </Image>
+    <Image Include="resource\Map_Tileds\Dungeon\Hell.png">
+      <Filter>Файлы ресурсов\Map</Filter>
+    </Image>
+    <Image Include="resource\Player\ProgressBar\hearts.png">
+      <Filter>Файлы ресурсов\GUI</Filter>
+    </Image>
+    <Image Include="resource\Enemy\Dungeon\Character\devil.png">
+      <Filter>Файлы ресурсов\Heroes</Filter>
+    </Image>
+    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\animatedWall.png">
+      <Filter>Файлы ресурсов\Map</Filter>
+    </Image>
+    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\animatedCorner.png">
+      <Filter>Файлы ресурсов\Map</Filter>
+    </Image>
+    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\gallows.png">
+      <Filter>Файлы ресурсов\Map</Filter>
+    </Image>
+    <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\guillotine.png">
+      <Filter>Файлы ресурсов\Map</Filter>
+    </Image>
+    <Image Include="resource\Items\Star.png">
+      <Filter>Файлы ресурсов\Items</Filter>
+    </Image>
+    <Image Include="resource\Enemy\Dungeon\Projectile\devilAttack.png">
+      <Filter>Файлы ресурсов\Objects</Filter>
     </Image>
   </ItemGroup>
 </Project>

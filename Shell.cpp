@@ -140,7 +140,7 @@ bool Shell::animation(int direction)
 	return false;
 }
 
-int Shell::actionCollisionObjects()
+int Shell::actionCollisionObjects(Object* obj)
 {
 	return 0;
 }
