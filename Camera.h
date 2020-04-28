@@ -6,7 +6,7 @@ class Camera
 {
 	//sf::View* camera{ nullptr };
 	
-	ProgressBar* progressBarHP;
+	ProgressBar* progressBarHP{ nullptr };
 	sf::View* view{ nullptr };
 	Hero* hero{ nullptr };
 	float x0, y0, tieldsWidth, tieldsHeight, width, height;

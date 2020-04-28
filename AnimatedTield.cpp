@@ -1,5 +1,5 @@
 #include "AnimatedTield.h"
-extern double  speedAnimation;
+extern double speedAnimation;
 extern float mainTime;
 
 void AnimatedTield::animation()

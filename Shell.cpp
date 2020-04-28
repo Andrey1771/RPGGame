@@ -1,7 +1,10 @@
 #include "Shell.h"
-
+#include "Header.h"
 #include <iostream>
 #include "Hero.h"
+#include <cmath>
+
+
 extern float mainTime;
 extern double speedAnimation;
 Shell::Shell(sf::String ImageFileAttack, int maxFrameAttackX, int maxFrameAttackY, double speed, int damage, bool enemyKill) : Object(ImageFileAttack, maxFrameAttackX, maxFrameAttackY, speed)
@@ -17,59 +20,63 @@ Shell::~Shell()
 }
 
 /*
+X:
 1 - left
 2 - right
-3 - up
-4 - down
+Y:
+1 - up
+2 - down
 */
-void Shell::startShot(double x0, double y0, int directionAttack, double range, double speed)
+void Shell::startShot(double x0, double y0, int directionAttackX, int directionAttackY, double range, double speed, float angle)
 {
 	setPos(x0, y0);
-	this->directionAttack = directionAttack;
+	this->directionAttackX = directionAttackX;
+	this->directionAttackY = directionAttackY;
 	this->range = range;
 	this->speed = speed;
 	this->x0 = x0;
 	this->y0 = y0;
+	this->angle = angle;
 
-	animation(directionAttack);
+	//updateAnimation();
 }
 
 int Shell::update(sf::Event)
 {
-	
+
 	return updateAnimation();
 }
 
 
-void Shell::makeShell(sf::String ImageFileAttack, int maxFrameAttackX, int maxFrameAttackY, double speed, int damage, bool enemyKill, Hero& hero, int direction)
+void Shell::makeShell(sf::String ImageFileAttack, int maxFrameAttackX, int maxFrameAttackY, double speed, int damage, bool enemyKill, Hero& hero, int directionX, int directionY, float angle)
 {
 	shells.push_back(new Shell(ImageFileAttack, maxFrameAttackX, maxFrameAttackY, speed, damage, enemyKill));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
-	switch (direction)
+
+	float tan = std::tan(angle * PI / 180.0);
+	std::cout << "tanNew = " << tan << std::endl;
+	float speedX = sqrt(pow(speed, 2) / (1 + pow(tan, 2)));
+	float speedY = sqrt(pow(speed, 2) - pow(speedX, 2));
+
+	if (directionY == 1)// 1 - left
+		speedY = -speedY;
+
+	if (directionX == 1)// 1 - up
+		speedX = -speedX;
+
+	if (abs(speedX) > abs(speedY))
 	{
-	case 1:// left
+		if (speedX < 0)
+			shells.back()->startShot((hero.getSprite().getPosition().x - hero.getSizeXY().sizeX + distanceAttackingObject), hero.getSprite().getPosition().y, directionX, directionY, hero.getStats().attackRange, hero.getStats().attackSpeed, angle);
+		else
+			shells.back()->startShot((hero.getSprite().getPosition().x + hero.getSizeXY().sizeX - distanceAttackingObject), hero.getSprite().getPosition().y, directionX, directionY, hero.getStats().attackRange, hero.getStats().attackSpeed, angle);
+	}
+	else
 	{
-		shells.back()->startShot((hero.getSprite().getPosition().x - hero.getSizeXY().sizeX + distanceAttackingObject), hero.getSprite().getPosition().y, 1, hero.getStats().attackRange, hero.getStats().attackSpeed);
-		break;
+		if (speedY < 0)
+			shells.back()->startShot(hero.getSprite().getPosition().x, (hero.getSprite().getPosition().y - hero.getSizeXY().sizeY + distanceAttackingObject), directionX, directionY, hero.getStats().attackRange, hero.getStats().attackSpeed, angle);
+		else
+			shells.back()->startShot(hero.getSprite().getPosition().x, (hero.getSprite().getPosition().y + hero.getSizeXY().sizeY - distanceAttackingObject), directionX, directionY, hero.getStats().attackRange, hero.getStats().attackSpeed, angle);
 	}
-	case 2:// right
-	{
-		shells.back()->startShot((hero.getSprite().getPosition().x + hero.getSizeXY().sizeX - distanceAttackingObject), hero.getSprite().getPosition().y, 2, hero.getStats().attackRange, hero.getStats().attackSpeed);
-		break;
-	}
-	case 3:// up
-	{
-		shells.back()->startShot(hero.getSprite().getPosition().x, (hero.getSprite().getPosition().y - hero.getSizeXY().sizeY + distanceAttackingObject), 3, hero.getStats().attackRange, hero.getStats().attackSpeed);
-		break;
-	}
-	case 4:// down
-	{
-		shells.back()->startShot(hero.getSprite().getPosition().x, (hero.getSprite().getPosition().y + hero.getSizeXY().sizeY - distanceAttackingObject), 4, hero.getStats().attackRange, hero.getStats().attackSpeed);
-		break;
-	}
-	default:
-		break;
-	}
-	
 }
 
 void Shell::checkIntersectsObjectsUpdate(const sf::Event& event)
@@ -153,30 +160,36 @@ int Shell::updateAnimation()
 	if (way > range)
 		return -1;
 	// Да, проверка именно здесь, чтобы игрок увидел, последний показывающийся спрайт
-	switch (directionAttack)
+	float speedX, speedY;
+
+	float tan = std::tan(angle * PI / 180.0);
+	speedX = sqrt(pow(speed, 2) / (1 + pow(tan, 2)));
+	speedY = sqrt(pow(speed, 2) - pow(speedX, 2));
+
+
+	if (directionAttackY == 1)// 1 - up
 	{
-	case 1:// 1 - left
+		speedY = -speedY;
+	}
+
+	if (directionAttackX == 1)// 1 - left
 	{
-		animation(1);
-		return this->move(-(speed), 0);
+		speedX = -speedX;
 	}
-	case 2:// 2 - right
+
+	if (abs(speedX) > abs(speedY))
 	{
-		animation(2);
-		return this->move(speed, 0);
+		if (speedX < 0)// if (angle < 0)
+			animation(1);
+		else
+			animation(2);
 	}
-	case 3://3 - up
+	else
 	{
-		animation(3);
-		return this->move(0, -(speed));
+		if (speedY > 0)
+			animation(4);
+		else
+			animation(3);
 	}
-	case 4://4 - down
-	{
-		animation(4);
-		return this->move(0, speed);
-	}
-	default:
-		break;
-	}
-	return -100;
+	return this->move(speedX, speedY);
 }

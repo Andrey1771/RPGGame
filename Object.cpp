@@ -44,9 +44,9 @@ Object::~Object()
 		}
 	}
 
-	delete movementTexture.sprite;
-	delete movementTexture.texture;
-	delete movementTexture.image;
+	//delete movementTexture.sprite;
+	//delete movementTexture.texture;
+	//delete movementTexture.image;
 }
 sf::Sprite Object::getSprite()
 {

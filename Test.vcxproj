@@ -172,7 +172,12 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\Enemy\Dungeon\Character\devil.png" />
+    <Image Include="resource\Enemy\Dungeon\Character\ifrit.png" />
+    <Image Include="resource\Enemy\Dungeon\Character\imp.png" />
+    <Image Include="resource\Enemy\Dungeon\Character\slave.png" />
     <Image Include="resource\Enemy\Dungeon\Projectile\devilAttack.png" />
+    <Image Include="resource\Enemy\Dungeon\Projectile\ifritAttack.png" />
+    <Image Include="resource\Enemy\Dungeon\Projectile\slaveAttack.png" />
     <Image Include="resource\Items\Star.png" />
     <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\animatedCorner.png" />
     <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\animatedWall.png" />

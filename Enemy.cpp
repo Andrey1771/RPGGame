@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include <iostream>
-
+#include <cmath>
+#include "Header.h"
 extern float mainTime;
 //extern const int distanceAttackingObject;
 
@@ -34,13 +35,24 @@ bool Enemy::artificialIntelligence(std::string action)
 		}
 		if (styleAttack == "range attack")//возможно бессмысленно
 		{
-			if (abs(correlationX) >= abs(correlationY))// 7 - attack down 8 - attack left 9 - attack right 10 - attack up
+			if (abs(correlationX) >= abs(correlationY))// 7 - attack down 8 - attack left 9 - atck right 10 - attack up
 			{
 				if (differenceX > 0)
 				{
 					if (animation(9))//9 - attack right
 					{
-						Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false, *this, 2);
+						std::cout << "angle = " << atan(differenceY / differenceX) * 180 / PI << std::endl;
+						std::cout << "tanOld = " << differenceY / differenceX << std::endl;
+						if (differenceY >= 0)
+						{
+							Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false, *this, 0, 0, atan(abs(differenceY / differenceX)) * 180 / PI);// abs(atan(differenceY / differenceX)) * 180 / PI)
+							std::cout << "11" << std::endl;
+						}
+						else
+						{
+							Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false, *this, 0, 1, atan(abs(differenceY / differenceX)) * 180 / PI);// abs(atan(differenceY / differenceX)) * 180 / PI)
+							std::cout << "22" << std::endl;
+						}
 						resetAnimationAttack();
 					}
 				}
@@ -48,7 +60,16 @@ bool Enemy::artificialIntelligence(std::string action)
 				{
 					if (animation(8))//8 - attack left
 					{
-						Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false, *this, 1);
+						std::cout << "angle = " << abs(atan(abs(differenceY / differenceX)) * 180 / PI) << std::endl;
+						if (differenceY <= 0)
+						{
+							Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false, *this, 1, 1, atan(abs(differenceY / differenceX)) * 180 / PI);
+						}
+						else
+						{
+							
+							Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false, *this, 1, 0, atan(abs(differenceY / differenceX)) * 180 / PI);
+						}
 						resetAnimationAttack();
 					}
 				}
@@ -59,7 +80,16 @@ bool Enemy::artificialIntelligence(std::string action)
 				{
 					if (animation(7))//7 - attack down
 					{
-						Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false, *this, 4);
+						std::cout << "angle = " << abs(atan(abs(differenceY / differenceX)) * 180 / PI) << std::endl;
+						if (differenceX >= 0)
+						{
+							Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false, *this, 0, 0, abs(atan(abs(differenceY / differenceX)) * 180 / PI));
+						}
+						else
+						{
+
+							Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false, *this, 1, 0, abs(atan(abs(differenceY / differenceX)) * 180 / PI));
+						}
 						resetAnimationAttack();
 					}
 				}
@@ -67,7 +97,16 @@ bool Enemy::artificialIntelligence(std::string action)
 				{
 					if (animation(10))//10 - attack up
 					{
-						Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false, *this, 3);
+						std::cout << "angle = " << abs(atan(abs(differenceY / differenceX)) * 180 / PI) << std::endl;
+						if (differenceX >= 0)
+						{
+							Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false, *this, 0, 1, abs(atan(abs(differenceY / differenceX)) * 180 / PI));
+						}
+						else
+						{
+		
+							Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false, *this, 1, 1, abs(atan(abs(differenceY / differenceX)) * 180 / PI));
+						}
 						resetAnimationAttack();
 					}
 				}

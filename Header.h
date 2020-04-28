@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 //#include <SFML/>
+#define PI 3.14159265
 extern const int distanceAttackingObject;
 struct TextureData
 {

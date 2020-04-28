@@ -190,5 +190,20 @@
     <Image Include="resource\Enemy\Dungeon\Projectile\devilAttack.png">
       <Filter>Файлы ресурсов\Objects</Filter>
     </Image>
+    <Image Include="resource\Enemy\Dungeon\Character\imp.png">
+      <Filter>Файлы ресурсов\Heroes</Filter>
+    </Image>
+    <Image Include="resource\Enemy\Dungeon\Character\ifrit.png">
+      <Filter>Файлы ресурсов\Heroes</Filter>
+    </Image>
+    <Image Include="resource\Enemy\Dungeon\Character\slave.png">
+      <Filter>Файлы ресурсов\Heroes</Filter>
+    </Image>
+    <Image Include="resource\Enemy\Dungeon\Projectile\ifritAttack.png">
+      <Filter>Файлы ресурсов\Objects</Filter>
+    </Image>
+    <Image Include="resource\Enemy\Dungeon\Projectile\slaveAttack.png">
+      <Filter>Файлы ресурсов\Objects</Filter>
+    </Image>
   </ItemGroup>
 </Project>

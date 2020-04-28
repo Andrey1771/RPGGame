@@ -8,7 +8,7 @@
 #include "Item.h"
 #include "HealthBottle.h"
 
-#include <iostream>
+//#include <iostream>
 //void start(sf::RenderWindow& window, Hero& hero);
 int verticalHeight = 1200;
 int horizontalHeight = 800;
@@ -67,8 +67,7 @@ int updateIntersectsWalls(Player&);
 
 int main()
 {
-	sf::VideoMode vid = sf::VideoMode(verticalHeight, horizontalHeight);
-	sf::RenderWindow window(vid, "SFMLwork");
+	sf::RenderWindow window(sf::VideoMode(verticalHeight, horizontalHeight), "SFMLwork");
 	
 	window.setVerticalSyncEnabled(true); // запустите это один раз, после создания окна
 	Stats statsPlayer(speedPlayer, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed, 6, 5);
@@ -97,6 +96,7 @@ int main()
 			{
 				//window.create(vid, "SFMLwork", sf::Style::Fullscreen);
 				window.close();
+				return 0;
 			}
 		}
 
