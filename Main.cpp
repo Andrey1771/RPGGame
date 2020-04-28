@@ -85,7 +85,7 @@ int main()
 	Music music;
 	music.openFromFile("resource\\Audio\\1.ogg");//загружаем файл
 
-	Menu menu(window, music, const_cast<sf::View*> (camera.getView()));
+	Menu menu(window, music, &camera);
 
 	while (window.isOpen())
 	{

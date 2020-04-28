@@ -2,13 +2,16 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "Header.h"
+#include "Camera.h"
+#include <windows.h>
+#include <winuser.h>
 
 using namespace sf;
 constexpr auto numOfMenuButtons = 17;
 constexpr auto keyDelay = 1;
 constexpr auto numOfMonstres = 4;
 constexpr auto numOfButton = 3;
-constexpr auto numOfDisplay = 6;
+constexpr auto numOfDisplay = 7;
 
 class Menu
 {
@@ -25,6 +28,7 @@ class Menu
 		std::pair < String, std::pair<int, int>>("1280x1024",std::pair<int,int>(1280, 1024)),
 		std::pair < String, std::pair<int, int>>("1024x768",std::pair<int,int>(1024, 768)),
 		std::pair < String, std::pair<int, int>>("640x480",std::pair<int,int>(640, 480)),
+		std::pair < String, std::pair<int, int>>("",std::pair<int,int>(0, 0)),
 		std::pair < String, std::pair<int, int>>("",std::pair<int,int>(0, 0))
 	};
 
@@ -51,6 +55,8 @@ class Menu
 		std::pair < String, String>(L"Àâòîðû", L"mainMenu")
 	};
 
+	SoundBuffer buttonBuffer;
+	Sound buttonSound;
 	Music bestiaryMusic;
 	Font bestiaryFont;
 	std::pair<String, String> bestiaryArray[numOfMonstres] =
@@ -74,8 +80,8 @@ class Menu
 
 	int whatMonster;
 
-	Texture aboutTexture;
-	Sprite about;
+	Texture bestiaryBgTexture;
+	Sprite bestiaryBg;
 	Window window;  // Îêíî
 
 	Music mainMenuMusic; // Ìóçûêà Ãëàâíîãî Ìåíþ
@@ -99,7 +105,7 @@ class Menu
 	bool isVol = 1;  // Èíäèêàòîð ðàáîòû çâóêà (Äà/Íåò)
 	int volValue = 4;  // Òåêóùåå çíà÷åíèå ãðîìêîñòè (0 - 0%, 1 - 25%, 2 - 50%, 3 - 75%, 4 - 100%)
 	
-	sf::View* camera{ nullptr };
+	Camera* camera{ nullptr };
 	void closeMainMenu(Music& musicToStop);
 	void openBestiary(RenderWindow& window, Music& musicToStop);
 	void closeGame(RenderWindow& window);
@@ -115,16 +121,18 @@ class Menu
 	void frameCreator(RenderWindow& window);
 	void chooseVolume(Music& music, bool leftArrow);
 	void createKeys(int numOfKeys);
+	void usersResolution(RenderWindow& window);
+	void playSound(Sound& sound);
 
 public:
-	Menu(RenderWindow& window, Music& music, sf::View* camera);  // Êîíñòðóêòîð - ÂÀÆÍÎ: ÇÀÃÐÓÆÀÅÒ ÂÑÅ ÍÅÎÁÕÎÄÈÌÛÅ ÔÀÉËÛ Â ÎÏÅÐÀÒÈÂÊÓ
+	Menu(RenderWindow& window, Music& music, Camera* camera);  // Êîíñòðóêòîð - ÂÀÆÍÎ: ÇÀÃÐÓÆÀÅÒ ÂÑÅ ÍÅÎÁÕÎÄÈÌÛÅ ÔÀÉËÛ Â ÎÏÅÐÀÒÈÂÊÓ
 	~Menu();  // Äåñòðóêòîð
 	void mainMenu(RenderWindow& window, Music& musicToStop);  // Ãëàâíîå Ìåíþ
 	void pauseMenu(RenderWindow& window, Music& music);  // Ìåíþ Ïàóçû
 	void settingsMenu(RenderWindow& window, Music& music);  // Ìåíþ íàñòðîéêè
 	void bestiary(RenderWindow& window, Music& musicToStop);  // Áåñòèàðèé
 	void updateSize();
-	void setView(sf::View* camera) { this->camera = camera; };
+	void setCamera(Camera* camera) { this->camera = camera; };
 	bool isMenuOn() { return isMenu; };
 };
 
