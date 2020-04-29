@@ -41,17 +41,13 @@ bool Enemy::artificialIntelligence(std::string action)
 				{
 					if (animation(9))//9 - attack right
 					{
-						std::cout << "angle = " << atan(differenceY / differenceX) * 180 / PI << std::endl;
-						std::cout << "tanOld = " << differenceY / differenceX << std::endl;
 						if (differenceY >= 0)
 						{
 							Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false, *this, 0, 0, atan(abs(differenceY / differenceX)) * 180 / PI);// abs(atan(differenceY / differenceX)) * 180 / PI)
-							std::cout << "11" << std::endl;
 						}
 						else
 						{
 							Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false, *this, 0, 1, atan(abs(differenceY / differenceX)) * 180 / PI);// abs(atan(differenceY / differenceX)) * 180 / PI)
-							std::cout << "22" << std::endl;
 						}
 						resetAnimationAttack();
 					}
@@ -60,7 +56,6 @@ bool Enemy::artificialIntelligence(std::string action)
 				{
 					if (animation(8))//8 - attack left
 					{
-						std::cout << "angle = " << abs(atan(abs(differenceY / differenceX)) * 180 / PI) << std::endl;
 						if (differenceY <= 0)
 						{
 							Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false, *this, 1, 1, atan(abs(differenceY / differenceX)) * 180 / PI);
@@ -80,7 +75,6 @@ bool Enemy::artificialIntelligence(std::string action)
 				{
 					if (animation(7))//7 - attack down
 					{
-						std::cout << "angle = " << abs(atan(abs(differenceY / differenceX)) * 180 / PI) << std::endl;
 						if (differenceX >= 0)
 						{
 							Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false, *this, 0, 0, abs(atan(abs(differenceY / differenceX)) * 180 / PI));
@@ -97,7 +91,6 @@ bool Enemy::artificialIntelligence(std::string action)
 				{
 					if (animation(10))//10 - attack up
 					{
-						std::cout << "angle = " << abs(atan(abs(differenceY / differenceX)) * 180 / PI) << std::endl;
 						if (differenceX >= 0)
 						{
 							Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, false, *this, 0, 1, abs(atan(abs(differenceY / differenceX)) * 180 / PI));

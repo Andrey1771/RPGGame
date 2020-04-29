@@ -9,6 +9,7 @@ Hero::Hero(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int 
 	this->stats = stats;
 	speedOneFrame = stats.attackTime / movementTexture.maxFrameX;
 	this->setPos(x, y);
+	healthChange = true;
 	//resetAnimationAttack();
 }
 Hero::~Hero()
@@ -38,11 +39,19 @@ void Hero::resetAnimationAttack()
 
 void Hero::changeHealthPoints(int addHP)
 {
-	stats.healthPoints += addHP;
-	if (stats.healthPoints > stats.maxHealthPoints)
-		stats.healthPoints = stats.maxHealthPoints;
-	if (stats.healthPoints < 0)
-		stats.healthPoints = 0;
+	if (healthChange)
+	{
+		stats.healthPoints += addHP;
+		if (stats.healthPoints > stats.maxHealthPoints)
+			stats.healthPoints = stats.maxHealthPoints;
+		if (stats.healthPoints < 0)
+			stats.healthPoints = 0;
+	}
+}
+
+void Hero::setHealthChange(bool ok)
+{
+	this->healthChange = ok;
 }
 
 double Hero::getSpeed()

@@ -5,7 +5,7 @@
 #include "Header.h"
 extern float mainTime;
 extern double speedAnimation;
-
+extern float teleportDistance;
 Player::Player(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, const Stats& stats) : Hero(ImageFile, ImageFileAttack, maxFrameX, maxFrameY, x, y, stats)
 {
 	players.push_back(this);
@@ -195,8 +195,11 @@ int Player::update(sf::Event event)
 		this->~Player();
 		return temp;
 	}
-	if(temp != -2)
-		attackHero(event, moveHero(event));
+	if (temp != -2)
+	{
+		if(dodge(event) == 0)
+			attackHero(event, moveHero(event));
+	}
 	return temp;
 }
 
@@ -205,3 +208,55 @@ bool Player::animation(int direction)
 {
 	return Hero::animation(direction);
 }
+
+int Player::dodge(sf::Event event)
+{
+	if (event.type == sf::Event::EventType::KeyReleased && event.key.code == sf::Keyboard::Space)
+	{
+		if (clockDodge != nullptr)// на всякий случай
+		{
+			delete clockDodge;
+			clockDodge = nullptr;
+			teleportUsed = false;
+		}
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		if (clockDodge == nullptr)
+			clockDodge = new sf::Clock;
+
+		if ((clockDodge->getElapsedTime().asMilliseconds() > maxTimeDodge) || teleportUsed)
+		{
+			this->setHealthChange(true);
+			return 0;
+		}
+
+		this->setHealthChange(false);
+		animation(6);// Тут должна быть 12 анимация
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		{
+			this->move(-teleportDistance, 0);
+			teleportUsed = true;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		{
+			this->move(teleportDistance, 0);
+			teleportUsed = true;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		{
+			this->move(0, -teleportDistance);
+			teleportUsed = true;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		{
+			this->move(0, teleportDistance);
+			teleportUsed = true;
+		}
+		return 1;
+	}
+	this->setHealthChange(true);
+	return 0;
+}
+

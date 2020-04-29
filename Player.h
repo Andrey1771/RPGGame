@@ -2,6 +2,8 @@
 #include "Hero.h"
 #include <SFML/Graphics.hpp>
 
+extern float maxTimeDodgePlayer;
+
 class Player :
 	public Hero
 {
@@ -18,7 +20,9 @@ private:
 	void attackHero(sf::Event event, bool ok);
 	// Унаследовано через Hero
 	virtual bool animation(int direction) override;
-
-	
+	int dodge(sf::Event event);
+	float maxTimeDodge{ maxTimeDodgePlayer };
+	sf::Clock* clockDodge{ nullptr };
+	bool teleportUsed{ false };
 };
 

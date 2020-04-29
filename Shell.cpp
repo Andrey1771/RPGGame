@@ -53,7 +53,6 @@ void Shell::makeShell(sf::String ImageFileAttack, int maxFrameAttackX, int maxFr
 	shells.push_back(new Shell(ImageFileAttack, maxFrameAttackX, maxFrameAttackY, speed, damage, enemyKill));//Player player(*camera, "resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1, 1, 500, 500, speedPlayer, speedPlayerAttack);
 
 	float tan = std::tan(angle * PI / 180.0);
-	std::cout << "tanNew = " << tan << std::endl;
 	float speedX = sqrt(pow(speed, 2) / (1 + pow(tan, 2)));
 	float speedY = sqrt(pow(speed, 2) - pow(speedX, 2));
 

@@ -17,7 +17,7 @@ private:
 	int numberTield{ 1 };
 	sf::Clock* clock{ nullptr };
 	double speedOneFrame;
-	
+	bool healthChange;
 	virtual int actionCollisionObjects(Object* obj) override;
 
 protected:
@@ -36,5 +36,6 @@ public:
 	const int getHealthPoints() { return stats.healthPoints; };
 	const int getMaxHealthPoints() { return stats.maxHealthPoints; };
 	void changeHealthPoints(int addHP);
+	void setHealthChange(bool ok);
 };
 

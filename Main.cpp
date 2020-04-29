@@ -18,11 +18,13 @@ double speedPlayer = 0.00033;//
 double speedPlayerAttack = 1.5;
 double attackPlayerRange = 400;
 double attackPlayerSpeed = 3;
-double repulsiveForce = 1;
+double repulsiveForce = 1;// unused
 int tieldsWidth = 64;
 int tieldsHeight = 64;
 int levelHeight = 25;
 const int distanceAttackingObject = 10;
+float maxTimeDodgePlayer = 1000; // 1000 милисекунд = 1 секунде
+float teleportDistance = 200;
 
 sf::String level[] = {// Перенести на файл
 	"0000000000000000000000000000000000000000",
@@ -190,7 +192,8 @@ void updateIntersects(Player& player)
 			{
 				//delete enemies[i];
 				//enemies.erase(enemies.begin() + i);
-				enemies[i]->setHealthPoints(enemies[i]->getHealthPoints() - Shell::shells[j]->getDamage());
+				enemies[i]->changeHealthPoints(-Shell::shells[j]->getDamage());
+				//enemies[i]->setHealthPoints(enemies[i]->getHealthPoints() - Shell::shells[j]->getDamage());
 				break;
 			}
 		}
@@ -206,7 +209,8 @@ void updateIntersects(Player& player)
 		{
 			//delete enemies[i];
 			//enemies.erase(enemies.begin() + i);
-			player.setHealthPoints(player.getHealthPoints() - Shell::shells[j]->getDamage());
+			player.changeHealthPoints(-Shell::shells[j]->getDamage());
+			//player.setHealthPoints(player.getHealthPoints() - Shell::shells[j]->getDamage());
 			delete Shell::shells[j];
 			Shell::shells.erase(Shell::shells.begin() + j);
 

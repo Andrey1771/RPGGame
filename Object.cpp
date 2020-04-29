@@ -195,6 +195,78 @@ int Object::move(double x, double y)
 		return actionCollisionTields();
 }
 
+int Object::teleport(double x, double y)
+{
+	int iObjects[4], jObjects[4];// Ввожу вручную, не вижу смысла что-то усложнять из-за чисел)
+
+	iObjects[0] = (movementTexture.sprite->getPosition().x + x) / map.getTieldWidth();
+	jObjects[0] = (movementTexture.sprite->getPosition().y + y) / map.getTieldHeight();
+
+	iObjects[1] = iObjects[0] + 1;
+	jObjects[1] = jObjects[0];
+
+	iObjects[2] = iObjects[0];
+	jObjects[2] = jObjects[0] + 1;
+
+	iObjects[3] = iObjects[0] + 1;
+	jObjects[3] = jObjects[0] + 1;
+
+	for (int i = 0; i < 4; ++i)
+	{
+		if (iObjects[i] < 0)
+		{
+			iObjects[i] = 0;
+		}
+		if (jObjects[i] < 0)
+		{
+			jObjects[i] = 0;
+		}
+		if (jObjects[i] >= map.getHeightMap())
+		{
+			jObjects[i] = map.getHeightMap() - 1;
+		}
+		if (iObjects[i] >= map.getWidthMap())
+		{
+			iObjects[i] = map.getWidthMap() - 1;
+		}
+	}
+	
+	double newX, newY;
+	double rangeX, rangeY;
+	sf::FloatRect rectNew(movementTexture.sprite->getPosition().x, movementTexture.sprite->getPosition().y, movementTexture.sprite->getLocalBounds().width, movementTexture.sprite->getLocalBounds().height);
+	sf::FloatRect rect2;
+	int number;
+	for (int i = 0; i < 4; ++i)
+	{
+		number = iObjects[i] + (map.getWidthMap() * (jObjects[i]));
+		rect2.left = map.magicTieldsVector.at(number).first.getPosition().x;
+		rect2.top = map.magicTieldsVector.at(number).first.getPosition().y;
+		rect2.width = map.magicTieldsVector.at(number).first.getLocalBounds().width;
+		rect2.height = map.magicTieldsVector.at(number).first.getLocalBounds().height;
+		rangeX = abs(abs(rect2.left - rectNew.left) - rect2.width);
+		rangeY = abs(abs(rect2.top - rectNew.top) - rect2.height);
+		// Скрытая ошибка с размерами, но тк размеры игрока и тайлов одинаковые, она не проявляется
+		//newX = std::min(rangeX, abs(speedXY.x)) * (speedXY.x / abs(speedXY.x));//rect3.top
+		//newY = std::min(rangeY, abs(speedXY.y)) * (speedXY.y / abs(speedXY.y));
+
+		//if (rangeX <= minDistance)
+		//	newX = 0;
+		//if (rangeY <= minDistance)
+		//	newY = 0;
+
+		//if (speedXY.x == 0)
+		//	newX = 0;
+		//if (speedXY.y == 0)
+		//	newY = 0;
+
+		//speedXY.x = newX;
+		//speedXY.y = newY;
+	}
+	
+
+	return 0;
+}
+
 bool Object::checkManyTieldsIntersection(SpeedXY& speedXY, int i, int j, int direction)
 {
 	sf::FloatRect rect(movementTexture.sprite->getPosition().x + speedXY.x, movementTexture.sprite->getPosition().y + speedXY.y, movementTexture.sprite->getLocalBounds().width, movementTexture.sprite->getLocalBounds().height);
