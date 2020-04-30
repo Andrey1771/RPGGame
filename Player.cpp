@@ -236,22 +236,22 @@ int Player::dodge(sf::Event event)
 		animation(6);// Тут должна быть 12 анимация
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			this->move(-teleportDistance, 0);
+			this->teleport(-teleportDistance, 0);
 			teleportUsed = true;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
-			this->move(teleportDistance, 0);
+			this->teleport(teleportDistance, 0);
 			teleportUsed = true;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		{
-			this->move(0, -teleportDistance);
+			this->teleport(0, -teleportDistance);
 			teleportUsed = true;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 		{
-			this->move(0, teleportDistance);
+			this->teleport(0, teleportDistance);
 			teleportUsed = true;
 		}
 		return 1;

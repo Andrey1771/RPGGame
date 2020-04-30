@@ -41,5 +41,8 @@ private:
 	
 	bool checkObjectsCollision(SpeedXY& speedXY);
 	void changeIntersection(SpeedXY& speedXY, sf::FloatRect rect2, int directionFlag/*0 - не блокирует координаты, 1 - блокирует X, 2 - блокирует Y*/);
+
+	bool checkTeleportIntersects(double& x, double& y);
+	void checkAndChangeIJ(int& i, int& j);
 };
 

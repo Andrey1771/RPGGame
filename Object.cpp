@@ -2,11 +2,30 @@
 #include "Map.h"
 #include <iostream>
 #include "Item.h"
+
+#include "Header.h"
 extern Map map;
 extern float mainTime;
 extern double speedAnimation;
 
 const int minDistance = 0;
+
+extern std::vector<sf::Sprite*> debugIntersects;
+void intersetsDebug(const sf::FloatRect& rect, int k)
+{
+	TextureData movementTexture23;
+	movementTexture23.image = new sf::Image;
+	movementTexture23.texture = new sf::Texture;
+	movementTexture23.sprite = new sf::Sprite;
+
+	movementTexture23.image->loadFromFile("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png");//sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, int maxFrameAttackX, int maxFrameAttackY, double x, double y, double speed, double attackTime)
+	movementTexture23.texture->loadFromImage(*movementTexture23.image);
+	movementTexture23.sprite->setTexture(*movementTexture23.texture);
+
+	movementTexture23.sprite->setTextureRect(sf::IntRect(k * 64, 0, 64, 64));
+	movementTexture23.sprite->setPosition(rect.left, rect.top);
+	debugIntersects.push_back(movementTexture23.sprite);
+}
 
 Object::Object(const sf::String& ImageFile, int maxFrameX, int maxFrameY, double speed)
 {
@@ -81,26 +100,11 @@ int Object::move(double x, double y)
 	int i = iObject;
 	int j = jObject;
 
-	if (i < 0)
-	{
-		i = 0;
-	}
-	if (j < 0)
-	{
-		j = 0;
-	}
-	if (j >= map.getHeightMap())
-	{
-		j = map.getHeightMap() - 1;
-	}
-	if (i >= map.getWidthMap())
-	{
-		i = map.getWidthMap() - 1;
-	}
+	checkAndChangeIJ(i, j);
 
 	int number; //+ ((map.magicTieldsVector.size() - 1) * (j - 1));
 	SpeedXY speedXY(x, y);
-	
+
 	if (x == 0 || y == 0)
 	{
 		number = i + (map.getWidthMap() * j); //+ ((map.magicTieldsVector.size() - 1) * (j - 1));
@@ -150,7 +154,7 @@ int Object::move(double x, double y)
 			if (y > 0)
 				number = i + (map.getWidthMap() * (j + 1));
 			if (y < 0)
-				number = i+ (map.getWidthMap() * (j));
+				number = i + (map.getWidthMap() * (j));
 
 			rect2.left = map.magicTieldsVector.at(number).first.getPosition().x;
 			rect2.top = map.magicTieldsVector.at(number).first.getPosition().y;
@@ -197,74 +201,376 @@ int Object::move(double x, double y)
 
 int Object::teleport(double x, double y)
 {
-	int iObjects[4], jObjects[4];// Ввожу вручную, не вижу смысла что-то усложнять из-за чисел)
+	if(!checkTeleportIntersects(x, y))
+		this->setPos(this->getPosition().x + x, this->getPosition().y + y);
+	return 0;
+}
 
-	iObjects[0] = (movementTexture.sprite->getPosition().x + x) / map.getTieldWidth();
-	jObjects[0] = (movementTexture.sprite->getPosition().y + y) / map.getTieldHeight();
-
-	iObjects[1] = iObjects[0] + 1;
-	jObjects[1] = jObjects[0];
-
-	iObjects[2] = iObjects[0];
-	jObjects[2] = jObjects[0] + 1;
-
-	iObjects[3] = iObjects[0] + 1;
-	jObjects[3] = jObjects[0] + 1;
-
-	for (int i = 0; i < 4; ++i)
-	{
-		if (iObjects[i] < 0)
-		{
-			iObjects[i] = 0;
-		}
-		if (jObjects[i] < 0)
-		{
-			jObjects[i] = 0;
-		}
-		if (jObjects[i] >= map.getHeightMap())
-		{
-			jObjects[i] = map.getHeightMap() - 1;
-		}
-		if (iObjects[i] >= map.getWidthMap())
-		{
-			iObjects[i] = map.getWidthMap() - 1;
-		}
-	}
-	
-	double newX, newY;
-	double rangeX, rangeY;
-	sf::FloatRect rectNew(movementTexture.sprite->getPosition().x, movementTexture.sprite->getPosition().y, movementTexture.sprite->getLocalBounds().width, movementTexture.sprite->getLocalBounds().height);
+bool Object::checkTeleportIntersects(double& x, double& y)
+{
+	sf::FloatRect rect(movementTexture.sprite->getPosition().x + x, movementTexture.sprite->getPosition().y + y, movementTexture.sprite->getLocalBounds().width, movementTexture.sprite->getLocalBounds().height);
 	sf::FloatRect rect2;
-	int number;
-	for (int i = 0; i < 4; ++i)
+	int iObject = (movementTexture.sprite->getPosition().x + x) / map.getTieldWidth();
+	int jObject = (movementTexture.sprite->getPosition().y + y) / map.getTieldHeight();
+
+	int number, i, j;
+	bool intersects = false;
+	float rangeX, rangeY;
+
+	float tempX = movementTexture.sprite->getPosition().x + x, tempY = movementTexture.sprite->getPosition().y + y;
+	i = tempX; j = tempY;
+	if (iObject < 0)
 	{
-		number = iObjects[i] + (map.getWidthMap() * (jObjects[i]));
+		x -= tempX;
+	}
+	if (jObject < 0)
+	{
+		y -= tempY;
+	}
+	if (jObject >= map.getHeightMap())
+	{
+		y -= abs(tempY - (map.getHeightMap() - 1) * map.getTieldHeight()) /* map.getTieldHeight()*/;
+	}
+	if (iObject >= map.getWidthMap())
+	{
+		x -= abs(tempX - (map.getWidthMap() - 1) * map.getTieldWidth());
+	}
+
+repeat:
+	intersects = false;
+	rect.left = movementTexture.sprite->getPosition().x + x;
+	rect.top = movementTexture.sprite->getPosition().y + y;
+	iObject = (movementTexture.sprite->getPosition().x + x) / map.getTieldWidth();
+	jObject = (movementTexture.sprite->getPosition().y + y) / map.getTieldHeight();
+	if (x > 0)
+	{
+		i = iObject + 1;
+		j = jObject;
+		checkAndChangeIJ(i, j);
+		number = i + (map.getWidthMap() * (j));
 		rect2.left = map.magicTieldsVector.at(number).first.getPosition().x;
 		rect2.top = map.magicTieldsVector.at(number).first.getPosition().y;
 		rect2.width = map.magicTieldsVector.at(number).first.getLocalBounds().width;
 		rect2.height = map.magicTieldsVector.at(number).first.getLocalBounds().height;
-		rangeX = abs(abs(rect2.left - rectNew.left) - rect2.width);
-		rangeY = abs(abs(rect2.top - rectNew.top) - rect2.height);
-		// Скрытая ошибка с размерами, но тк размеры игрока и тайлов одинаковые, она не проявляется
-		//newX = std::min(rangeX, abs(speedXY.x)) * (speedXY.x / abs(speedXY.x));//rect3.top
-		//newY = std::min(rangeY, abs(speedXY.y)) * (speedXY.y / abs(speedXY.y));
 
-		//if (rangeX <= minDistance)
-		//	newX = 0;
-		//if (rangeY <= minDistance)
-		//	newY = 0;
+		if (rect.intersects(rect2) && (map.magicTieldsVector.at(number).second >> 1 == 1))
+		{
+			intersects = true;
+			rangeX = abs(abs(rect2.left - rect.left) - rect2.width);
+			x -= rangeX;
+			goto repeat;
+			//rangeY = abs(abs(rect2.top - rect.top) - rect2.height);
 
-		//if (speedXY.x == 0)
-		//	newX = 0;
-		//if (speedXY.y == 0)
-		//	newY = 0;
+		}
 
-		//speedXY.x = newX;
-		//speedXY.y = newY;
+		i = iObject + 1;
+		j = jObject + 1;
+		checkAndChangeIJ(i, j);
+
+		number = i + (map.getWidthMap() * (j));
+		rect2.left = map.magicTieldsVector.at(number).first.getPosition().x;
+		rect2.top = map.magicTieldsVector.at(number).first.getPosition().y;
+		rect2.width = map.magicTieldsVector.at(number).first.getLocalBounds().width;
+		rect2.height = map.magicTieldsVector.at(number).first.getLocalBounds().height;
+
+		if (rect.intersects(rect2) && (map.magicTieldsVector.at(number).second >> 1 == 1))
+		{
+			intersects = true;
+			rangeX = abs(abs(rect2.left - rect.left) - rect2.width);
+			x -= rangeX;
+			goto repeat;
+			//rangeY = abs(abs(rect2.top - rect.top) - rect2.height);
+		}
+
+		i = iObject;
+		j = jObject;
+		checkAndChangeIJ(i, j);
+
+		number = i + (map.getWidthMap() * (j));
+		rect2.left = map.magicTieldsVector.at(number).first.getPosition().x;
+		rect2.top = map.magicTieldsVector.at(number).first.getPosition().y;
+		rect2.width = map.magicTieldsVector.at(number).first.getLocalBounds().width;
+		rect2.height = map.magicTieldsVector.at(number).first.getLocalBounds().height;
+
+		if (rect.intersects(rect2) && (map.magicTieldsVector.at(number).second >> 1 == 1))
+		{
+			intersects = true;
+			rangeX = abs(abs(rect2.left - rect.left) - rect2.width);
+			x -= rangeX;
+			goto repeat;
+			//rangeY = abs(abs(rect2.top - rect.top) - rect2.height);
+		}
+
+		i = iObject;
+		j = jObject + 1;
+		checkAndChangeIJ(i, j);
+
+		number = i + (map.getWidthMap() * (j));
+		rect2.left = map.magicTieldsVector.at(number).first.getPosition().x;
+		rect2.top = map.magicTieldsVector.at(number).first.getPosition().y;
+		rect2.width = map.magicTieldsVector.at(number).first.getLocalBounds().width;
+		rect2.height = map.magicTieldsVector.at(number).first.getLocalBounds().height;
+
+		if (rect.intersects(rect2) && (map.magicTieldsVector.at(number).second >> 1 == 1))
+		{
+			intersects = true;
+			rangeX = abs(abs(rect2.left - rect.left) - rect2.width);
+			x -= rangeX;
+			goto repeat;
+			//rangeY = abs(abs(rect2.top - rect.top) - rect2.height);
+		}
+
 	}
-	
+	if (x < 0)
+	{
+		i = iObject;
+		j = jObject;
+		checkAndChangeIJ(i, j);
 
-	return 0;
+		number = i + (map.getWidthMap() * (j));
+		rect2.left = map.magicTieldsVector.at(number).first.getPosition().x;
+		rect2.top = map.magicTieldsVector.at(number).first.getPosition().y;
+		rect2.width = map.magicTieldsVector.at(number).first.getLocalBounds().width;
+		rect2.height = map.magicTieldsVector.at(number).first.getLocalBounds().height;
+
+		if (rect.intersects(rect2) && (map.magicTieldsVector.at(number).second >> 1 == 1))
+		{
+			intersects = true;
+			rangeX = abs(abs(rect2.left - rect.left) - rect2.width);
+			x += rangeX;
+			goto repeat;
+			//rangeY = abs(abs(rect2.top - rect.top) - rect2.height);
+		}
+
+		i = iObject;
+		j = jObject + 1;
+		checkAndChangeIJ(i, j);
+
+		number = i + (map.getWidthMap() * (j));
+		rect2.left = map.magicTieldsVector.at(number).first.getPosition().x;
+		rect2.top = map.magicTieldsVector.at(number).first.getPosition().y;
+		rect2.width = map.magicTieldsVector.at(number).first.getLocalBounds().width;
+		rect2.height = map.magicTieldsVector.at(number).first.getLocalBounds().height;
+
+		if (rect.intersects(rect2) && (map.magicTieldsVector.at(number).second >> 1 == 1))
+		{
+			intersects = true;
+			rangeX = abs(abs(rect2.left - rect.left) - rect2.width);
+			x += rangeX;
+			goto repeat;
+		}
+
+		i = iObject + 1;
+		j = jObject;
+		checkAndChangeIJ(i, j);
+
+		number = i + (map.getWidthMap() * (j));
+		rect2.left = map.magicTieldsVector.at(number).first.getPosition().x;
+		rect2.top = map.magicTieldsVector.at(number).first.getPosition().y;
+		rect2.width = map.magicTieldsVector.at(number).first.getLocalBounds().width;
+		rect2.height = map.magicTieldsVector.at(number).first.getLocalBounds().height;
+
+		if (rect.intersects(rect2) && (map.magicTieldsVector.at(number).second >> 1 == 1))
+		{
+			intersects = true;
+			rangeX = abs(abs(rect2.left - rect.left) - rect2.width);
+			x += rangeX;
+			goto repeat;
+		}
+
+
+		i = iObject + 1;
+		j = jObject + 1;
+		checkAndChangeIJ(i, j);
+
+		number = i + (map.getWidthMap() * (j));
+		rect2.left = map.magicTieldsVector.at(number).first.getPosition().x;
+		rect2.top = map.magicTieldsVector.at(number).first.getPosition().y;
+		rect2.width = map.magicTieldsVector.at(number).first.getLocalBounds().width;
+		rect2.height = map.magicTieldsVector.at(number).first.getLocalBounds().height;
+
+		if (rect.intersects(rect2) && (map.magicTieldsVector.at(number).second >> 1 == 1))
+		{
+			intersects = true;
+			rangeX = abs(abs(rect2.left - rect.left) - rect2.width);
+			x += rangeX;
+			goto repeat;
+		}
+	}
+	if (y > 0)
+	{
+		i = iObject;
+		j = jObject + 1;
+		checkAndChangeIJ(i, j);
+
+		number = i + (map.getWidthMap() * (j));
+		rect2.left = map.magicTieldsVector.at(number).first.getPosition().x;
+		rect2.top = map.magicTieldsVector.at(number).first.getPosition().y;
+		rect2.width = map.magicTieldsVector.at(number).first.getLocalBounds().width;
+		rect2.height = map.magicTieldsVector.at(number).first.getLocalBounds().height;
+
+		if (rect.intersects(rect2) && (map.magicTieldsVector.at(number).second >> 1 == 1))
+		{
+			intersects = true;
+			rangeY = abs(abs(rect2.top - rect.top) - rect2.height);
+			y -= rangeY;
+			goto repeat;
+		}
+
+
+		i = iObject + 1;
+		j = jObject + 1;
+		checkAndChangeIJ(i, j);
+
+		number = i + (map.getWidthMap() * (j));
+		rect2.left = map.magicTieldsVector.at(number).first.getPosition().x;
+		rect2.top = map.magicTieldsVector.at(number).first.getPosition().y;
+		rect2.width = map.magicTieldsVector.at(number).first.getLocalBounds().width;
+		rect2.height = map.magicTieldsVector.at(number).first.getLocalBounds().height;
+
+		if (rect.intersects(rect2) && (map.magicTieldsVector.at(number).second >> 1 == 1))
+		{
+			intersects = true;
+			rangeY = abs(abs(rect2.top - rect.top) - rect2.height);
+			y -= rangeY;
+			goto repeat;
+		}
+
+
+		i = iObject;
+		j = jObject;
+		checkAndChangeIJ(i, j);
+
+		number = i + (map.getWidthMap() * (j));
+		rect2.left = map.magicTieldsVector.at(number).first.getPosition().x;
+		rect2.top = map.magicTieldsVector.at(number).first.getPosition().y;
+		rect2.width = map.magicTieldsVector.at(number).first.getLocalBounds().width;
+		rect2.height = map.magicTieldsVector.at(number).first.getLocalBounds().height;
+
+		if (rect.intersects(rect2) && (map.magicTieldsVector.at(number).second >> 1 == 1))
+		{
+			intersects = true;
+			rangeY = abs(abs(rect2.top - rect.top) - rect2.height);
+			y -= rangeY;
+			goto repeat;
+		}
+
+
+		i = iObject + 1;
+		j = jObject;
+		checkAndChangeIJ(i, j);
+
+		number = i + (map.getWidthMap() * (j));
+		rect2.left = map.magicTieldsVector.at(number).first.getPosition().x;
+		rect2.top = map.magicTieldsVector.at(number).first.getPosition().y;
+		rect2.width = map.magicTieldsVector.at(number).first.getLocalBounds().width;
+		rect2.height = map.magicTieldsVector.at(number).first.getLocalBounds().height;
+
+		if (rect.intersects(rect2) && (map.magicTieldsVector.at(number).second >> 1 == 1))
+		{
+			intersects = true;
+			rangeY = abs(abs(rect2.top - rect.top) - rect2.height);
+			y -= rangeY;
+			goto repeat;
+		}
+	}
+	if (y < 0)
+	{
+
+		i = iObject;
+		j = jObject;
+		checkAndChangeIJ(i, j);
+
+		number = i + (map.getWidthMap() * (j));
+		rect2.left = map.magicTieldsVector.at(number).first.getPosition().x;
+		rect2.top = map.magicTieldsVector.at(number).first.getPosition().y;
+		rect2.width = map.magicTieldsVector.at(number).first.getLocalBounds().width;
+		rect2.height = map.magicTieldsVector.at(number).first.getLocalBounds().height;
+
+		if (rect.intersects(rect2) && (map.magicTieldsVector.at(number).second >> 1 == 1))
+		{
+			intersects = true;
+			rangeY = abs(abs(rect2.top - rect.top) - rect2.height);
+			y += rangeY;
+			goto repeat;
+		}
+
+		i = iObject + 1;
+		j = jObject;
+		checkAndChangeIJ(i, j);
+
+		number = i + (map.getWidthMap() * (j));
+		rect2.left = map.magicTieldsVector.at(number).first.getPosition().x;
+		rect2.top = map.magicTieldsVector.at(number).first.getPosition().y;
+		rect2.width = map.magicTieldsVector.at(number).first.getLocalBounds().width;
+		rect2.height = map.magicTieldsVector.at(number).first.getLocalBounds().height;
+
+		if (rect.intersects(rect2) && (map.magicTieldsVector.at(number).second >> 1 == 1))
+		{
+			intersects = true;
+			rangeY = abs(abs(rect2.top - rect.top) - rect2.height);
+			y += rangeY;
+			goto repeat;
+		}
+
+		i = iObject;
+		j = jObject + 1;
+		checkAndChangeIJ(i, j);
+
+		number = i + (map.getWidthMap() * (j));
+		rect2.left = map.magicTieldsVector.at(number).first.getPosition().x;
+		rect2.top = map.magicTieldsVector.at(number).first.getPosition().y;
+		rect2.width = map.magicTieldsVector.at(number).first.getLocalBounds().width;
+		rect2.height = map.magicTieldsVector.at(number).first.getLocalBounds().height;
+
+		if (rect.intersects(rect2) && (map.magicTieldsVector.at(number).second >> 1 == 1))
+		{
+			intersects = true;
+			rangeY = abs(abs(rect2.top - rect.top) - rect2.height);
+			y += rangeY;
+			goto repeat;
+		}
+
+		i = iObject + 1;
+		j = jObject + 1;
+		checkAndChangeIJ(i, j);
+
+		number = i + (map.getWidthMap() * (j));
+		rect2.left = map.magicTieldsVector.at(number).first.getPosition().x;
+		rect2.top = map.magicTieldsVector.at(number).first.getPosition().y;
+		rect2.width = map.magicTieldsVector.at(number).first.getLocalBounds().width;
+		rect2.height = map.magicTieldsVector.at(number).first.getLocalBounds().height;
+
+		if (rect.intersects(rect2) && (map.magicTieldsVector.at(number).second >> 1 == 1))
+		{
+			intersects = true;
+			rangeY = abs(abs(rect2.top - rect.top) - rect2.height);
+			y += rangeY;
+			goto repeat;
+		}
+	}
+	return intersects;
+
+}
+
+void Object::checkAndChangeIJ(int& i, int& j)
+{
+	if (i < 0)
+	{
+		i = 0;
+	}
+	if (j < 0)
+	{
+		j = 0;
+	}
+	if (j >= map.getHeightMap())
+	{
+		j = map.getHeightMap() - 1;
+	}
+	if (i >= map.getWidthMap())
+	{
+		i = map.getWidthMap() - 1;
+	}
 }
 
 bool Object::checkManyTieldsIntersection(SpeedXY& speedXY, int i, int j, int direction)

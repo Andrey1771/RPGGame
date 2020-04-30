@@ -45,11 +45,11 @@ sf::String level[] = {// Перенести на файл
 	"0             0                        0",
 	"0                                      0",
 	"0                                      0",
-	"0                                      0",
-	"0                                      0",
-	"0                                      0",
-	"0                                      0",
-	"0                                      0",
+	"0                       00000          0",
+	"0                       00000          0",
+	"0                       00000          0",
+	"0                       00000          0",
+	"0                       00000          0",
 	"0                                      0",
 	"0000000000000000000000000000000000000000",
 };
@@ -61,11 +61,13 @@ std::vector<Player*> Player::players;
 std::vector<Item*> Item::items;
 Map map("resource\\Map_Tileds\\Dungeon\\Hell.png", 25, 40, 9);//C:\Users\Andrey\Desktop\RPGGame\resource\Map_Tileds\Dungeon
 
+std::vector<sf::Sprite*> debugIntersects;
 //void updateShells(const sf::Event& event, sf::RenderWindow& window);
 void updateEnemies(const sf::Event& event, sf::RenderWindow& window);
 void updateIntersects(Player& player);
 void funRandomizer(int countEnemies, Player& player);
 int updateIntersectsWalls(Player&);
+
 
 int main()
 {
@@ -77,7 +79,7 @@ int main()
 	Player player("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 500, 500, statsPlayer);
 	Camera camera(&player, new sf::View, tieldsWidth, tieldsHeight, verticalHeight, horizontalHeight);//dynamic_cast<Hero*>(&player)
 	camera.setMapXYAndSize(0, 0, level[0].getSize() * tieldsWidth, levelHeight * tieldsHeight);
-	funRandomizer(1, player);
+	//funRandomizer(1, player);
 	HealthBottle hPBottle(250, 250, 2);
 	map.setMap(level, 25, 40);
 	map.setPosBG(verticalHeight, horizontalHeight);
@@ -131,6 +133,10 @@ int main()
 		Shell::checkIntersectsObjectsUpdate(event);
 		for (Shell* var : Shell::shells)
 			window.draw(var->getSprite());
+
+		for (sf::Sprite* var : debugIntersects)
+			window.draw(*var);
+
 		//updateIntersectsHeroes(player);
 		window.display();
 	}
@@ -236,7 +242,6 @@ void funRandomizer(int countEnemies, Player& player)
 
 	}
 }
-
 
 /*void start(sf::RenderWindow &window, Hero &hero)
 {
