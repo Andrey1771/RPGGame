@@ -7,14 +7,27 @@
 #include <winuser.h>
 
 using namespace sf;
-constexpr auto numOfMenuButtons = 17;
+constexpr auto numOfMenuButtons = 20;
 constexpr auto keyDelay = 1;
 constexpr auto numOfMonstres = 4;
 constexpr auto numOfButton = 3;
 constexpr auto numOfDisplay = 7;
+constexpr auto numOfAuthors = 4;
+constexpr auto numOfAuthorsTexture = 18;
 
 class Menu
 {
+	RectangleShape authorsBg;
+	String authorsArray[numOfAuthors] = 
+	{
+		L"Благодарим вас за проявленный интерес к нашей игре", 
+		L"Привет", 
+		L"Андрей <Shadow> Хохлов\nПавел <pavelgrafit> Соколов", 
+		L"Особая благодарность Давиду Феслияну" 
+	};
+	std::vector<Text> authorsVector;
+	Music authorsMusic;
+
 	double cameraOffsetX, cameraOffsetY;
 	double kX, kY;
 	double resizeMistakeX, resizeMistakeY;
@@ -52,7 +65,10 @@ class Menu
 		std::pair < String, String>(L"Разрешение экрана:", L"settingsMenu"),
 		std::pair < String, String>(L"Продолжить", L"mainMenu"),
 		std::pair < String, String>(L"Настройки", L"mainMenu"),
-		std::pair < String, String>(L"Авторы", L"mainMenu")
+		std::pair < String, String>(L"Авторы", L"mainMenu"),
+		std::pair < String, String>(L"Загрузка", L"mainMenu"),
+		std::pair < String, String>(L"Сохранение", L"pauseMenu"),
+		std::pair < String, String>(L"Загрузка", L"pauseMenu")
 	};
 
 	SoundBuffer buttonBuffer;
@@ -77,6 +93,9 @@ class Menu
 
 	std::vector<Texture> bestiaryTextureVec;
 	std::vector<Sprite> bestiarySpriteVec;
+
+	std::vector<Texture> authorsTextureVec;
+	std::vector<Sprite> authorsSpriteVec;
 
 	int whatMonster;
 
@@ -123,6 +142,7 @@ class Menu
 	void createKeys(int numOfKeys);
 	void usersResolution(RenderWindow& window);
 	void playSound(Sound& sound);
+	void authors(RenderWindow& window, Music& musicToStop);
 
 public:
 	Menu(RenderWindow& window, Music& music, Camera* camera);  // Конструктор - ВАЖНО: ЗАГРУЖАЕТ ВСЕ НЕОБХОДИМЫЕ ФАЙЛЫ В ОПЕРАТИВКУ

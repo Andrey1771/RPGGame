@@ -17,6 +17,13 @@ Menu::Menu(sf::RenderWindow& window, Music& music, Camera* camera)
 	whatDisplay = 5;
 	isDisp = 0;
 
+	for (size_t i = 0; i < numOfAuthors; i++)
+	{
+		authorsVector.push_back(Text());
+		authorsVector.back().setString(authorsArray[i]);
+		authorsVector.back().setFont(font);
+	}
+
 	font.loadFromFile("resource\\Fonts\\mainFonts\\18959.ttf");
 	for (size_t i = 0; i < numOfDisplay; i++)
 	{
@@ -75,6 +82,28 @@ Menu::Menu(sf::RenderWindow& window, Music& music, Camera* camera)
 		bestiarySpriteVec.back().setScale(kX, kY);
 	}
 
+	for (size_t i = 0; i < numOfAuthorsTexture; i++)
+	{
+		authorsTextureVec.push_back(Texture());
+		authorsTextureVec.back().loadFromFile("resource\\Menu\\mainMenu\\Authors\\authors_" + std::to_string(i) + ".png");
+	}
+
+	for (size_t i = 0; i < numOfAuthorsTexture; i++)
+	{
+		authorsSpriteVec.push_back(Sprite());
+		authorsSpriteVec.back().setTexture(authorsTextureVec.at(i));
+		authorsSpriteVec.back().setTextureRect(IntRect(0, 0, 1920, 1080));
+		if (i < 9)
+		{
+			authorsSpriteVec.back().setTextureRect(IntRect(0, 0, 160, 160));
+		}
+		else
+		{
+			authorsSpriteVec.back().setTextureRect(IntRect(0, 0, 800, 800));
+		}
+		authorsSpriteVec.back().setScale(2 * kX,2 * kY);
+	}
+
 	bestiaryBgTexture.loadFromFile("resource\\Menu\\mainMenu\\Bestiary\\backGround.png");
 	bestiaryBg.setTexture(bestiaryBgTexture);
 	bestiaryBg.setPosition(0, 0);
@@ -108,6 +137,7 @@ Menu::Menu(sf::RenderWindow& window, Music& music, Camera* camera)
 		sprPauseVec.back().setScale(kX * resizeMistakeX, kY * resizeMistakeY);
 	}
 
+	authorsMusic.openFromFile("resource\\Audio\\authorsMusic.ogg");
 	buttonBuffer.loadFromFile("resource\\Audio\\buttonSound.ogg");
 	buttonSound.setBuffer(buttonBuffer);
 	bestiaryMusic.openFromFile("resource\\Audio\\bestiaryMusic.ogg");
@@ -159,7 +189,7 @@ void Menu::mainMenu(RenderWindow& window, Music& musicToStop)
 		window.clear();
 		
 		Menu::frameCreator(window);
-		Menu::createKeys(6);
+		Menu::createKeys(7);
 		switch (key)
 		{
 		case 1:
@@ -189,6 +219,18 @@ void Menu::mainMenu(RenderWindow& window, Music& musicToStop)
 		}
 		case 3:
 		{
+			textVector.at(17).first.setFillColor(Color(176, 227, 23, 255));  // Загрузка
+			if (menuTimer > keyDelay)
+			{
+				if (Keyboard::isKeyPressed(Keyboard::Enter))
+				{
+
+				}
+			}
+			break;
+		}
+		case 4:
+		{
 			textVector.at(15).first.setFillColor(Color(176, 227, 23, 255));  // Настройки 
 			if (menuTimer > keyDelay)
 			{
@@ -201,7 +243,7 @@ void Menu::mainMenu(RenderWindow& window, Music& musicToStop)
 			}
 			break;
 		}
-		case 4:
+		case 5:
 		{
 			textVector.at(1).first.setFillColor(Color(176, 227, 23, 255));  // Бестиарий
 			if (menuTimer > keyDelay)
@@ -213,19 +255,23 @@ void Menu::mainMenu(RenderWindow& window, Music& musicToStop)
 			}
 			break;
 		}
-		case 5:
+		case 6:
 		{
 			textVector.at(16).first.setFillColor(Color(176, 227, 23, 255));  // Авторы
 			if (menuTimer > keyDelay)
 			{
 				if (Keyboard::isKeyPressed(Keyboard::Enter))
 				{
-
+					Menu::authors(window, musicToStop);
+					mainMenuMusic.play();
+					mainMenuMusic.setVolume(isVol * 25 * volValue);
+					isMenu = true;
+					key = 1;
 				}
 			}
 			break;
 		}
-		case 6:
+		case 7:
 		{
 			textVector.at(2).first.setFillColor(Color(176, 227, 23, 255));  // Выход
 			if (menuTimer > keyDelay)
@@ -286,33 +332,71 @@ void Menu::pauseMenu(RenderWindow& window, Music& music)
 		}
 
 		Menu::frameCreator(window);
-		Menu::createKeys(3);
-		textVector.at(key + 2).first.setFillColor(Color(67, 0, 229, 255));
-		if (menuTimer > keyDelay)
+		Menu::createKeys(5);
+		switch (key)
 		{
-			if (Keyboard::isKeyPressed(Keyboard::Enter))
+		case 1:
+		{
+			textVector.at(3).first.setFillColor(Color(67, 0, 229, 255));
+			if (menuTimer > keyDelay)
 			{
-				switch (key)
-				{
-				case 1:
+				if (Keyboard::isKeyPressed(Keyboard::Enter))
 				{
 					Menu::closePauseMenu();
-					break;
 				}
-				case 2:
+			}
+			break;
+		}
+		case 2:
+		{
+			textVector.at(18).first.setFillColor(Color(67, 0, 229, 255));
+			if (menuTimer > keyDelay)
+			{
+				if (Keyboard::isKeyPressed(Keyboard::Enter))
+				{
+
+				}
+			}
+			break;
+		}
+		case 3:
+		{
+			textVector.at(19).first.setFillColor(Color(67, 0, 229, 255));
+			if (menuTimer > keyDelay)
+			{
+				if (Keyboard::isKeyPressed(Keyboard::Enter))
+				{
+
+				}
+			}
+			break;
+		}
+		case 4:
+		{
+			textVector.at(4).first.setFillColor(Color(67, 0, 229, 255));
+			if (menuTimer > keyDelay)
+			{
+				if (Keyboard::isKeyPressed(Keyboard::Enter))
 				{
 					Menu::openSettingsMenu(window, music);
 					isMenu = true;
 					key = 1;
-					break;
-				}
-				case 3:
-				{
-					Menu::openMainMenu(window, music);
-					break;
-				}
 				}
 			}
+			break;
+		}
+		case 5:
+		{
+			textVector.at(5).first.setFillColor(Color(67, 0, 229, 255));
+			if (menuTimer > keyDelay)
+			{
+				if (Keyboard::isKeyPressed(Keyboard::Enter))
+				{
+					Menu::openMainMenu(window, music);
+				}
+			}
+			break;
+		}
 		}
 
 		if (CurrentFrame > 8) CurrentFrame = 0;
@@ -578,6 +662,16 @@ void Menu::updateSize()
 	resizeMistakeX = 1920.0 / 1280.0;
 	resizeMistakeY = 1080.0 / 720.0;
 	
+	authorsBg.setFillColor(Color(50, 50, 50, 255));
+	authorsBg.setSize(Vector2f(GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)));
+	authorsBg.setPosition(cameraOffsetX, cameraOffsetY);
+
+	for (size_t i = 0; i < numOfAuthors; i++)
+	{
+		authorsVector.at(i).setCharacterSize(int(camera->getView()->getSize().y / 27));
+		authorsVector.at(i).setPosition((360 - 320) * kX * resizeMistakeX + cameraOffsetX, (597 - 180) * kY * resizeMistakeY + cameraOffsetY);
+	}
+
 	for (int i = 0; i < numOfDisplay; i++)
 	{
 		displayVector.at(i).first.setPosition((360 - 320) * kX * resizeMistakeX + cameraOffsetX, (597 - 180) * kY * resizeMistakeY + cameraOffsetY);
@@ -596,16 +690,19 @@ void Menu::updateSize()
 		}
 	}
 	
-	textVector.at(14).first.setPosition(40 * kX + cameraOffsetX, 350 * kY + cameraOffsetY);  // Продолжить
-	textVector.at(0).first.setPosition(40 * kX + cameraOffsetX, 410 * kY + cameraOffsetY);  // Новая игра 
-	textVector.at(15).first.setPosition(40 * kX + cameraOffsetX, 470 * kY + cameraOffsetY);  // Настройки
-	textVector.at(1).first.setPosition(40 * kX + cameraOffsetX, 530 * kY + cameraOffsetY);  // Бестиарий
-	textVector.at(16).first.setPosition(40 * kX + cameraOffsetX, 590 * kY + cameraOffsetY);  // Авторы
-	textVector.at(2).first.setPosition(40 * kX + cameraOffsetX, 650 * kY + cameraOffsetY);  // Выход из игры
+	textVector.at(14).first.setPosition(40 * kX + cameraOffsetX, 380 * kY + cameraOffsetY);  // Продолжить
+	textVector.at(0).first.setPosition(40 * kX + cameraOffsetX, 440 * kY + cameraOffsetY);  // Новая игра 
+	textVector.at(17).first.setPosition(40 * kX + cameraOffsetX, 500 * kY + cameraOffsetY);  // Загрузка
+	textVector.at(15).first.setPosition(40 * kX + cameraOffsetX, 560 * kY + cameraOffsetY);  // Настройки
+	textVector.at(1).first.setPosition(40 * kX + cameraOffsetX, 620 * kY + cameraOffsetY);  // Бестиарий
+	textVector.at(16).first.setPosition(40 * kX + cameraOffsetX, 680 * kY + cameraOffsetY);  // Авторы
+	textVector.at(2).first.setPosition(40 * kX + cameraOffsetX, 740 * kY + cameraOffsetY);  // Выход из игры
 
-	textVector.at(3).first.setPosition((360 - 320) * kX * resizeMistakeX + cameraOffsetX, (590 - 180) * kY * resizeMistakeY + cameraOffsetY);  // Продолжить
-	textVector.at(4).first.setPosition((360 - 320) * kX * resizeMistakeX + cameraOffsetX, (670 - 180) * kY * resizeMistakeX + cameraOffsetY);  // Настройки
-	textVector.at(5).first.setPosition((360 - 320) * kX * resizeMistakeX + cameraOffsetX, (750 - 180) * kY * resizeMistakeX + cameraOffsetY);  // Главное меню
+	textVector.at(3).first.setPosition((360 - 320) * kX * resizeMistakeX + cameraOffsetX, (560 - 180) * kY * resizeMistakeY + cameraOffsetY);  // Продолжить
+	textVector.at(18).first.setPosition((360 - 320) * kX * resizeMistakeX + cameraOffsetX, (620 - 180) * kY * resizeMistakeX + cameraOffsetY);  // Сохранение
+	textVector.at(19).first.setPosition((360 - 320) * kX * resizeMistakeX + cameraOffsetX, (680 - 180) * kY * resizeMistakeX + cameraOffsetY);  // Загрузка
+	textVector.at(4).first.setPosition((360 - 320) * kX * resizeMistakeX + cameraOffsetX, (740 - 180) * kY * resizeMistakeX + cameraOffsetY);  // Настройки
+	textVector.at(5).first.setPosition((360 - 320) * kX * resizeMistakeX + cameraOffsetX, (800 - 180) * kY * resizeMistakeX + cameraOffsetY);  // Главное меню
 
 	textVector.at(6).first.setPosition((360 - 320) * kX * resizeMistakeX + cameraOffsetX, (455 - 180) * kY * resizeMistakeX + cameraOffsetY);  // Режим:
 	textVector.at(7).first.setPosition((360 - 320) * kX * resizeMistakeX + cameraOffsetX, (495 - 180) * kY * resizeMistakeX + cameraOffsetY);  // Оконный
@@ -656,6 +753,12 @@ void Menu::updateSize()
 
 	bestiaryBg.setPosition(camera->getView()->getCenter().x - kX * bestiaryBg.getTexture()->getSize().x / 2,
 		camera->getView()->getCenter().y - kY * bestiaryBg.getTexture()->getSize().y / 2);
+	
+	for (size_t i = 0; i < numOfAuthorsTexture; i++)  // Вектор спрайтов кадров меню "Авторы"
+	{
+		authorsSpriteVec.at(i).setPosition(100 * kX + cameraOffsetX, 100 * kY + cameraOffsetY);
+	}
+	authorsSpriteVec.at(2).setPosition(300 * kX + cameraOffsetX, 100 * kY + cameraOffsetY);
 }
 
 void Menu::createKeys(int numOfKeys)
@@ -936,4 +1039,83 @@ void Menu::playSound(Sound& sound)
 {
 	sound.play();
 	sound.setVolume(isVol * 25 * volValue);
+}
+
+void Menu::authors(RenderWindow& window, Music& musicToStop)
+{
+	Menu::updateSize();
+	Menu::playSound(buttonSound);
+	
+	isMenu = true;
+	menuTimer = 0;
+	CurrentFrame = 0;
+	
+	mainMenuMusic.stop();
+	authorsMusic.play();
+	authorsMusic.setVolume(isVol * 25 * volValue);
+
+	while (isMenu)
+	{
+		window.clear();
+		Menu::frameCreator(window);
+		if (menuTimer > keyDelay)
+		{
+			if (Keyboard::isKeyPressed(Keyboard::Enter))
+			{
+				authorsMusic.stop();
+				//window.clear();
+				isMenu = false;
+				clock3.restart();
+				menuTimer = 0;
+			}
+		}
+		if (!authorsMusic.getStatus())
+		{
+			authorsMusic.stop();
+			//window.clear();
+			isMenu = false;
+			clock3.restart();
+			menuTimer = 0;
+		}
+
+		if (CurrentFrame > 400) CurrentFrame = 0;
+
+		/*authorsVector.at(int(CurrentFrame / 25)).setFillColor(Color(
+			50 * 255 / (abs(-205 + 410 * abs(CurrentFrame - 25 * (int(CurrentFrame / 25) + 1)) / 25) + 50),
+			50 * 255 / (abs(-205 + 410 * abs(CurrentFrame - 25 * (int(CurrentFrame / 25) + 1)) / 25) + 50),
+			50 * 255 / (abs(-205 + 410 * abs(CurrentFrame - 25 * (int(CurrentFrame / 25) + 1)) / 25) + 50),
+			255));*/
+
+		
+
+		if (isMenu)
+		{
+			window.draw(authorsBg);
+			
+			if (int(CurrentFrame / 25) > 3)
+			{
+				if (int(int(CurrentFrame - 25 * int(CurrentFrame / 25)) / (25 / 16.0)) < 8)
+				{
+					authorsSpriteVec.at(int(CurrentFrame / 25)).setTextureRect(IntRect(160 * int(int(CurrentFrame - 25 * int(CurrentFrame / 25)) / (25 / 16.0)), 0, 160, 160));
+				}
+				else
+				{
+					authorsSpriteVec.at(int(CurrentFrame / 25)).setTextureRect(IntRect(160 * (15 - int(int(CurrentFrame - 25 * int(CurrentFrame / 25)) / (25 / 16.0))), 0, 160, 160));
+				}
+			}
+
+			/*if ((CurrentFrame >= 0) && (CurrentFrame <= 35))
+			{
+				authorsSpriteVec.at(9 + int(int(CurrentFrame) / 4)).setTextureRect(IntRect(800 * int(CurrentFrame - 4 * int(CurrentFrame / 4)), 0, 800, 800 ));
+				std::cout << int(CurrentFrame - 4 * int(CurrentFrame / 4));
+			}*/
+				
+			window.draw(authorsSpriteVec.at(int(CurrentFrame / 25)));
+
+			//window.draw(authorsSpriteVec.at(9 + int(int(CurrentFrame) / 4)));
+			
+			//window.draw(authorsVector.at(int(CurrentFrame / 25)));
+			window.display();
+		}
+	}
 }
