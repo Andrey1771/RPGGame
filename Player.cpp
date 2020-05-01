@@ -6,9 +6,11 @@
 extern float mainTime;
 extern double speedAnimation;
 extern float teleportDistance;
-Player::Player(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, const Stats& stats) : Hero(ImageFile, ImageFileAttack, maxFrameX, maxFrameY, x, y, stats)
+
+Player::Player(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, const Stats& stats, int dodgeDelay) : Hero(ImageFile, ImageFileAttack, maxFrameX, maxFrameY, x, y, stats)
 {
 	players.push_back(this);
+	this->dodgeDelay = dodgeDelay;
 }
 
 Player::~Player()
@@ -218,10 +220,11 @@ int Player::dodge(sf::Event event)
 			delete clockDodge;
 			clockDodge = nullptr;
 			teleportUsed = false;
+			clockDodgeDelay.restart();
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && clockDodgeDelay.getElapsedTime().asMilliseconds() > dodgeDelay)
 	{
 		if (clockDodge == nullptr)
 			clockDodge = new sf::Clock;
@@ -229,6 +232,7 @@ int Player::dodge(sf::Event event)
 		if ((clockDodge->getElapsedTime().asMilliseconds() > maxTimeDodge) || teleportUsed)
 		{
 			this->setHealthChange(true);
+			clockDodgeDelay.restart();
 			return 0;
 		}
 
@@ -258,5 +262,20 @@ int Player::dodge(sf::Event event)
 	}
 	this->setHealthChange(true);
 	return 0;
+}
+
+sf::Clock& Player::getClockDodgeDelay()
+{
+	return clockDodgeDelay;
+}
+
+void Player::setDodgeDelay(const int dodgeDelay)
+{
+	this->dodgeDelay = dodgeDelay;
+}
+
+const int Player::getDodgeDelay()
+{
+	return dodgeDelay;
 }
 

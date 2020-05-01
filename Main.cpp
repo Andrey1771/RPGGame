@@ -7,7 +7,8 @@
 #include "Camera.h"
 #include "Item.h"
 #include "HealthBottle.h"
-
+#include "HealthBar.h"
+#include "DodgeBar.h"
 //#include <iostream>
 //void start(sf::RenderWindow& window, Hero& hero);
 int verticalHeight = 1200;
@@ -25,6 +26,7 @@ int levelHeight = 25;
 const int distanceAttackingObject = 10;
 float maxTimeDodgePlayer = 1000; // 1000 милисекунд = 1 секунде
 float teleportDistance = 200;
+int dodgeDelay = 5000;
 
 sf::String level[] = {// Перенести на файл
 	"0000000000000000000000000000000000000000",
@@ -76,7 +78,7 @@ int main()
 	window.setVerticalSyncEnabled(true); // запустите это один раз, после создания окна
 	Stats statsPlayer(speedPlayer, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed, 6, 5);
 	
-	Player player("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 500, 500, statsPlayer);
+	Player player("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 500, 500, statsPlayer, dodgeDelay);
 	Camera camera(&player, new sf::View, tieldsWidth, tieldsHeight, verticalHeight, horizontalHeight);//dynamic_cast<Hero*>(&player)
 	camera.setMapXYAndSize(0, 0, level[0].getSize() * tieldsWidth, levelHeight * tieldsHeight);
 	funRandomizer(1, player);
@@ -119,7 +121,10 @@ int main()
 			window.draw(var->getSprite());
 		}
 		camera.update();
-		for (sf::Sprite var : camera.getProgressBar()->getSpritesBar())
+		for (sf::Sprite var : camera.getHPProgressBar()->getSpritesBar())
+			window.draw(var);
+
+		for (sf::Sprite var : camera.getDodgeProgressBar()->getSpritesBar())
 			window.draw(var);
 
 		for (Player* var : Player::players)

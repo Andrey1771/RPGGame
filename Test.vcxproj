@@ -142,7 +142,9 @@
   <ItemGroup>
     <ClCompile Include="AnimatedTield.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="DodgeBar.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="HealthBottle.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -157,8 +159,10 @@
   <ItemGroup>
     <ClInclude Include="AnimatedTield.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="DodgeBar.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Header.h" />
+    <ClInclude Include="HealthBar.h" />
     <ClInclude Include="HealthBottle.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="Item.h" />

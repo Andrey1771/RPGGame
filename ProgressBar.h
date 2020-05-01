@@ -5,9 +5,10 @@
 class ProgressBar
 {
 	TextureData movementTexture;
-	int range, value;
 	XY xy; SizeXY sizeXY;
 	sf::View* view{ nullptr };
+protected:
+	int range, value;
 	Hero* hero{ nullptr };
 public:
 	ProgressBar(sf::View* view, sf::String ImageFile, int range, int value, XY xy, SizeXY sizeXY, int maxFrameX, int maxFrameY);
@@ -17,6 +18,7 @@ public:
 	void setView(sf::View* view);
 	void setSizeXY(const SizeXY& sizeXY);
 	void setTrackingHero(Hero* hero) { this->hero = hero; };
+
 private:
 	void updatePosition();
 	std::vector<sf::Sprite> spritesBar;

@@ -1,4 +1,6 @@
 #include "Camera.h"
+#include "HealthBar.h"
+#include "DodgeBar.h"
 
 Camera::Camera(Hero* hero, sf::View* view, float tieldsWidth, float tieldsHeight, float width, float height)
 {
@@ -7,8 +9,13 @@ Camera::Camera(Hero* hero, sf::View* view, float tieldsWidth, float tieldsHeight
 
 	view->setSize(sf::Vector2f(width, height));
 	view->setCenter(width / 2, height / 2);
-	progressBarHP = new ProgressBar(view, "resource\\Player\\ProgressBar\\hearts.png", 0, 0, XY(), SizeXY(tieldsWidth, tieldsHeight), 3, 1);
-	progressBarHP->setTrackingHero(hero);
+	
+	healthBar = new HealthBar(view, 0, 0, XY(), SizeXY(tieldsWidth, tieldsHeight));
+	healthBar->setTrackingHero(hero);
+
+	dodgeBar = new DodgeBar(view, 0, 0, XY(width - tieldsWidth, 0), SizeXY(tieldsWidth, tieldsHeight));
+	dodgeBar->setTrackingHero(hero);
+
 }
 
 void Camera::setCoordinationCamera(float x0, float y0, float width, float height)
@@ -45,17 +52,23 @@ void Camera::setHero(Hero* hero)
 void Camera::setView(sf::View* view)
 {
 	this->view = view;
-	progressBarHP->setView(view);
+	healthBar->setView(view);
 }
 
-ProgressBar* Camera::getProgressBar()
+HealthBar* Camera::getHPProgressBar()
 {
-	return progressBarHP;
+	return healthBar;
+}
+
+DodgeBar* Camera::getDodgeProgressBar()
+{
+	return dodgeBar;
 }
 
 void Camera::update()
 {
-	progressBarHP->update();
+	healthBar->update();
+	dodgeBar->update();
 	setCoordinationCamera(0, 0, width, height);
 	
 }

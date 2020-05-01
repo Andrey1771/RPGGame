@@ -57,12 +57,6 @@ void ProgressBar::setValue(int newValue)
 
 int ProgressBar::update()
 {
-	if (hero != nullptr)
-	{
-		range = hero->getMaxHealthPoints();
-		value = hero->getHealthPoints();
-	}
-
 	updatePosition();
 	return 0;
 }
