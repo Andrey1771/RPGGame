@@ -13,16 +13,22 @@ Camera::Camera(Hero* hero, sf::View* view, float tieldsWidth, float tieldsHeight
 
 void Camera::setCoordinationCamera(float x0, float y0, float width, float height)
 {
-	float lastX = view->getCenter().x, lastY = view->getCenter().y;
 	view->setCenter(hero->getSprite().getPosition().x + hero->getSprite().getLocalBounds().width / 2.0, hero->getSprite().getPosition().y + hero->getSprite().getLocalBounds().height / 2.0);
-	
-	if (view->getCenter().x - view->getSize().x / 2 < x0 || view->getCenter().x + view->getSize().x / 2 > x0 + width)
+	if (view->getCenter().x - view->getSize().x / 2 < x0)
 	{
-		view->setCenter(lastX, view->getCenter().y);
+		view->setCenter(x0 + view->getSize().x / 2, view->getCenter().y);
 	}
-	if (view->getCenter().y - view->getSize().y / 2 < y0 || view->getCenter().y + view->getSize().y / 2 > y0 + height)
+	if (view->getCenter().x + view->getSize().x / 2 > x0 + width)
 	{
-		view->setCenter(view->getCenter().x, lastY);
+		view->setCenter(x0 + width - view->getSize().x / 2, view->getCenter().y);
+	}
+	if (view->getCenter().y - view->getSize().y / 2 < y0)
+	{
+		view->setCenter(view->getCenter().x, y0 + view->getSize().y / 2);
+	}
+	if (view->getCenter().y + view->getSize().y / 2 > y0 + height)
+	{
+		view->setCenter(view->getCenter().x, y0 + height - view->getSize().y / 2);
 	}
 }
 

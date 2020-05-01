@@ -79,7 +79,7 @@ int main()
 	Player player("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 500, 500, statsPlayer);
 	Camera camera(&player, new sf::View, tieldsWidth, tieldsHeight, verticalHeight, horizontalHeight);//dynamic_cast<Hero*>(&player)
 	camera.setMapXYAndSize(0, 0, level[0].getSize() * tieldsWidth, levelHeight * tieldsHeight);
-	//funRandomizer(1, player);
+	funRandomizer(1, player);
 	HealthBottle hPBottle(250, 250, 2);
 	map.setMap(level, 25, 40);
 	map.setPosBG(verticalHeight, horizontalHeight);
@@ -108,7 +108,6 @@ int main()
 		//player.MoveHero();
 		for (Player* var : Player::players)
 			var->update(event);
-		camera.update();
 		window.clear();
 
 		map.updateMap(&window);
@@ -119,7 +118,7 @@ int main()
 			var->update(event);
 			window.draw(var->getSprite());
 		}
-
+		camera.update();
 		for (sf::Sprite var : camera.getProgressBar()->getSpritesBar())
 			window.draw(var);
 
@@ -137,6 +136,7 @@ int main()
 		for (sf::Sprite* var : debugIntersects)
 			window.draw(*var);
 
+		
 		//updateIntersectsHeroes(player);
 		window.display();
 	}
