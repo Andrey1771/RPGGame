@@ -123,7 +123,6 @@ bool Player::moveHero(sf::Event event)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
 		move(speed * mainTime, 0);
-
 		if (!(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 			animation(2);
 		//dx = speed * mainTime;
@@ -213,26 +212,24 @@ bool Player::animation(int direction)
 
 int Player::dodge(sf::Event event)
 {
+	dodgeDelayTime += mainTime;
 	if (event.type == sf::Event::EventType::KeyReleased && event.key.code == sf::Keyboard::Space)
 	{
-		if (clockDodge != nullptr)// на всякий случай
+		if (dodgeTime != 0)
 		{
-			delete clockDodge;
-			clockDodge = nullptr;
+			dodgeTime = 0;
 			teleportUsed = false;
-			clockDodgeDelay.restart();
+			dodgeDelayTime = 0;
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && clockDodgeDelay.getElapsedTime().asMilliseconds() > dodgeDelay)
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && dodgeDelayTime / 1000 > dodgeDelay)
 	{
-		if (clockDodge == nullptr)
-			clockDodge = new sf::Clock;
-
-		if ((clockDodge->getElapsedTime().asMilliseconds() > maxTimeDodge) || teleportUsed)
+		dodgeTime += mainTime;
+		if ((dodgeTime / 1000 > maxTimeDodge) || teleportUsed)
 		{
 			this->setHealthChange(true);
-			clockDodgeDelay.restart();
+			dodgeDelayTime = 0;
 			return 0;
 		}
 
@@ -264,9 +261,9 @@ int Player::dodge(sf::Event event)
 	return 0;
 }
 
-sf::Clock& Player::getClockDodgeDelay()
+const float Player::getDodgeDelayTime()
 {
-	return clockDodgeDelay;
+	return dodgeDelayTime;
 }
 
 void Player::setDodgeDelay(const int dodgeDelay)

@@ -17,7 +17,8 @@ public:
 	virtual int update(sf::Event event) override;
 	void setDodgeDelay(const int dodgeDelay);
 	const int getDodgeDelay();
-	sf::Clock& getClockDodgeDelay();
+	const float getDodgeDelayTime();
+
 private:
 	bool moveHero(sf::Event event);
 	void attackHero(sf::Event event, bool ok);
@@ -25,8 +26,9 @@ private:
 	virtual bool animation(int direction) override;
 	int dodge(sf::Event event);
 	float maxTimeDodge{ maxTimeDodgePlayer };
-	sf::Clock* clockDodge{ nullptr };
-	sf::Clock clockDodgeDelay;
+	//sf::Clock* clockDodge{ nullptr };
+	float dodgeTime{ 0 };
+	float dodgeDelayTime{ 0 };
 	bool teleportUsed{ false };
 	
 	

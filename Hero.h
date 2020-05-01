@@ -15,11 +15,10 @@ private:
 	
 	bool temp{ false };
 	int numberTield{ 1 };
-	sf::Clock* clock{ nullptr };
 	double speedOneFrame;
 	bool healthChange;
 	virtual int actionCollisionObjects(Object* obj) override;
-
+	float attackTime;
 protected:
 	Stats stats;
 	bool deathResolution{ true };

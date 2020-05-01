@@ -29,12 +29,10 @@ int Hero::update(sf::Event event)
 
 void Hero::resetAnimationAttack()
 {
-	//clock.restart();//currentFrameAttackY += speedAnimation * mainTime;
-	delete clock;
-	clock = nullptr;
 	numberTield = 1;
 	currentFrameAttackX = 0;
 	currentFrameAttackY = 0;
+	attackTime = 0;
 }
 
 void Hero::changeHealthPoints(int addHP)
@@ -110,16 +108,14 @@ bool Hero::animation(int direction)
 	}
 	case 7://7 - attack down
 	{
-		if (clock == nullptr)
-			clock = new sf::Clock;
-
-		if (clock->getElapsedTime().asSeconds() < numberTield * speedOneFrame)
+		attackTime += mainTime;
+		if (attackTime/pow(10, 6) < numberTield * speedOneFrame)
 		{
 			movementTexture.sprite->setTextureRect(sf::IntRect((getSizeXY().sizeX) * int(numberTield - 1), 6 * getSizeXY().sizeX, getSizeXY().sizeX, getSizeXY().sizeY));
 		}
 		else
 		{
-			if (clock->getElapsedTime().asSeconds() > stats.attackTime)
+			if (attackTime / pow(10, 6) > stats.attackTime)
 			{
 				resetAnimationAttack();
 				return true;
@@ -134,16 +130,14 @@ bool Hero::animation(int direction)
 	}
 	case 8://8 - attack left
 	{
-		if (clock == nullptr)
-			clock = new sf::Clock;
-
-		if (clock->getElapsedTime().asSeconds() < numberTield * speedOneFrame)
+		attackTime += mainTime;
+		if (attackTime / pow(10, 6) < numberTield * speedOneFrame)
 		{
 			movementTexture.sprite->setTextureRect(sf::IntRect((getSizeXY().sizeX) * int(numberTield - 1), 7 * getSizeXY().sizeX, getSizeXY().sizeX, getSizeXY().sizeY));
 		}
 		else
 		{
-			if (clock->getElapsedTime().asSeconds() > stats.attackTime)
+			if (attackTime / pow(10, 6) > stats.attackTime)
 			{
 				resetAnimationAttack();
 				return true;
@@ -158,16 +152,14 @@ bool Hero::animation(int direction)
 	}
 	case 9://9 - attack right
 	{
-		if (clock == nullptr)
-			clock = new sf::Clock;
-
-		if (clock->getElapsedTime().asSeconds() < numberTield * speedOneFrame)
+		attackTime += mainTime;
+		if (attackTime / pow(10, 6) < numberTield * speedOneFrame)
 		{
 			movementTexture.sprite->setTextureRect(sf::IntRect((getSizeXY().sizeX) * int(numberTield - 1), 8 * getSizeXY().sizeX, getSizeXY().sizeX, getSizeXY().sizeY));
 		}
 		else
 		{
-			if (clock->getElapsedTime().asSeconds() > stats.attackTime)
+			if (attackTime / pow(10, 6) > stats.attackTime)
 			{
 				resetAnimationAttack();
 				return true;
@@ -183,16 +175,14 @@ bool Hero::animation(int direction)
 	}
 	case 10://10 - attack up
 	{
-		if (clock == nullptr)
-			clock = new sf::Clock;
-
-		if (clock->getElapsedTime().asSeconds() < numberTield * speedOneFrame)
+		attackTime += mainTime;
+		if (attackTime / pow(10, 6) < numberTield * speedOneFrame)
 		{
 			movementTexture.sprite->setTextureRect(sf::IntRect((getSizeXY().sizeX) * int(numberTield - 1), 9 * getSizeXY().sizeX, getSizeXY().sizeX, getSizeXY().sizeY));
 		}
 		else
 		{
-			if (clock->getElapsedTime().asSeconds() > stats.attackTime)
+			if (attackTime / pow(10, 6) > stats.attackTime)
 			{
 				resetAnimationAttack();
 				return true;

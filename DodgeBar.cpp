@@ -11,10 +11,7 @@ int DodgeBar::update()
 	if (player != nullptr)
 	{
 		range = 1;//Energy.png
-		std::cout << player->getClockDodgeDelay().getElapsedTime().asMilliseconds() << "  " << player->getDodgeDelay() << std::endl;
-		value = player->getClockDodgeDelay().getElapsedTime().asMilliseconds() / (player->getDodgeDelay() / maxFrameX) - 1;// пока так temp
-		//if (value >= range)
-		//	value = range - 1;
+		value = player->getDodgeDelayTime() / (player->getDodgeDelay() * 1000 / maxFrameX) - 1;// пока так temp
 	}
 	return ProgressBar::update();
 }
