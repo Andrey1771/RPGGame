@@ -205,5 +205,8 @@
     <Image Include="resource\Enemy\Dungeon\Projectile\slaveAttack.png">
       <Filter>Файлы ресурсов\Objects</Filter>
     </Image>
+    <Image Include="resource\Player\ProgressBar\Energy.png">
+      <Filter>Файлы ресурсов\GUI</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -7,7 +7,7 @@ Camera::Camera(Hero* hero, sf::View* view, float tieldsWidth, float tieldsHeight
 
 	view->setSize(sf::Vector2f(width, height));
 	view->setCenter(width / 2, height / 2);
-	progressBarHP = new ProgressBar(view, "resource\\Player\\ProgressBar\\hearts.png", 0, 0, XY(), SizeXY(tieldsWidth, tieldsHeight));
+	progressBarHP = new ProgressBar(view, "resource\\Player\\ProgressBar\\hearts.png", 0, 0, XY(), SizeXY(tieldsWidth, tieldsHeight), 3, 1);
 	progressBarHP->setTrackingHero(hero);
 }
 

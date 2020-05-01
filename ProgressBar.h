@@ -10,7 +10,7 @@ class ProgressBar
 	sf::View* view{ nullptr };
 	Hero* hero{ nullptr };
 public:
-	ProgressBar(sf::View* view, sf::String ImageFile, int range, int value, XY xy, SizeXY sizeXY);
+	ProgressBar(sf::View* view, sf::String ImageFile, int range, int value, XY xy, SizeXY sizeXY, int maxFrameX, int maxFrameY);
 	void setValue(int newValue);
 	virtual int update();
 	const std::vector<sf::Sprite>& getSpritesBar();

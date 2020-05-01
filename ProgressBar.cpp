@@ -1,6 +1,6 @@
 #include "ProgressBar.h"
 #include <iostream>
-ProgressBar::ProgressBar(sf::View* view, sf::String ImageFile, int range, int value, XY xy, SizeXY sizeXY)
+ProgressBar::ProgressBar(sf::View* view, sf::String ImageFile, int range, int value, XY xy, SizeXY sizeXY, int maxFrameX, int maxFrameY)
 {
 	//Movement
 	movementTexture.image = new sf::Image;
@@ -11,8 +11,8 @@ ProgressBar::ProgressBar(sf::View* view, sf::String ImageFile, int range, int va
 	movementTexture.texture->loadFromImage(*movementTexture.image);
 	
 	movementTexture.sprite->setTexture(*movementTexture.texture);
-	movementTexture.maxFrameX = 3;
-	movementTexture.maxFrameY = 1;
+	movementTexture.maxFrameX = maxFrameX;
+	movementTexture.maxFrameY = maxFrameY;
 
 	movementTexture.sprite->setTextureRect(sf::IntRect(0, 0, movementTexture.image->getSize().x / movementTexture.maxFrameX, movementTexture.image->getSize().y / movementTexture.maxFrameY));
 	this->range = range;
@@ -30,26 +30,23 @@ void ProgressBar::updatePosition()
 	spritesBar.clear();
 	for (int i = 0; i < range; i += 2)
 	{
-		if (value - (i + 1) > 0)
+		for (int k = movementTexture.maxFrameX; k > 0; --k)
 		{
-			movementTexture.sprite->setPosition(sf::Vector2f(xy.x  + view->getCenter().x - view->getSize().x / 2 + (movementTexture.image->getSize().x / movementTexture.maxFrameX) * int(i / 2), xy.y + view->getCenter().y - view->getSize().y / 2));
-			
-			movementTexture.sprite->setTextureRect(sf::IntRect(0, 0, movementTexture.image->getSize().x / movementTexture.maxFrameX, movementTexture.image->getSize().y / movementTexture.maxFrameY));
-			spritesBar.push_back(*(movementTexture.sprite));
-			continue;
-		}
-		if (value - i > 0)
-		{
-			movementTexture.sprite->setPosition(sf::Vector2f(xy.x + view->getCenter().x - view->getSize().x / 2 + (movementTexture.image->getSize().x / movementTexture.maxFrameX) * int(i / 2), xy.y + view->getCenter().y - view->getSize().y / 2));
+			if (value - (i + k - 2) > 0)
+			{
+				movementTexture.sprite->setPosition(sf::Vector2f(xy.x + view->getCenter().x - view->getSize().x / 2 + (movementTexture.image->getSize().x / movementTexture.maxFrameX) * int(i / 2), xy.y + view->getCenter().y - view->getSize().y / 2));
 
-			movementTexture.sprite->setTextureRect(sf::IntRect(movementTexture.image->getSize().x / movementTexture.maxFrameX, 0, movementTexture.image->getSize().x / movementTexture.maxFrameX, movementTexture.image->getSize().y / movementTexture.maxFrameY));
-			spritesBar.push_back(*(movementTexture.sprite));
-			continue;
+				movementTexture.sprite->setTextureRect(sf::IntRect((movementTexture.image->getSize().x / movementTexture.maxFrameX) * (movementTexture.maxFrameX - k), 0, movementTexture.image->getSize().x / movementTexture.maxFrameX, movementTexture.image->getSize().y / movementTexture.maxFrameY));
+				spritesBar.push_back(*(movementTexture.sprite));
+				break;
+			}
+			if (k == 1)
+			{
+				movementTexture.sprite->setPosition(sf::Vector2f(xy.x + view->getCenter().x - view->getSize().x / 2 + (movementTexture.image->getSize().x / movementTexture.maxFrameX) * int(i / 2), xy.y + view->getCenter().y - view->getSize().y / 2));
+				movementTexture.sprite->setTextureRect(sf::IntRect((movementTexture.image->getSize().x  / movementTexture.maxFrameX) * (movementTexture.maxFrameX - k), 0, movementTexture.image->getSize().x / movementTexture.maxFrameX, movementTexture.image->getSize().y / movementTexture.maxFrameY));
+				spritesBar.push_back(*(movementTexture.sprite));
+			}
 		}
-
-		movementTexture.sprite->setPosition(sf::Vector2f(xy.x + view->getCenter().x - view->getSize().x / 2 + (movementTexture.image->getSize().x / movementTexture.maxFrameX) * int(i / 2), xy.y + view->getCenter().y - view->getSize().y / 2));
-		movementTexture.sprite->setTextureRect(sf::IntRect((movementTexture.image->getSize().x * 2) / movementTexture.maxFrameX, 0, movementTexture.image->getSize().x / movementTexture.maxFrameX, movementTexture.image->getSize().y / movementTexture.maxFrameY));
-		spritesBar.push_back(*(movementTexture.sprite));
 	}
 }
 
