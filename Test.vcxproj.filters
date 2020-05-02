@@ -111,6 +111,12 @@
     <ClCompile Include="DodgeBar.cpp">
       <Filter>Исходные файлы\Basic\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Исходные файлы\Basic\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>Исходные файлы\Basic\Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header.h">
@@ -160,6 +166,12 @@
     </ClInclude>
     <ClInclude Include="DodgeBar.h">
       <Filter>Файлы заголовков\Basic\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Файлы заголовков\Basic\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>Файлы заголовков\Basic\Map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -11,11 +11,19 @@ Player::Player(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, 
 {
 	players.push_back(this);
 	this->dodgeDelay = dodgeDelay;
+	resetAnimationAttack();
 }
 
 Player::~Player()
 {
-	players.clear();
+	for (int j = 0; j < Player::players.size(); ++j)
+	{
+		if (this == Player::players[j])
+		{
+			Player::players.erase(Player::players.begin() + j);
+			break;
+		}
+	}
 }
 
 bool Player::moveHero(sf::Event event)

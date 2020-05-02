@@ -12,6 +12,18 @@ Enemy::Enemy(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, in
 	setAttackStyle("range attack");
 }
 
+Enemy::~Enemy()
+{
+	for (int j = 0; j < Enemy::enemies.size(); ++j)
+	{
+		if (this == Enemy::enemies[j])
+		{
+			Enemy::enemies.erase(Enemy::enemies.begin() + j);
+			break;
+		}
+	}
+}
+
 bool Enemy::artificialIntelligence(std::string action)
 {
 	if (player == nullptr)
@@ -110,8 +122,6 @@ bool Enemy::artificialIntelligence(std::string action)
 	}
 	if (action == "move")//ƒорогосто€ща€ операци€ 
 	{
-		//std::cout << "move move move" << player->getPosition().x << "  " << this->getPosition().x << std::endl;
-
 		if (difference < 0.5)// ќн должен сто€ть, по хорошему нужно расчитать погрешность O)))
 		{
 			animation(5);
@@ -174,7 +184,7 @@ int Enemy::update(sf::Event event)
 	int temp = Hero::update(event);
 	if (temp == -1)
 	{
-		//this->~Enemy();
+		this->~Enemy();
 		return temp;
 	}
 	if (temp != -2)
@@ -183,16 +193,4 @@ int Enemy::update(sf::Event event)
 		artificialIntelligence("attack");
 	}
 	return temp;
-
-	/*
-	int temp = Hero::update(event);
-	if (temp == -1)
-	{
-		this->~Player();
-		return temp;
-	}
-	if(temp != -2)
-		attackHero(event, moveHero(event));
-	return temp;
-	*/
 }

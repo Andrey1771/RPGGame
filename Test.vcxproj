@@ -148,12 +148,14 @@
     <ClCompile Include="HealthBottle.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelTileds.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
+    <ClCompile Include="Room.cpp" />
     <ClCompile Include="Shell.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -166,12 +168,14 @@
     <ClInclude Include="HealthBottle.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Level.h" />
     <ClInclude Include="LevelTileds.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Room.h" />
     <ClInclude Include="Shell.h" />
   </ItemGroup>
   <ItemGroup>

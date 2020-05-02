@@ -26,7 +26,6 @@ private:
 	virtual bool animation(int direction) override;
 	int dodge(sf::Event event);
 	float maxTimeDodge{ maxTimeDodgePlayer };
-	//sf::Clock* clockDodge{ nullptr };
 	float dodgeTime{ 0 };
 	float dodgeDelayTime{ 0 };
 	bool teleportUsed{ false };
