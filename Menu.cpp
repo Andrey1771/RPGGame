@@ -14,32 +14,7 @@ Menu::Menu(sf::RenderWindow& window, Music& music, Camera* camera)
 	resizeMistakeX = 1920.0 / 1280.0;
 	resizeMistakeY = 1080.0 / 720.0;
 
-	whatDisplay = 5;
-	isDisp = 0;
-
-	for (size_t i = 0; i < numOfAuthors; i++)
-	{
-		authorsVector.push_back(Text());
-		authorsVector.back().setString(authorsArray[i]);
-		authorsVector.back().setFont(font);
-	}
-
 	font.loadFromFile("resource\\Fonts\\mainFonts\\18959.ttf");
-	for (size_t i = 0; i < numOfDisplay; i++)
-	{
-		displayVector.push_back(std::pair< Text, std::pair<int, int>>(Text(), std::pair<int, int>(0, 0)));
-		displayVector.back().first.setFont(font);
-		displayVector.back().first.setString(displayArray[i].first);
-		displayVector.back().second.first = displayArray[i].second.first;
-		displayVector.back().second.second = displayArray[i].second.second;
-	}
-	displayVector.at(5).second.first = verticalHeight;  // Пользовательское разрешение
-	displayVector.at(5).second.second = horizontalHeight;
-	displayVector.at(5).first.setString(std::to_string(verticalHeight) + "x" + std::to_string(horizontalHeight) + L" - пользовательское");
-	
-	displayVector.at(6).second.first = GetSystemMetrics(SM_CXSCREEN);  // Разрешение дисплея пользователя
-	displayVector.at(6).second.second = GetSystemMetrics(SM_CYSCREEN);
-	displayVector.at(6).first.setString(std::to_string(GetSystemMetrics(SM_CXSCREEN)) + "x" + std::to_string(GetSystemMetrics(SM_CYSCREEN)) + L" - полный экран");
 
 	for (size_t i = 0; i < numOfMenuButtons; i++)
 	{
@@ -48,66 +23,6 @@ Menu::Menu(sf::RenderWindow& window, Music& music, Camera* camera)
 		textVector.back().first.setString(nameArray[i].first);
 		textVector.back().second = nameArray[i].second;
 	}
-
-	bestiaryFont.loadFromFile("resource\\Fonts\\bestiaryFonts\\13859.ttf");
-	for (size_t i = 0; i < numOfMonstres; i++)
-	{
-		bestiaryVector.push_back(std::pair<Text, Text>(Text(), Text()));
-		bestiaryVector.back().first.setFont(bestiaryFont);
-		bestiaryVector.back().first.setString(bestiaryArray[i].first);
-		bestiaryVector.back().second.setFont(bestiaryFont);
-		bestiaryVector.back().second.setString(bestiaryArray[i].second);
-		bestiaryVector.back().second.setLineSpacing(0.6);
-	}
-	
-	for (size_t i = 0; i < numOfButton; i++)
-	{
-		buttonVector.push_back(Text());
-		buttonVector.back().setFont(bestiaryFont);
-		buttonVector.back().setString(buttonArray[i]);
-		buttonVector.back().setStyle(Text::Bold);
-	}
-
-	for (size_t i = 0; i < numOfMonstres; i++)  // Вектор текстур существ Бестиария
-	{
-		bestiaryTextureVec.push_back(Texture());
-		bestiaryTextureVec.back().loadFromFile("resource\\Menu\\mainMenu\\Bestiary\\sprite_" + std::to_string(i) + ".png");
-	}
-
-	for (size_t i = 0; i < numOfMonstres; i++)  // Вектор спрайтов существ Бестриария
-	{
-		bestiarySpriteVec.push_back(Sprite());
-		bestiarySpriteVec.back().setTexture(bestiaryTextureVec.at(i));
-		bestiarySpriteVec.back().setTextureRect(IntRect(0, 0, 256, 256));
-		bestiarySpriteVec.back().setScale(kX, kY);
-	}
-
-	for (size_t i = 0; i < numOfAuthorsTexture; i++)
-	{
-		authorsTextureVec.push_back(Texture());
-		authorsTextureVec.back().loadFromFile("resource\\Menu\\mainMenu\\Authors\\authors_" + std::to_string(i) + ".png");
-	}
-
-	for (size_t i = 0; i < numOfAuthorsTexture; i++)
-	{
-		authorsSpriteVec.push_back(Sprite());
-		authorsSpriteVec.back().setTexture(authorsTextureVec.at(i));
-		authorsSpriteVec.back().setTextureRect(IntRect(0, 0, 1920, 1080));
-		if (i < 9)
-		{
-			authorsSpriteVec.back().setTextureRect(IntRect(0, 0, 160, 160));
-		}
-		else
-		{
-			authorsSpriteVec.back().setTextureRect(IntRect(0, 0, 800, 800));
-		}
-		authorsSpriteVec.back().setScale(2 * kX,2 * kY);
-	}
-
-	bestiaryBgTexture.loadFromFile("resource\\Menu\\mainMenu\\Bestiary\\backGround.png");
-	bestiaryBg.setTexture(bestiaryBgTexture);
-	bestiaryBg.setPosition(0, 0);
-	bestiaryBg.setScale(kX, kY);
 
 	for (size_t i = 0; i < 8; i++)  // Вектор текстур бэкграунда Главного Меню
 	{
@@ -137,16 +52,111 @@ Menu::Menu(sf::RenderWindow& window, Music& music, Camera* camera)
 		sprPauseVec.back().setScale(kX * resizeMistakeX, kY * resizeMistakeY);
 	}
 
-	authorsMusic.openFromFile("resource\\Audio\\authorsMusic.ogg");
-	buttonBuffer.loadFromFile("resource\\Audio\\buttonSound.ogg");
-	buttonSound.setBuffer(buttonBuffer);
-	bestiaryMusic.openFromFile("resource\\Audio\\bestiaryMusic.ogg");
-	mainMenuMusic.openFromFile("resource\\Audio\\mainMenuMusic.ogg");
+	whatDisplay = 5;
+	isDisp = 0;
+
+	for (size_t i = 0; i < numOfDisplay; i++)
+	{
+		displayVector.push_back(std::pair< Text, std::pair<int, int>>(Text(), std::pair<int, int>(0, 0)));
+		displayVector.back().first.setFont(font);
+		displayVector.back().first.setString(displayArray[i].first);
+		displayVector.back().second.first = displayArray[i].second.first;
+		displayVector.back().second.second = displayArray[i].second.second;
+	}
+	displayVector.at(5).second.first = verticalHeight;  // Пользовательское разрешение
+	displayVector.at(5).second.second = horizontalHeight;
+	displayVector.at(5).first.setString(std::to_string(verticalHeight) + "x" + std::to_string(horizontalHeight) + L" - пользовательское");
+
+	displayVector.at(6).second.first = GetSystemMetrics(SM_CXSCREEN);  // Разрешение дисплея пользователя
+	displayVector.at(6).second.second = GetSystemMetrics(SM_CYSCREEN);
+	displayVector.at(6).first.setString(std::to_string(GetSystemMetrics(SM_CXSCREEN)) + "x" + std::to_string(GetSystemMetrics(SM_CYSCREEN)) + L" - полный экран");
 
 	arrow.loadFromFile("resource\\Menu\\settingsMenu\\volumeArrows.png");
 	volArrows.setTexture(arrow);
 	volArrows.setTextureRect(IntRect(0, 144, 252, 36));
 	volArrows.setScale(kX * resizeMistakeX, kY * resizeMistakeY);
+
+	for (size_t i = 0; i < numOfMonstres; i++)  // Вектор текстур существ Бестиария
+	{
+		bestiaryTextureVec.push_back(Texture());
+		bestiaryTextureVec.back().loadFromFile("resource\\Menu\\mainMenu\\Bestiary\\sprite_" + std::to_string(i) + ".png");
+	}
+
+	for (size_t i = 0; i < numOfMonstres; i++)  // Вектор спрайтов существ Бестриария
+	{
+		bestiarySpriteVec.push_back(Sprite());
+		bestiarySpriteVec.back().setTexture(bestiaryTextureVec.at(i));
+		bestiarySpriteVec.back().setTextureRect(IntRect(0, 0, 256, 256));
+		bestiarySpriteVec.back().setScale(kX, kY);
+	}
+
+	bestiaryFont.loadFromFile("resource\\Fonts\\bestiaryFonts\\13859.ttf");
+	for (size_t i = 0; i < numOfMonstres; i++)
+	{
+		bestiaryVector.push_back(std::pair<Text, Text>(Text(), Text()));
+		bestiaryVector.back().first.setFont(bestiaryFont);
+		bestiaryVector.back().first.setString(bestiaryArray[i].first);
+		bestiaryVector.back().second.setFont(bestiaryFont);
+		bestiaryVector.back().second.setString(bestiaryArray[i].second);
+		bestiaryVector.back().second.setLineSpacing(0.6);
+	}
+	
+	for (size_t i = 0; i < numOfButton; i++)
+	{
+		buttonVector.push_back(Text());
+		buttonVector.back().setFont(bestiaryFont);
+		buttonVector.back().setString(buttonArray[i]);
+		buttonVector.back().setStyle(Text::Bold);
+	}
+
+	bestiaryBgTexture.loadFromFile("resource\\Menu\\mainMenu\\Bestiary\\backGround.png");
+	bestiaryBg.setTexture(bestiaryBgTexture);
+	bestiaryBg.setPosition(0, 0);
+	bestiaryBg.setScale(kX, kY);
+
+	for (size_t i = 0; i < numOfAuthors; i++)
+	{
+		authorsTextVec.push_back(Text());
+		authorsTextVec.back().setString(authorsTextArray[i]);
+		authorsTextVec.back().setFont(font);
+	}
+
+	for (size_t i = 0; i < numOfAuthorsTexture; i++)
+	{
+		authorsTextureVec.push_back(Texture());
+		authorsTextureVec.back().loadFromFile("resource\\Menu\\mainMenu\\Authors\\authors_" + std::to_string(i) + ".png");
+	}
+
+	for (size_t i = 0; i < numOfAuthorsTexture; i++)
+	{
+		authorsSpriteVec.push_back(Sprite());
+		authorsSpriteVec.back().setTexture(authorsTextureVec.at(i));
+		authorsSpriteVec.back().setTextureRect(IntRect(0, 0, 1920, 1080));
+		if (i < 9)
+		{
+			authorsSpriteVec.back().setTextureRect(IntRect(0, 0, 200, 200));
+			if (i > 3)
+			{
+				authorsSpriteVec.back().setScale(kX, kY);
+			}
+			else
+			{
+				authorsSpriteVec.back().setScale(2 * kX, 2 * kY);
+			}
+		}
+		else
+		{
+			authorsSpriteVec.back().setTextureRect(IntRect(0, 0, 1000, 1000));
+			authorsSpriteVec.back().setScale(kX, kY);
+		}
+		
+	}
+
+	mainMenuMusic.openFromFile("resource\\Audio\\mainMenuMusic.ogg");
+	bestiaryMusic.openFromFile("resource\\Audio\\bestiaryMusic.ogg");
+	authorsMusic.openFromFile("resource\\Audio\\authorsMusic.ogg");
+	buttonBuffer.loadFromFile("resource\\Audio\\buttonSound.ogg");
+	buttonSound.setBuffer(buttonBuffer);
 
 	Menu::updateSize();
 	Menu:mainMenu(window, music);
@@ -172,9 +182,8 @@ void Menu::mainMenu(RenderWindow& window, Music& musicToStop)
 	menuTimer = 0; // Таймер для нажатия клавиш
 
 	musicToStop.stop();
-	mainMenuMusic.play();
+	Menu::playMusic(mainMenuMusic);
 	mainMenuMusic.setLoop(true);
-	mainMenuMusic.setVolume(25 * volValue * isVol);
 
 	while (isMenu)
 	{
@@ -263,8 +272,7 @@ void Menu::mainMenu(RenderWindow& window, Music& musicToStop)
 				if (Keyboard::isKeyPressed(Keyboard::Enter))
 				{
 					Menu::authors(window, musicToStop);
-					mainMenuMusic.play();
-					mainMenuMusic.setVolume(isVol * 25 * volValue);
+					Menu::playMusic(mainMenuMusic);
 					isMenu = true;
 					key = 1;
 				}
@@ -583,9 +591,8 @@ void Menu::bestiary(RenderWindow& window, Music& musicToStop)
 	whatMonster = 0;
 
 	mainMenuMusic.stop();
-	bestiaryMusic.play();
+	Menu::playMusic(bestiaryMusic);
 	bestiaryMusic.setLoop(true);
-	bestiaryMusic.setVolume(25 * volValue * isVol);
 
 	while (isMenu)
 	{
@@ -655,29 +662,14 @@ void Menu::updateSize()
 		std::cout << "Camera not found!" << std::endl;
 		return;
 	}
+	
 	cameraOffsetX = camera->getView()->getCenter().x - camera->getView()->getSize().x / 2;
 	cameraOffsetY = camera->getView()->getCenter().y - camera->getView()->getSize().y / 2;
 	kX = double(camera->getView()->getSize().x) / double(1920);
 	kY = double(camera->getView()->getSize().y) / double(1080);
 	resizeMistakeX = 1920.0 / 1280.0;
 	resizeMistakeY = 1080.0 / 720.0;
-	
-	authorsBg.setFillColor(Color(50, 50, 50, 255));
-	authorsBg.setSize(Vector2f(GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)));
-	authorsBg.setPosition(cameraOffsetX, cameraOffsetY);
 
-	for (size_t i = 0; i < numOfAuthors; i++)
-	{
-		authorsVector.at(i).setCharacterSize(int(camera->getView()->getSize().y / 27));
-		authorsVector.at(i).setPosition((360 - 320) * kX * resizeMistakeX + cameraOffsetX, (597 - 180) * kY * resizeMistakeY + cameraOffsetY);
-	}
-
-	for (int i = 0; i < numOfDisplay; i++)
-	{
-		displayVector.at(i).first.setPosition((360 - 320) * kX * resizeMistakeX + cameraOffsetX, (597 - 180) * kY * resizeMistakeY + cameraOffsetY);
-		displayVector.at(i).first.setCharacterSize(int(camera->getView()->getSize().y * resizeMistakeY / 27));
-	}
-	
 	for (int i = 0; i < numOfMenuButtons; i++)
 	{
 		if (textVector.at(i).second == "mainMenu")
@@ -689,7 +681,7 @@ void Menu::updateSize()
 			textVector.at(i).first.setCharacterSize(int(camera->getView()->getSize().y * resizeMistakeY / 27));
 		}
 	}
-	
+
 	textVector.at(14).first.setPosition(40 * kX + cameraOffsetX, 380 * kY + cameraOffsetY);  // Продолжить
 	textVector.at(0).first.setPosition(40 * kX + cameraOffsetX, 440 * kY + cameraOffsetY);  // Новая игра 
 	textVector.at(17).first.setPosition(40 * kX + cameraOffsetX, 500 * kY + cameraOffsetY);  // Загрузка
@@ -712,20 +704,28 @@ void Menu::updateSize()
 	textVector.at(11).first.setPosition((360 - 320) * kX * resizeMistakeX + cameraOffsetX, (715 - 180) * kY * resizeMistakeX + cameraOffsetY);  // Громкость
 	textVector.at(12).first.setPosition((360 - 320) * kX * resizeMistakeX + cameraOffsetX, (819 - 180) * kY * resizeMistakeX + cameraOffsetY);  // Назад
 	textVector.at(13).first.setPosition((360 - 320) * kX * resizeMistakeX + cameraOffsetX, (550 - 180) * kY * resizeMistakeX + cameraOffsetY);  // Разрешение
-	
-	for (int i = 0; i < 4; i++)  // Вектор спрайтов бэкграунда Меню Паузы
-	{
-		sprPauseVec.at(i).setPosition(camera->getView()->getCenter().x - kX * resizeMistakeX * sprPauseVec.at(i).getTexture()->getSize().x / 4,
-			camera->getView()->getCenter().y - kY * resizeMistakeY * sprPauseVec.at(i).getTexture()->getSize().y / 2);
-	}
-	
-	for (int i = 0; i < 8; i++)
+
+	for (int i = 0; i < 8; i++)  // Вектор спрайтов бэкграунда главного меню
 	{
 		spriteVec.at(i).setPosition(camera->getView()->getCenter().x - kX * spriteVec.at(i).getTexture()->getSize().x / 4,
 			camera->getView()->getCenter().y - kY * spriteVec.at(i).getTexture()->getSize().y / 2);
 	}
 	
-	for (size_t i = 0; i < numOfMonstres; i++)
+	for (int i = 0; i < 4; i++)  // Вектор спрайтов бэкграунда меню паузы
+	{
+		sprPauseVec.at(i).setPosition(camera->getView()->getCenter().x - kX * resizeMistakeX * sprPauseVec.at(i).getTexture()->getSize().x / 4,
+			camera->getView()->getCenter().y - kY * resizeMistakeY * sprPauseVec.at(i).getTexture()->getSize().y / 2);
+	}
+	
+	for (int i = 0; i < numOfDisplay; i++)  // Вектор параметров разрешения экрана
+	{
+		displayVector.at(i).first.setPosition((360 - 320) * kX * resizeMistakeX + cameraOffsetX, (597 - 180) * kY * resizeMistakeY + cameraOffsetY);
+		displayVector.at(i).first.setCharacterSize(int(camera->getView()->getSize().y * resizeMistakeY / 27));
+	}
+	
+	volArrows.setPosition((360 - 320) * kX * resizeMistakeX + cameraOffsetX, (773 - 180) * kY * resizeMistakeY + cameraOffsetY);  // Стрелки громкости
+
+	for (size_t i = 0; i < numOfMonstres; i++)  // Вектор текста бестиария
 	{
 		bestiaryVector.at(i).first.setCharacterSize(int(camera->getView()->getSize().y / 10.8));
 		bestiaryVector.at(i).first.setPosition(400 * kX + cameraOffsetX, 350 * kY + cameraOffsetY);
@@ -733,7 +733,7 @@ void Menu::updateSize()
 		bestiaryVector.at(i).second.setPosition(400 * kX + cameraOffsetX, 475 * kY + cameraOffsetY);
 	}
 	
-	for (size_t i = 0; i < numOfButton; i++)
+	for (size_t i = 0; i < numOfButton; i++)  // Вектор кнопок бестиария
 	{
 		buttonVector.at(i).setCharacterSize(int(camera->getView()->getSize().y / 20));
 		buttonVector.at(i).setPosition(600 * kX + cameraOffsetX, 600 * kY + cameraOffsetY);
@@ -749,16 +749,57 @@ void Menu::updateSize()
 		bestiarySpriteVec.at(i).setPosition(1300 * kX + cameraOffsetX, 400 * kY + cameraOffsetY);
 	}
 
-	volArrows.setPosition((360 - 320) * kX * resizeMistakeX + cameraOffsetX, (773 - 180) * kY * resizeMistakeY + cameraOffsetY);
-
-	bestiaryBg.setPosition(camera->getView()->getCenter().x - kX * bestiaryBg.getTexture()->getSize().x / 2,
+	bestiaryBg.setPosition(camera->getView()->getCenter().x - kX * bestiaryBg.getTexture()->getSize().x / 2,  // Вектор бэкграунда бестиария
 		camera->getView()->getCenter().y - kY * bestiaryBg.getTexture()->getSize().y / 2);
 	
-	for (size_t i = 0; i < numOfAuthorsTexture; i++)  // Вектор спрайтов кадров меню "Авторы"
+	for (size_t i = 0; i < numOfAuthors; i++)  // Вектор текста меню "Авторы"
 	{
-		authorsSpriteVec.at(i).setPosition(100 * kX + cameraOffsetX, 100 * kY + cameraOffsetY);
+		authorsTextVec.at(i).setCharacterSize(int(camera->getView()->getSize().y / 27));
 	}
-	authorsSpriteVec.at(2).setPosition(300 * kX + cameraOffsetX, 100 * kY + cameraOffsetY);
+	
+	authorsBg.setFillColor(Color(50, 50, 50, 255));
+	authorsBg.setSize(Vector2f(GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)));  // Бэкграунд меню "Авторы"
+	authorsBg.setPosition(cameraOffsetX, cameraOffsetY);
+
+	authorsTextVec.at(0).setPosition(170 * kX + cameraOffsetX, 800 * kY + cameraOffsetY);  // Текст меню "Авторы"
+	authorsTextVec.at(1).setPosition(240 * kX + cameraOffsetX, 800 * kY + cameraOffsetY);
+	authorsTextVec.at(2).setPosition(240 * kX + cameraOffsetX, 850 * kY + cameraOffsetY);
+	authorsTextVec.at(3).setPosition(1200 * kX + cameraOffsetX, 800 * kY + cameraOffsetY);
+	authorsTextVec.at(4).setPosition(1200 * kX + cameraOffsetX, 850 * kY + cameraOffsetY);
+	authorsTextVec.at(5).setPosition(380 * kX + cameraOffsetX, 800 * kY + cameraOffsetY);
+	authorsTextVec.at(6).setPosition(530 * kX + cameraOffsetX, 850 * kY + cameraOffsetY);
+	authorsTextVec.at(7).setPosition(570 * kX + cameraOffsetX, 1000 * kY + cameraOffsetY);
+
+	authorsSpriteVec.at(1).setPosition(280 * kX + cameraOffsetX, 300 * kY + cameraOffsetY);  // Спрайты меню "Авторы"
+	authorsSpriteVec.at(2).setPosition(1240 * kX + cameraOffsetX, 300 * kY + cameraOffsetY);
+	authorsSpriteVec.at(0).setPosition(760 * kX + cameraOffsetX, 300 * kY + cameraOffsetY);
+	authorsSpriteVec.at(3).setPosition(760 * kX + cameraOffsetX, 300 * kY + cameraOffsetY);
+	
+	for (size_t i = 9; i < numOfAuthorsTexture; i++)  // Вектор спрайтов кадров меню "Авторы"
+	{
+		authorsSpriteVec.at(i).setPosition(460 * kX + cameraOffsetX, cameraOffsetY);
+	}
+	for (size_t i = 4; i < 9; i++)
+	{
+		authorsSpriteVec.at(i).setPosition((400 + 460) * kX + cameraOffsetX, 500 * kY + cameraOffsetY);
+	}
+}
+
+void Menu::frameCreator(RenderWindow& window)
+{
+	float time = clock2.getElapsedTime().asMicroseconds();
+	clock2.restart();
+	time = time / 800;
+	menuTimer += 0.005 * time;
+	CurrentFrame += 0.005 * time;
+	while (window.pollEvent(event))
+	{
+		if (event.type == Event::Closed)
+		{
+			isMenu = false;
+			window.close();
+		}
+	}
 }
 
 void Menu::createKeys(int numOfKeys)
@@ -793,8 +834,7 @@ void Menu::closeMainMenu(Music& musicToStop)
 	Menu::playSound(buttonSound);
 	clock3.restart();
 	isMenu = false;
-	musicToStop.play();
-	musicToStop.setVolume(25 * volValue * isVol);
+	Menu::playMusic(musicToStop);
 	menuTimer = 0;
 }
 
@@ -948,23 +988,6 @@ void Menu::closeSettingsMenu(RenderWindow& window, Music& music)
 	menuTimer = 0;
 }
 
-void Menu::frameCreator(RenderWindow& window)
-{
-	float time = clock2.getElapsedTime().asMicroseconds();
-	clock2.restart();
-	time = time / 800;
-	menuTimer += 0.005 * time;
-	CurrentFrame += 0.005 * time;
-	while (window.pollEvent(event))
-	{
-		if (event.type == Event::Closed)
-		{
-			isMenu = false;
-			window.close();
-		}
-	}
-}
-
 void Menu::chooseVolume(Music& music, bool leftArrow)
 {
 	if (leftArrow)
@@ -1051,8 +1074,7 @@ void Menu::authors(RenderWindow& window, Music& musicToStop)
 	CurrentFrame = 0;
 	
 	mainMenuMusic.stop();
-	authorsMusic.play();
-	authorsMusic.setVolume(isVol * 25 * volValue);
+	Menu::playMusic(authorsMusic);
 
 	while (isMenu)
 	{
@@ -1062,60 +1084,98 @@ void Menu::authors(RenderWindow& window, Music& musicToStop)
 		{
 			if (Keyboard::isKeyPressed(Keyboard::Enter))
 			{
-				authorsMusic.stop();
-				//window.clear();
-				isMenu = false;
-				clock3.restart();
-				menuTimer = 0;
+				Menu::closeAuthors();
 			}
 		}
 		if (!authorsMusic.getStatus())
 		{
-			authorsMusic.stop();
-			//window.clear();
-			isMenu = false;
-			clock3.restart();
-			menuTimer = 0;
+			Menu::closeAuthors();
 		}
-
-		if (CurrentFrame > 400) CurrentFrame = 0;
-
-		/*authorsVector.at(int(CurrentFrame / 25)).setFillColor(Color(
-			50 * 255 / (abs(-205 + 410 * abs(CurrentFrame - 25 * (int(CurrentFrame / 25) + 1)) / 25) + 50),
-			50 * 255 / (abs(-205 + 410 * abs(CurrentFrame - 25 * (int(CurrentFrame / 25) + 1)) / 25) + 50),
-			50 * 255 / (abs(-205 + 410 * abs(CurrentFrame - 25 * (int(CurrentFrame / 25) + 1)) / 25) + 50),
-			255));*/
-
-		
 
 		if (isMenu)
 		{
-			window.draw(authorsBg);
-			
-			if (int(CurrentFrame / 25) > 3)
-			{
-				if (int(int(CurrentFrame - 25 * int(CurrentFrame / 25)) / (25 / 16.0)) < 8)
-				{
-					authorsSpriteVec.at(int(CurrentFrame / 25)).setTextureRect(IntRect(160 * int(int(CurrentFrame - 25 * int(CurrentFrame / 25)) / (25 / 16.0)), 0, 160, 160));
-				}
-				else
-				{
-					authorsSpriteVec.at(int(CurrentFrame / 25)).setTextureRect(IntRect(160 * (15 - int(int(CurrentFrame - 25 * int(CurrentFrame / 25)) / (25 / 16.0))), 0, 160, 160));
-				}
-			}
-
-			/*if ((CurrentFrame >= 0) && (CurrentFrame <= 35))
-			{
-				authorsSpriteVec.at(9 + int(int(CurrentFrame) / 4)).setTextureRect(IntRect(800 * int(CurrentFrame - 4 * int(CurrentFrame / 4)), 0, 800, 800 ));
-				std::cout << int(CurrentFrame - 4 * int(CurrentFrame / 4));
-			}*/
-				
-			window.draw(authorsSpriteVec.at(int(CurrentFrame / 25)));
-
-			//window.draw(authorsSpriteVec.at(9 + int(int(CurrentFrame) / 4)));
-			
-			//window.draw(authorsVector.at(int(CurrentFrame / 25)));
+			window.draw(authorsBg);	
+			Menu::drawAuthorsSprites(window);
 			window.display();
 		}
+	}
+}
+
+void Menu::drawAuthorsText(RenderWindow& window, int numOfElem, int startFrame, int duration)
+{
+	authorsTextVec.at(numOfElem).setFillColor(Color(
+			50 * 255 / (abs(-205 + 410 * abs((CurrentFrame - startFrame) - duration * (int((CurrentFrame - startFrame) / duration) + 1)) / duration) + 50),
+			50 * 255 / (abs(-205 + 410 * abs((CurrentFrame - startFrame) - duration * (int((CurrentFrame - startFrame) / duration) + 1)) / duration) + 50),
+			50 * 255 / (abs(-205 + 410 * abs((CurrentFrame - startFrame) - duration * (int((CurrentFrame - startFrame) / duration) + 1)) / duration) + 50),
+			255));
+	window.draw(authorsTextVec.at(numOfElem));
+}
+
+void Menu::closeAuthors()
+{
+	authorsMusic.stop();
+	isMenu = false;
+	clock3.restart();
+	menuTimer = 0;
+}
+
+void Menu::playMusic(Music& music)
+{
+	music.play();
+	music.setVolume(isVol * 25 * volValue);
+}
+
+void Menu::drawAuthorsSprites(RenderWindow& window)
+{
+	if ((CurrentFrame >= 0) && (CurrentFrame < 50))
+	{
+		window.draw(authorsSpriteVec.at(0));
+		Menu::drawAuthorsText(window, 0, 0, 50);
+	}
+
+	if ((CurrentFrame >= 50) && (CurrentFrame < 100))
+	{
+		window.draw(authorsSpriteVec.at(1));
+		window.draw(authorsSpriteVec.at(2));
+		Menu::drawAuthorsText(window, 1, 50, 50);
+		Menu::drawAuthorsText(window, 2, 50, 50);
+		Menu::drawAuthorsText(window, 3, 50, 50);
+		Menu::drawAuthorsText(window, 4, 50, 50);
+	}
+
+	if ((CurrentFrame >= 100) && (CurrentFrame < 150))
+	{
+		window.draw(authorsSpriteVec.at(3));
+		Menu::drawAuthorsText(window, 5, 100, 50);
+		Menu::drawAuthorsText(window, 6, 100, 50);
+	}
+
+	if ((CurrentFrame >= 150) && (CurrentFrame <= 270))
+	{
+		if (CurrentFrame < 230)
+		{
+			if (int(int((CurrentFrame - 150) - 16 * int((CurrentFrame - 150) / 16)) / (16 / 16.0)) < 8)
+			{
+				authorsSpriteVec.at(4 + int((CurrentFrame - 150) / 16)).setTextureRect(IntRect(200 * int(int((CurrentFrame - 150) - 16 * int((CurrentFrame - 150) / 16)) / (16 / 16.0)), 0, 200, 200));
+			}
+			else
+			{
+				authorsSpriteVec.at(4 + int((CurrentFrame - 150) / 16)).setTextureRect(IntRect(200 * (15 - int(int((CurrentFrame - 150) - 16 * int((CurrentFrame - 150) / 16)) / (16 / 16.0))), 0, 200, 200));
+			}
+			window.draw(authorsSpriteVec.at(4 + int((CurrentFrame - 150) / 16)));
+		}
+		else
+		{
+			authorsSpriteVec.at(9 + int(int((CurrentFrame - 230)) / 4)).setTextureRect(IntRect(1000 * int((CurrentFrame - 230) - 4 * int((CurrentFrame - 230) / 4)), 0, 1000, 1000));
+			window.draw(authorsSpriteVec.at(9 + int(int((CurrentFrame - 230)) / 4)));
+		}
+		Menu::drawAuthorsText(window, 7, 150, 120);
+	}
+
+	if (CurrentFrame >= 270)
+	{
+		CurrentFrame = 150;
+		authorsSpriteVec.at(4).setTextureRect(IntRect(0, 0, 200, 200));
+		window.draw(authorsSpriteVec.at(4));
 	}
 }
