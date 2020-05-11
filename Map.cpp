@@ -36,22 +36,7 @@ void Map::loadMap()
 	magicTieldsVector.clear();
 	/////////////////////////////Рисуем карту/////////////////////
 	std::vector<sf::Sprite> vect;
-	//temp
-	TextureData movementTexture0;
-
-	movementTexture0.image = new sf::Image;
-	movementTexture0.texture = new sf::Texture;
-	movementTexture0.sprite = new sf::Sprite;
-
-	movementTexture0.image->loadFromFile("resource\\Map_Tileds\\Dungeon\\Animation_Objects\\boiler.png");//sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, int maxFrameAttackX, int maxFrameAttackY, double x, double y, double speed, double attackTime)
-	movementTexture0.texture->loadFromImage(*movementTexture0.image);
-	movementTexture0.sprite->setTexture(*movementTexture0.texture);
-
-	movementTexture0.maxFrameX = 4;
-	movementTexture0.maxFrameY = 1;
-
-	SizeXY sizeXY(movementTexture0.texture->getSize().x/movementTexture0.maxFrameX, movementTexture0.texture->getSize().y / movementTexture0.maxFrameY);
-	//temp
+	loadObjectAnimations();
 	for (int i = 0; i < heightMap; i++)
 	{
 		for (int j = 0; j < widthMap; j++)
@@ -65,19 +50,200 @@ void Map::loadMap()
 			if (tieldMaps[i][j] == '0')
 			{
 				sprite.setTextureRect(sf::IntRect(tieldWidth * 5, 0, tieldWidth, tieldHeight));
-				sprite.setPosition(j * tieldWidth, i * tieldHeight);
-				magicTieldsVector.push_back(std::pair<sf::Sprite, int>(sprite, 2));
-
-				movementTexture0.sprite->setPosition(j * tieldWidth, i * tieldHeight);
-				animatedTields.push_back(new AnimatedTield(movementTexture0, sizeXY, 0));
+				addWallObject(sprite, j * tieldWidth, i * tieldHeight);
+				addAnimationObject(sprite, j * tieldWidth, i * tieldHeight, 0);
 				continue;
 			}
 			if (tieldMaps[i][j] == '7')  sprite.setTextureRect(sf::IntRect(tieldWidth * 7, 0, tieldWidth, tieldHeight));
 			if ((tieldMaps[i][j] == '8')) sprite.setTextureRect(sf::IntRect(tieldWidth * 8, 0, tieldWidth, tieldHeight));
+			if ((tieldMaps[i][j] == 'q'))
+			{
+				sprite.setTextureRect(sf::IntRect(tieldWidth * 9, 0, tieldWidth, tieldHeight));
+				addWallObject(sprite, j * tieldWidth, i * tieldHeight);
+				continue;;
+			}
+			if ((tieldMaps[i][j] == 'w')) 
+			{ 
+				sprite.setTextureRect(sf::IntRect(tieldWidth * 10, 0, tieldWidth, tieldHeight));
+				addWallObject(sprite, j * tieldWidth, i * tieldHeight);
+				continue;;
+			}
+			if ((tieldMaps[i][j] == 'e')) 
+			{ 
+				sprite.setTextureRect(sf::IntRect(tieldWidth * 11, 0, tieldWidth, tieldHeight));
+				addWallObject(sprite, j * tieldWidth, i * tieldHeight);
+				continue;;
+			}
+			if ((tieldMaps[i][j] == 'r'))
+			{
+				sprite.setTextureRect(sf::IntRect(tieldWidth * 12, 0, tieldWidth, tieldHeight)); 
+				addWallObject(sprite, j * tieldWidth, i * tieldHeight);
+				continue;;
+			}
+			if ((tieldMaps[i][j] == 'a')) 
+			{ 
+				sprite.setTextureRect(sf::IntRect(tieldWidth * 13, 0, tieldWidth, tieldHeight));
+				addWallObject(sprite, j * tieldWidth, i * tieldHeight);
+				continue;;
+			}
+			if ((tieldMaps[i][j] == 's')) 
+			{ 
+				sprite.setTextureRect(sf::IntRect(tieldWidth * 14, 0, tieldWidth, tieldHeight));
+				addWallObject(sprite, j * tieldWidth, i * tieldHeight);
+				continue;;
+			}
+			if ((tieldMaps[i][j] == 'd'))
+			{ 
+				sprite.setTextureRect(sf::IntRect(tieldWidth * 15, 0, tieldWidth, tieldHeight));
+				addWallObject(sprite, j * tieldWidth, i * tieldHeight);
+				continue;;
+			}
+			if ((tieldMaps[i][j] == 'f'))
+			{ 
+				sprite.setTextureRect(sf::IntRect(tieldWidth * 16, 0, tieldWidth, tieldHeight)); 
+				addWallObject(sprite, j * tieldWidth, i * tieldHeight);
+				continue;;
+			}
+
+			if ((tieldMaps[i][j] == '@'))
+			{
+				sprite.setTextureRect(sf::IntRect(tieldWidth * 5, 0, tieldWidth, tieldHeight));
+				addWallObject(sprite, j * tieldWidth, i * tieldHeight);
+				continue;;
+			}
+
+			if (tieldMaps[i][j] == 'z')
+			{
+				sprite.setTextureRect(sf::IntRect(tieldWidth * 5, 0, tieldWidth, tieldHeight));
+				addWallObject(sprite, j * tieldWidth, i * tieldHeight);
+				addAnimationObject(sprite, j * tieldWidth, i * tieldHeight, 1);
+				continue;
+			}
+			if (tieldMaps[i][j] == 'x')
+			{
+				sprite.setTextureRect(sf::IntRect(tieldWidth * 5, 0, tieldWidth, tieldHeight));
+				addWallObject(sprite, j * tieldWidth, i * tieldHeight);
+				addAnimationObject(sprite, j * tieldWidth, i * tieldHeight, 2);
+				continue;
+			}
+			if (tieldMaps[i][j] == 'c')
+			{
+				sprite.setTextureRect(sf::IntRect(tieldWidth * 5, 0, tieldWidth, tieldHeight));
+				addWallObject(sprite, j * tieldWidth, i * tieldHeight);
+				addAnimationObject(sprite, j * tieldWidth, i * tieldHeight, 3);
+				continue;
+			}
+			if (tieldMaps[i][j] == 'v')
+			{
+				sprite.setTextureRect(sf::IntRect(tieldWidth * 5, 0, tieldWidth, tieldHeight));
+				addWallObject(sprite, j * tieldWidth, i * tieldHeight);
+				addAnimationObject(sprite, j * tieldWidth, i * tieldHeight, 4);
+				continue;
+			}
+			if (tieldMaps[i][j] == 'b')
+			{
+				sprite.setTextureRect(sf::IntRect(tieldWidth * 5, 0, tieldWidth, tieldHeight));
+				addWallObject(sprite, j * tieldWidth, i * tieldHeight);
+				addAnimationObject(sprite, j * tieldWidth, i * tieldHeight, 5);
+				continue;
+			}
+			if (tieldMaps[i][j] == 'n')//на будущее
+			{
+				sprite.setTextureRect(sf::IntRect(tieldWidth * 5, 0, tieldWidth, tieldHeight));
+				addWallObject(sprite, j * tieldWidth, i * tieldHeight);
+				addAnimationObject(sprite, j * tieldWidth, i * tieldHeight, 6);
+				continue;
+			}
 			sprite.setPosition(j * tieldWidth, i * tieldHeight);
 			magicTieldsVector.push_back(std::pair<sf::Sprite, int> (sprite, 0));
 		}
 	}
+}
+
+
+
+void Map::addWallObject(sf::Sprite& sprite, int jTields, int iTields)// должна принимать флаг 2, 1, 0, Но мы торопимся сдать работу)
+{
+	sprite.setPosition(jTields, iTields);
+	magicTieldsVector.push_back(std::pair<sf::Sprite, int>(sprite, 2));
+}
+void Map::addAnimationObject(sf::Sprite& sprite, int jTields, int iTields, int number)// Прости за числа, времени мало, а писать списки нет времени XD
+{
+	movementTexturesAndSizeXY.at(number).first.sprite->setPosition(jTields, iTields);
+	double speedAnimation = 0;
+	switch (number)
+	{
+	case 0:
+	{
+		speedAnimation = 9 * pow(10, -6) / 3;
+		break;
+	}
+	case 1:
+	{
+		speedAnimation = 9 * pow(10, -6) / 3;
+		break;
+	case 2:
+	{
+		speedAnimation = 9 * pow(10, -6) / 3;
+		break;
+	case 3:
+	{
+		speedAnimation = 9 * pow(10, -6) / 3;
+		break;
+	}
+	case 4:
+	{
+		speedAnimation = 9 * pow(10, -6) / 3;
+		break;
+	}
+	case 5:
+	{
+		speedAnimation = 9 * pow(10, -6) / 3;
+		break;
+	}
+	case 6:
+	{
+		speedAnimation = 9 * pow(10, -6) / 3;
+		break;
+	}
+	}
+
+	}
+	}
+	animatedTields.push_back(new AnimatedTield(movementTexturesAndSizeXY.at(number).first, movementTexturesAndSizeXY.at(number).second, 0, speedAnimation));
+}
+
+void Map::loadObjectAnimations()
+{
+	movementTexturesAndSizeXY.clear();
+	addAnimatedTexture("resource\\Map_Tileds\\Dungeon\\Animation_Objects\\boiler.png", 4, 1);
+	addAnimatedTexture("resource\\Map_Tileds\\Dungeon\\Animation_Objects\\coffin.png", 4, 1);
+	addAnimatedTexture("resource\\Map_Tileds\\Dungeon\\Animation_Objects\\gallows.png", 4, 1);
+	
+	addAnimatedTexture("resource\\Map_Tileds\\Dungeon\\Animation_Objects\\guillotine.png", 4, 1);
+	addAnimatedTexture("resource\\Map_Tileds\\Dungeon\\Animation_Objects\\hellTree.png", 4, 1);
+	addAnimatedTexture("resource\\Map_Tileds\\Dungeon\\Animation_Objects\\jesus.png", 4, 1);
+}
+
+void Map::addAnimatedTexture(const sf::String& fileFolder, int maxFrameX, int maxFrameY)
+{
+	//temp
+	TextureData movementTexture0;
+
+	movementTexture0.image = new sf::Image;
+	movementTexture0.texture = new sf::Texture;
+	movementTexture0.sprite = new sf::Sprite;
+
+	movementTexture0.image->loadFromFile(fileFolder);//sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, int maxFrameAttackX, int maxFrameAttackY, double x, double y, double speed, double attackTime)
+	movementTexture0.texture->loadFromImage(*movementTexture0.image);
+	movementTexture0.sprite->setTexture(*movementTexture0.texture);
+
+	movementTexture0.maxFrameX = maxFrameX;
+	movementTexture0.maxFrameY = maxFrameY;
+
+	SizeXY sizeXY(movementTexture0.texture->getSize().x / movementTexture0.maxFrameX, movementTexture0.texture->getSize().y / movementTexture0.maxFrameY);
+	//temp
+	movementTexturesAndSizeXY.push_back(std::pair<TextureData, SizeXY>(movementTexture0, sizeXY));
 }
 
 void Map::animationTields(sf::RenderWindow* window)

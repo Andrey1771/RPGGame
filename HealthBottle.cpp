@@ -1,6 +1,6 @@
 #include "HealthBottle.h"
 #include "Player.h"
-HealthBottle::HealthBottle(int x, int y, int healthPoints) : Item("resource\\Items\\Star.png", 1, 1, 0)
+HealthBottle::HealthBottle(int x, int y, int healthPoints) : Item("resource\\Items\\HealthBottle.png", 1, 1, 0)
 {
 	setPos(x, y);
 	this->healthPoints = healthPoints;

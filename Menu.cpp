@@ -4,10 +4,10 @@
 
 extern int verticalHeight;
 extern int horizontalHeight;
-extern sf::Clock clock3;
 
-Menu::Menu(sf::RenderWindow& window, Music& music, Camera* camera)
+Menu::Menu(sf::RenderWindow& window, Music& music, Camera* camera, sf::Clock& clock)
 {
+	this->clock = &clock;
 	this->camera = camera;
 	kX = double(camera->getView()->getSize().x) / double(1920);
 	kY = double(camera->getView()->getSize().y) / double(1080);
@@ -832,7 +832,7 @@ void Menu::createKeys(int numOfKeys)
 void Menu::closeMainMenu(Music& musicToStop)
 {
 	Menu::playSound(buttonSound);
-	clock3.restart();
+	clock->restart();
 	isMenu = false;
 	Menu::playMusic(musicToStop);
 	menuTimer = 0;
@@ -880,7 +880,7 @@ void Menu::chooseMonster(bool leftArrow)
 void Menu::closeBestiary(RenderWindow& window, Music& musicToStop)
 {
 	Menu::playSound(buttonSound);
-	clock3.restart();
+	clock->restart();
 	bestiaryMusic.stop();
 	mainMenu(window, musicToStop);
 	isMenu = false;
@@ -890,7 +890,7 @@ void Menu::closePauseMenu()
 {
 	Menu::playSound(buttonSound);
 	isMenu = false;
-	clock3.restart();
+	clock->restart();
 	menuTimer = 0;
 }
 
@@ -916,12 +916,20 @@ void Menu::screenModes(RenderWindow& window)
 	isDisp = !isDisp;
 	if (isDisp == 1)
 	{
-		window.create(sf::VideoMode(GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)), "SFMLwork", sf::Style::Fullscreen);
+		window.create(sf::VideoMode(GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN)), "The Darkest Shadow", sf::Style::Fullscreen);
+		sf::Image* icon = new sf::Image;
+		icon->loadFromFile("resource\\Window\\WindowIcon.png");
+
+		window.setIcon(icon->getSize().x, icon->getSize().y, icon->getPixelsPtr());
 		window.setVerticalSyncEnabled(true);
 	}
 	else
 	{
-		window.create(sf::VideoMode(displayVector.at(whatDisplay).second.first, displayVector.at(whatDisplay).second.second), "SFMLwork", sf::Style::Default);
+		window.create(sf::VideoMode(displayVector.at(whatDisplay).second.first, displayVector.at(whatDisplay).second.second), "The Darkest Shadow", sf::Style::Default);
+		sf::Image* icon = new sf::Image;
+		icon->loadFromFile("resource\\Window\\WindowIcon.png");
+
+		window.setIcon(icon->getSize().x, icon->getSize().y, icon->getPixelsPtr());
 		window.setVerticalSyncEnabled(true);
 	}
 	
@@ -982,7 +990,7 @@ void Menu::onOffMusic(Music& music)
 void Menu::closeSettingsMenu(RenderWindow& window, Music& music)
 {
 	Menu::playSound(buttonSound);
-	clock3.restart();
+	clock->restart();
 	isMenu = false;
 	//Menu::pauseMenu(window, music);
 	menuTimer = 0;
@@ -1115,7 +1123,7 @@ void Menu::closeAuthors()
 {
 	authorsMusic.stop();
 	isMenu = false;
-	clock3.restart();
+	clock->restart();
 	menuTimer = 0;
 }
 

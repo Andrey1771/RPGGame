@@ -12,12 +12,38 @@ struct TextureData
 	int maxFrameX{ 1 };
 	int maxFrameY{ 1 };
 	//TextureData(const TextureData& texDat){}
+	TextureData()
+	{
+
+	}
+	/*TextureData(const TextureData& var) // оставить утечки памяти - хорошая идея?- нет, но времени мало
+	{
+		this->image = new sf::Image;
+		this->texture = new sf::Texture;
+		this->sprite = new sf::Sprite;
+		*this->image = *var.image;
+		*this->texture = *var.texture;
+		*this->sprite = *var.sprite;
+	}
+	~TextureData()
+	{
+		delete sprite;
+		delete texture;
+		delete image;
+	}*/
 };
+
 struct SizeXY
 {
 	SizeXY(int sizeX = 0, int sizeY = 0) { this->sizeX = sizeX; this->sizeY = sizeY; };
 	int sizeX;
 	int sizeY;
+	SizeXY& operator=(const SizeXY& right)
+	{
+		sizeX = right.sizeX;
+		sizeY = right.sizeY;
+		return *this;
+	}
 };
 struct SpeedXY
 {
@@ -36,7 +62,7 @@ struct Stats
 	double speed, attackTime, attackRange, attackSpeed;
 	int maxHealthPoints, healthPoints;
 
-	Stats(double speed = 0, double attackTime = 0, double attackRange = 0, double attackSpeed = 0, int maxHealthPoints = 0, int healthPoints = 0) 
+	Stats(double speed = 0, double attackTime = 0, double attackRange = 0, double attackSpeed = 0, int maxHealthPoints = 0, int healthPoints = 0)
 	{
 		this->speed = speed; this->attackTime = attackTime; this->attackRange = attackRange;
 		this->attackSpeed = attackSpeed; this->maxHealthPoints = maxHealthPoints; this->healthPoints = healthPoints;

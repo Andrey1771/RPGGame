@@ -1,16 +1,15 @@
 #include "AnimatedTield.h"
-extern double speedAnimation;
 extern float mainTime;
 
 void AnimatedTield::animation()
 {
-	currentFrameX += speedAnimation * mainTime;
+	currentFrameX += speedAnimation * mainTime + rand() / 3'000'000.0;
 	if (currentFrameX > movementTexture.maxFrameX)
 		currentFrameX -= movementTexture.maxFrameX;
 	movementTexture.sprite->setTextureRect(sf::IntRect((valueSizeXY.sizeX) * int(currentFrameX), valueSizeXY.sizeY * int(currentFrameY), valueSizeXY.sizeX, valueSizeXY.sizeY));//(sizeX) * int(currentFrameY) + sizeX
 }
 
-AnimatedTield::AnimatedTield(const TextureData movementTexture, const SizeXY& valueSizeXY, int currentFrameY/*Не хочу просить Пашка переделывать, тк он неправильно структуризировал стенки*/)
+AnimatedTield::AnimatedTield(const TextureData movementTexture, const SizeXY& valueSizeXY, int currentFrameY/*Не хочу просить Пашка переделывать, тк он неправильно структуризировал стенки*/, double speedAnimation)
 {
 	this->valueSizeXY.sizeX = valueSizeXY.sizeX;
 	this->valueSizeXY.sizeY = valueSizeXY.sizeY;
@@ -26,6 +25,7 @@ AnimatedTield::AnimatedTield(const TextureData movementTexture, const SizeXY& va
 	*this->movementTexture.texture = *movementTexture.texture;
 
 	this->currentFrameY = currentFrameY;// эх
+	this->speedAnimation = speedAnimation;
 }
 
 AnimatedTield::~AnimatedTield()

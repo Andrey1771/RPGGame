@@ -1,4 +1,4 @@
-//#include <SFML/Graphics.hpp>
+п»ї//#include <SFML/Graphics.hpp>
 #include "Header.h"
 #include "Player.h"
 #include "Map.h"
@@ -9,12 +9,13 @@
 #include "HealthBottle.h"
 #include "HealthBar.h"
 #include "DodgeBar.h"
+#include "Menu.h"
 //#include <iostream>
 //void start(sf::RenderWindow& window, Hero& hero);
 int verticalHeight = 1200;
 int horizontalHeight = 800;
 float mainTime;
-double speedAnimation = 9 * pow(10, -6);//Реализовать зависимость скорости анимации от скорости
+double speedAnimation = 9 * pow(10, -6);//Р РµР°Р»РёР·РѕРІР°С‚СЊ Р·Р°РІРёСЃРёРјРѕСЃС‚СЊ СЃРєРѕСЂРѕСЃС‚Рё Р°РЅРёРјР°С†РёРё РѕС‚ СЃРєРѕСЂРѕСЃС‚Рё
 double speedPlayer = 0.00033;//
 double speedPlayerAttack = 1.5;
 double attackPlayerRange = 400;
@@ -24,36 +25,36 @@ int tieldsWidth = 64;
 int tieldsHeight = 64;
 int levelHeight = 25;
 const int distanceAttackingObject = 10;
-float maxTimeDodgePlayer = 1000; // 1000 милисекунд = 1 секунде
+float maxTimeDodgePlayer = 1000; // 1000 РјРёР»РёСЃРµРєСѓРЅРґ = 1 СЃРµРєСѓРЅРґРµ
 float teleportDistance = 200;
 int dodgeDelay = 5000;
 
-sf::String level[] = {// Перенести на файл
-	"0000000000000000000000000000000000000000",
-	"0                                      0",
-	"0   3        0                         0",
-	"0                                      0",
-	"0                   51                 0",
-	"0        0          23                 0",
-	"0                                      0",
-	"0            0                         0",
-	"0                   0                  0",
-	"0       0       0                      0",
-	"0                                      0",
-	"0                      6               0",
-	"0       0                              0",
-	"0                                      0",
-	"0            000             5         0",
-	"0             0                        0",
-	"0                                      0",
-	"0                                      0",
-	"0                       00000          0",
-	"0                       00000          0",
-	"0                       00000          0",
-	"0                       00000          0",
-	"0                       00000          0",
-	"0                                      0",
-	"0000000000000000000000000000000000000000",
+sf::String level[] = {// РџРµСЂРµРЅРµСЃС‚Рё РЅР° С„Р°Р№Р»
+	"aqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqs",
+	"wzzzzzzzz               4            4 e",
+	"w@@@@@@@@   0     v@@@         4       e",
+	"wz      z         @@@@    b            e",
+	"w@      @         @@@@    bb     51    e",
+	"wz                @@@@    @@     23    e",
+	"w@                                     e",
+	"wz4     z    0                         e",
+	"w@      @           0        c         e",
+	"wzzzzzzzz       0            cc        e",
+	"w@@@@@@@@                    @cc       e",
+	"w               000    4      @cc      e",
+	"w 4     0                      @c      e",
+	"w                               @      e",
+	"wx  СЃСЃСЃ      000             4         e",
+	"wx  @@@       0                        e",
+	"wx   4                                 e",
+	"wx      4       51      00000          e",
+	"wx              23      0bbb0     xx   e",
+	"wx                      0bbb0     x@   e",
+	"wx      xxx             0bbb0     x    e",
+	"w@  4   @@@             0@@@0     @    e",
+	"w                 51    00000   4      e",
+	"w    4            23                   e",
+	"frrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrd",
 };
 
 std::vector<Shell*> Shell::shells;
@@ -61,82 +62,104 @@ std::vector<Enemy*> Enemy::enemies;
 std::vector<Object*> Object::objectsAll;
 std::vector<Player*> Player::players;
 std::vector<Item*> Item::items;
-Map map("resource\\Map_Tileds\\Dungeon\\Hell.png", 25, 40, 9);//C:\Users\Andrey\Desktop\RPGGame\resource\Map_Tileds\Dungeon
+Map map("resource\\Map_Tileds\\Dungeon\\Hell.png", 25, 40, 17);//C:\Users\Andrey\Desktop\RPGGame\resource\Map_Tileds\Dungeon
 
 std::vector<sf::Sprite*> debugIntersects;
 void updateEnemies(const sf::Event& event, sf::RenderWindow& window);
 void updateIntersects();
 void funRandomizer(int countEnemies, Player& player);
 int updateIntersectsWalls(Player&);
+void makeEnemies(Player& player);
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(verticalHeight, horizontalHeight), "SFMLwork");
-	
-	window.setVerticalSyncEnabled(true); // запустите это один раз, после создания окна
+	srand(time(NULL));
+	sf::RenderWindow window(sf::VideoMode(verticalHeight, horizontalHeight), "The Darkest Shadow");
+	sf::Image* icon = new sf::Image;// РџР°С€РѕРє РЅРµ СѓРґР°Р»СЏРµС‚ icon РїСЂРё Р·Р°РєСЂС‹С‚РёРё РѕРєРЅР°С„С„
+	icon->loadFromFile("resource\\Window\\WindowIcon.png");
+
+	window.setIcon(icon->getSize().x, icon->getSize().y, icon->getPixelsPtr());
+
+	window.setVerticalSyncEnabled(true);
 	Stats statsPlayer(speedPlayer, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed, 6, 5);
-	Player player("resource\\Player\\Player\\Character\\shadowHero.png", "resource\\Player\\Player\\Projectile\\shadowHeroAttack.png", 8, 11, 500, 500, statsPlayer, dodgeDelay);
+	Player player("resource\\Player\\Player\\Character\\shadowHero.png", "resource\\Player\\Player\\Projectile\\shadowHeroAttack.png", 8, 11, 350, 350, statsPlayer, dodgeDelay);
 	Camera camera(&player, new sf::View, tieldsWidth, tieldsHeight, verticalHeight, horizontalHeight);
 	camera.setMapXYAndSize(0, 0, level[0].getSize() * tieldsWidth, levelHeight * tieldsHeight);
-	funRandomizer(1, player);
+	//funRandomizer(25, player);
+	makeEnemies(player);
 	HealthBottle hPBottle(250, 250, 2);
 	map.setMap(level, 25, 40);
 	map.setPosBG(verticalHeight, horizontalHeight);
 
 	sf::Clock clock;
 
+	Music music;
+	music.openFromFile("resource\\Audio\\1.ogg");
+	music.setLoop(true);
+
+	Menu menu(window, music, &camera, clock);
+
 	while (window.isOpen())
 	{
-		sf::Event event;//setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
-
-		mainTime = clock.getElapsedTime().asMicroseconds();
-		clock.restart();
-
-		while (window.pollEvent(event))
+		if (Keyboard::isKeyPressed(Keyboard::Escape))
 		{
-			if (event.type == sf::Event::Closed) 
+			menu.pauseMenu(window, music);
+		}
+		if (!menu.isMenuOn())
+		{
+			//
+			sf::Event event;//setCoordinationCamera(0, 0, 40 * 64, 64 * 25);
+
+			mainTime = clock.getElapsedTime().asMicroseconds();
+			clock.restart();
+
+			while (window.pollEvent(event))
 			{
-				window.close();
-				return 0;
+				if (event.type == sf::Event::Closed)
+				{
+					window.close();
+					return 0;
+				}
 			}
+
+			window.setView(*(camera.getView()));
+			for (Player* var : Player::players)
+				var->update(event);
+
+			window.clear();
+			map.updateMap(&window);
+
+			for (Item* var : Item::items)
+			{
+				var->update(event);
+				window.draw(var->getSprite());
+			}
+			camera.update();
+			for (sf::Sprite var : camera.getHPProgressBar()->getSpritesBar())
+				window.draw(var);
+
+			for (sf::Sprite var : camera.getDodgeProgressBar()->getSpritesBar())
+				window.draw(var);
+
+			updateIntersects();
+			for (Player* var : Player::players)
+			{
+				window.draw(var->getSprite());
+
+			}
+
+			updateEnemies(event, window);
+			Shell::checkIntersectsObjectsUpdate(event);
+			for (Shell* var : Shell::shells)
+				window.draw(var->getSprite());
+
+			for (sf::Sprite* var : debugIntersects)
+				window.draw(*var);
+			//
 		}
-
-		window.setView(*(camera.getView()));
-		for (Player* var : Player::players)
-			var->update(event);
-
-		window.clear();
-		map.updateMap(&window);
-
-		for (Item* var : Item::items)
-		{
-			var->update(event);
-			window.draw(var->getSprite());
-		}
-		camera.update();
-		for (sf::Sprite var : camera.getHPProgressBar()->getSpritesBar())
-			window.draw(var);
-
-		for (sf::Sprite var : camera.getDodgeProgressBar()->getSpritesBar())
-			window.draw(var);
-
-		updateIntersects();
-		for (Player* var : Player::players)
-		{
-			window.draw(var->getSprite());
-			
-		}
-		
-		updateEnemies(event, window);
-		Shell::checkIntersectsObjectsUpdate(event);
-		for (Shell* var : Shell::shells)
-			window.draw(var->getSprite());
-
-		for (sf::Sprite* var : debugIntersects)
-			window.draw(*var);
-
 		window.display();
 	}
+
 	return 0;
 }
 
@@ -157,7 +180,7 @@ void updateIntersects()
 {
 	sf::IntRect rect2;
 	sf::IntRect rect3;
-	for (int i = 0; i < Enemy::enemies.size(); ++i) // O(n^2) Можно оптимизировать в будущем
+	for (int i = 0; i < Enemy::enemies.size(); ++i) // O(n^2) РњРѕР¶РЅРѕ РѕРїС‚РёРјРёР·РёСЂРѕРІР°С‚СЊ РІ Р±СѓРґСѓС‰РµРј
 	{
 		rect2.left = Enemy::enemies[i]->getSprite().getPosition().x;
 		rect2.top = Enemy::enemies[i]->getSprite().getPosition().y;
@@ -169,7 +192,7 @@ void updateIntersects()
 			rect3.top = Shell::shells[j]->getSprite().getPosition().y;
 			rect3.width = Shell::shells[j]->getSprite().getLocalBounds().width;
 			rect3.height = Shell::shells[j]->getSprite().getLocalBounds().height;
-			if (rect3.intersects(rect2) && Shell::shells[j]->enemyKill)// Есть куча способов и идей по оптимизации всего этого и того, что выше
+			if (rect3.intersects(rect2) && Shell::shells[j]->enemyKill)// Р•СЃС‚СЊ РєСѓС‡Р° СЃРїРѕСЃРѕР±РѕРІ Рё РёРґРµР№ РїРѕ РѕРїС‚РёРјРёР·Р°С†РёРё РІСЃРµРіРѕ СЌС‚РѕРіРѕ Рё С‚РѕРіРѕ, С‡С‚Рѕ РІС‹С€Рµ
 			{
 				Enemy::enemies[i]->changeHealthPoints(-Shell::shells[j]->getDamage());
 				delete Shell::shells[j];
@@ -180,7 +203,7 @@ void updateIntersects()
 		}
 	}
 
-	for (int i = 0; i < Player::players.size(); ++i) // O(n^2) Можно оптимизировать в будущем
+	for (int i = 0; i < Player::players.size(); ++i) // O(n^2) РњРѕР¶РЅРѕ РѕРїС‚РёРјРёР·РёСЂРѕРІР°С‚СЊ РІ Р±СѓРґСѓС‰РµРј
 	{
 		rect2.left = Player::players[i]->getSprite().getPosition().x;
 		rect2.top = Player::players[i]->getSprite().getPosition().y;
@@ -192,7 +215,7 @@ void updateIntersects()
 			rect3.top = Shell::shells[j]->getSprite().getPosition().y;
 			rect3.width = Shell::shells[j]->getSprite().getLocalBounds().width;
 			rect3.height = Shell::shells[j]->getSprite().getLocalBounds().height;
-			if (rect3.intersects(rect2) && !Shell::shells[j]->enemyKill)// Есть куча способов и идей по оптимизации всего этого и того, что выше
+			if (rect3.intersects(rect2) && !Shell::shells[j]->enemyKill)// Р•СЃС‚СЊ РєСѓС‡Р° СЃРїРѕСЃРѕР±РѕРІ Рё РёРґРµР№ РїРѕ РѕРїС‚РёРјРёР·Р°С†РёРё РІСЃРµРіРѕ СЌС‚РѕРіРѕ Рё С‚РѕРіРѕ, С‡С‚Рѕ РІС‹С€Рµ
 			{
 				Player::players[i]->changeHealthPoints(-Shell::shells[j]->getDamage());
 				delete Shell::shells[j];
@@ -221,3 +244,12 @@ void funRandomizer(int countEnemies, Player& player)
 {
 	//hero.setPos(100, 100);
 }*/
+
+void makeEnemies(Player& player)
+{
+	Enemy::enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 650, 600, Stats(speedPlayer / 2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed * 2, 1, 1), &player));
+	Enemy::enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1650, 600, Stats(speedPlayer / 2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed * 2, 1, 1), &player));
+	Enemy::enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 950, 800, Stats(speedPlayer / 2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed * 2, 1, 1), &player));
+	Enemy::enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1250, 1000, Stats(speedPlayer / 2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed * 2, 1, 1), &player));
+	Enemy::enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1110, 900, Stats(speedPlayer / 2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed * 2, 1, 1), &player));
+}

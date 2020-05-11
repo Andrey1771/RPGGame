@@ -10,6 +10,7 @@ private:
 	int tieldWidth, tieldHeight;
 	sf::String* tieldMaps{ nullptr };
 	std::vector<AnimatedTield*> animatedTields;
+	std::vector<std::pair<TextureData, SizeXY>> movementTexturesAndSizeXY;
 public:
 	Map(const sf::String& ImageFolder, int heightMap, int widthMap, int amountTiledsMap);
 	~Map();
@@ -29,6 +30,9 @@ private:
 	void tieldsSettings(int amountTieldsMap);
 	void loadMap();
 	void animationTields(sf::RenderWindow* window);
-	
+	void addWallObject(sf::Sprite& sprite, int jTields, int iTields);
+	void addAnimationObject(sf::Sprite& sprite, int jTields, int iTields, int number);
+	void loadObjectAnimations();
+	void addAnimatedTexture(const sf::String& fileFolder, int maxFrameX, int maxFrameY);
 };
 

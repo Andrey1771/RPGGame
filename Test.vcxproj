@@ -113,11 +113,13 @@
       <PreprocessorDefinitions>SFML_DYNAMIC;WiN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>E:\Work\SFML\lib x86;E:\Work\SFML\lib x86</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-audio-d.lib;flac.lib;freetype.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-audio.lib;sfml-audio-s.lib;sfml-graphics.lib;sfml-graphics-s.lib;sfml-main.lib;sfml-network.lib;sfml-network-s.lib;sfml-system.lib;sfml-system-s.lib;sfml-window.lib;sfml-window-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -132,11 +134,13 @@
       <PreprocessorDefinitions>SFML_DYNAMIC;WiN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>E:\Work\SFML\lib x86;E:\Work\SFML\lib x64</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-audio-d.lib;flac.lib;freetype.lib;ogg.lib;openal32.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;sfml-audio.lib;sfml-audio-s.lib;sfml-graphics.lib;sfml-graphics-s.lib;sfml-main.lib;sfml-network.lib;sfml-network-s.lib;sfml-system.lib;sfml-system-s.lib;sfml-window.lib;sfml-window-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -152,6 +156,7 @@
     <ClCompile Include="LevelTileds.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
@@ -171,6 +176,7 @@
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelTileds.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ProgressBar.h" />
@@ -186,6 +192,7 @@
     <Image Include="resource\Enemy\Dungeon\Projectile\devilAttack.png" />
     <Image Include="resource\Enemy\Dungeon\Projectile\ifritAttack.png" />
     <Image Include="resource\Enemy\Dungeon\Projectile\slaveAttack.png" />
+    <Image Include="resource\Items\HealthBottle.png" />
     <Image Include="resource\Items\Star.png" />
     <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\animatedCorner.png" />
     <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\animatedWall.png" />
@@ -196,10 +203,66 @@
     <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\hellTree.png" />
     <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\jesus.png" />
     <Image Include="resource\Map_Tileds\Dungeon\Hell.png" />
+    <Image Include="resource\Menu\mainMenu\Authors\authors_0.png" />
+    <Image Include="resource\Menu\mainMenu\Authors\authors_1.png" />
+    <Image Include="resource\Menu\mainMenu\Authors\authors_10.png" />
+    <Image Include="resource\Menu\mainMenu\Authors\authors_11.png" />
+    <Image Include="resource\Menu\mainMenu\Authors\authors_12.png" />
+    <Image Include="resource\Menu\mainMenu\Authors\authors_13.png" />
+    <Image Include="resource\Menu\mainMenu\Authors\authors_14.png" />
+    <Image Include="resource\Menu\mainMenu\Authors\authors_15.png" />
+    <Image Include="resource\Menu\mainMenu\Authors\authors_16.png" />
+    <Image Include="resource\Menu\mainMenu\Authors\authors_17.png" />
+    <Image Include="resource\Menu\mainMenu\Authors\authors_18.png" />
+    <Image Include="resource\Menu\mainMenu\Authors\authors_2.png" />
+    <Image Include="resource\Menu\mainMenu\Authors\authors_3.png" />
+    <Image Include="resource\Menu\mainMenu\Authors\authors_4.png" />
+    <Image Include="resource\Menu\mainMenu\Authors\authors_5.png" />
+    <Image Include="resource\Menu\mainMenu\Authors\authors_6.png" />
+    <Image Include="resource\Menu\mainMenu\Authors\authors_7.png" />
+    <Image Include="resource\Menu\mainMenu\Authors\authors_8.png" />
+    <Image Include="resource\Menu\mainMenu\Authors\authors_9.png" />
+    <Image Include="resource\Menu\mainMenu\backGround_0.png" />
+    <Image Include="resource\Menu\mainMenu\backGround_1.png" />
+    <Image Include="resource\Menu\mainMenu\backGround_2.png" />
+    <Image Include="resource\Menu\mainMenu\backGround_3.png" />
+    <Image Include="resource\Menu\mainMenu\backGround_4.png" />
+    <Image Include="resource\Menu\mainMenu\backGround_5.png" />
+    <Image Include="resource\Menu\mainMenu\backGround_6.png" />
+    <Image Include="resource\Menu\mainMenu\backGround_7.png" />
+    <Image Include="resource\Menu\mainMenu\Bestiary\backGround.png" />
+    <Image Include="resource\Menu\mainMenu\Bestiary\sprite_0.png" />
+    <Image Include="resource\Menu\mainMenu\Bestiary\sprite_1.png" />
+    <Image Include="resource\Menu\mainMenu\Bestiary\sprite_2.png" />
+    <Image Include="resource\Menu\mainMenu\Bestiary\sprite_3.png" />
+    <Image Include="resource\Menu\mainMenu\steve.png" />
+    <Image Include="resource\Menu\pauseMenu\backGround_0.png" />
+    <Image Include="resource\Menu\pauseMenu\backGround_1.png" />
+    <Image Include="resource\Menu\pauseMenu\backGround_2.png" />
+    <Image Include="resource\Menu\pauseMenu\backGround_3.png" />
+    <Image Include="resource\Menu\settingsMenu\volumeArrows.png" />
     <Image Include="resource\Player\Player\Character\shadowHero.png" />
     <Image Include="resource\Player\Player\Projectile\shadowHeroAttack.png" />
     <Image Include="resource\Player\ProgressBar\Energy.png" />
     <Image Include="resource\Player\ProgressBar\hearts.png" />
+    <Image Include="resource\Window\WindowIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resource\Audio\0.ogg" />
+    <None Include="resource\Audio\1.ogg" />
+    <None Include="resource\Audio\authorsMusic.ogg" />
+    <None Include="resource\Audio\bestiaryMusic.ogg" />
+    <None Include="resource\Audio\buttonSound.ogg" />
+    <None Include="resource\Audio\mainMenuMusic.ogg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="resource\Fonts\bestiaryFonts\13830.ttf" />
+    <Font Include="resource\Fonts\bestiaryFonts\13859.ttf" />
+    <Font Include="resource\Fonts\bestiaryFonts\19108.otf" />
+    <Font Include="resource\Fonts\mainFonts\18959.ttf" />
+    <Font Include="resource\Fonts\mainFonts\18963.ttf" />
+    <Font Include="resource\Fonts\mainFonts\19190.ttf" />
+    <Font Include="resource\Fonts\mainFonts\19246.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

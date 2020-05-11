@@ -64,6 +64,48 @@
     <Filter Include="Файлы заголовков\Basic\Items">
       <UniqueIdentifier>{033ed8df-a86c-4815-8f6b-1c5f14e70e76}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы ресурсов\Menu">
+      <UniqueIdentifier>{ef9ad2fd-ceac-4839-8ce6-8e32ad74fe98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Menu">
+      <UniqueIdentifier>{2f3570e6-03cc-46aa-908e-d314ecbc728a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Menu">
+      <UniqueIdentifier>{3e058ea6-2071-43aa-a650-09499346e42c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\Menu\Music">
+      <UniqueIdentifier>{fd40d34e-5501-44e8-89d0-f6e9f20d0fee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\Menu\Fonts">
+      <UniqueIdentifier>{d7bae473-f7c4-4a90-a1c3-d52446804a93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\Menu\Fonts\BestiaryFonts">
+      <UniqueIdentifier>{b28b0ea4-d5c4-4e75-9320-41fdf8471c90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\Menu\Fonts\MainFonts">
+      <UniqueIdentifier>{8dd734de-f192-43ad-8f7f-8d4b7d4bdfc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\Menu\MainMenu">
+      <UniqueIdentifier>{3cbd0083-a91e-4c7d-a323-78fdfa91e0be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\Menu\MainMenu\BackGround">
+      <UniqueIdentifier>{dffc6bf8-2268-4461-8d52-e8cde6301278}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\Menu\MainMenu\Bestiary">
+      <UniqueIdentifier>{47000068-905e-4ca3-b95f-1df93fd2bd93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\Menu\MainMenu\Authors">
+      <UniqueIdentifier>{4410d094-4252-4551-89ec-56616ab6ea8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\Menu\PauseMenu">
+      <UniqueIdentifier>{bb5713fd-67d5-44a5-bb15-f85650e9281e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\Menu\SettingsMenu">
+      <UniqueIdentifier>{becde26a-0a8d-417e-a52f-8da4989350c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы ресурсов\WIndow">
+      <UniqueIdentifier>{0e0b2223-c487-41b8-b754-ade4b52a10e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimatedTield.cpp">
@@ -116,6 +158,9 @@
     </ClCompile>
     <ClCompile Include="Room.cpp">
       <Filter>Исходные файлы\Basic\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Исходные файлы\Menu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +218,9 @@
     <ClInclude Include="Room.h">
       <Filter>Файлы заголовков\Basic\Map</Filter>
     </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Файлы заголовков\Menu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\coffin.png">
@@ -185,9 +233,6 @@
       <Filter>Файлы ресурсов\Map</Filter>
     </Image>
     <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\hellTree.png">
-      <Filter>Файлы ресурсов\Map</Filter>
-    </Image>
-    <Image Include="resource\Map_Tileds\Dungeon\Hell.png">
       <Filter>Файлы ресурсов\Map</Filter>
     </Image>
     <Image Include="resource\Player\ProgressBar\hearts.png">
@@ -238,5 +283,171 @@
     <Image Include="resource\Player\Player\Character\shadowHero.png">
       <Filter>Файлы ресурсов\Heroes</Filter>
     </Image>
+    <Image Include="resource\Menu\mainMenu\backGround_0.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\BackGround</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\backGround_1.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\BackGround</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\backGround_2.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\BackGround</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\backGround_3.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\BackGround</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\backGround_4.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\BackGround</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\backGround_5.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\BackGround</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\backGround_6.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\BackGround</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\backGround_7.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\BackGround</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\steve.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\BackGround</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Bestiary\backGround.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Bestiary</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Bestiary\sprite_0.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Bestiary</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Bestiary\sprite_1.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Bestiary</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Bestiary\sprite_2.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Bestiary</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Bestiary\sprite_3.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Bestiary</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Authors\authors_0.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Authors</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Authors\authors_1.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Authors</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Authors\authors_2.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Authors</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Authors\authors_3.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Authors</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Authors\authors_4.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Authors</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Authors\authors_5.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Authors</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Authors\authors_6.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Authors</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Authors\authors_7.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Authors</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Authors\authors_8.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Authors</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Authors\authors_9.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Authors</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Authors\authors_10.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Authors</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Authors\authors_11.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Authors</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Authors\authors_12.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Authors</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Authors\authors_13.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Authors</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Authors\authors_14.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Authors</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Authors\authors_15.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Authors</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Authors\authors_16.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Authors</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Authors\authors_17.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Authors</Filter>
+    </Image>
+    <Image Include="resource\Menu\mainMenu\Authors\authors_18.png">
+      <Filter>Файлы ресурсов\Menu\MainMenu\Authors</Filter>
+    </Image>
+    <Image Include="resource\Menu\pauseMenu\backGround_0.png">
+      <Filter>Файлы ресурсов\Menu\PauseMenu</Filter>
+    </Image>
+    <Image Include="resource\Menu\pauseMenu\backGround_1.png">
+      <Filter>Файлы ресурсов\Menu\PauseMenu</Filter>
+    </Image>
+    <Image Include="resource\Menu\pauseMenu\backGround_2.png">
+      <Filter>Файлы ресурсов\Menu\PauseMenu</Filter>
+    </Image>
+    <Image Include="resource\Menu\pauseMenu\backGround_3.png">
+      <Filter>Файлы ресурсов\Menu\PauseMenu</Filter>
+    </Image>
+    <Image Include="resource\Menu\settingsMenu\volumeArrows.png">
+      <Filter>Файлы ресурсов\Menu\SettingsMenu</Filter>
+    </Image>
+    <Image Include="resource\Map_Tileds\Dungeon\Hell.png">
+      <Filter>Файлы ресурсов\Map</Filter>
+    </Image>
+    <Image Include="resource\Window\WindowIcon.png">
+      <Filter>Файлы ресурсов\WIndow</Filter>
+    </Image>
+    <Image Include="resource\Items\HealthBottle.png">
+      <Filter>Файлы ресурсов\Items</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resource\Audio\mainMenuMusic.ogg">
+      <Filter>Файлы ресурсов\Menu\Music</Filter>
+    </None>
+    <None Include="resource\Audio\buttonSound.ogg">
+      <Filter>Файлы ресурсов\Menu\Music</Filter>
+    </None>
+    <None Include="resource\Audio\bestiaryMusic.ogg">
+      <Filter>Файлы ресурсов\Menu\Music</Filter>
+    </None>
+    <None Include="resource\Audio\authorsMusic.ogg">
+      <Filter>Файлы ресурсов\Menu\Music</Filter>
+    </None>
+    <None Include="resource\Audio\1.ogg">
+      <Filter>Файлы ресурсов\Menu\Music</Filter>
+    </None>
+    <None Include="resource\Audio\0.ogg">
+      <Filter>Файлы ресурсов\Menu\Music</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="resource\Fonts\bestiaryFonts\19108.otf">
+      <Filter>Файлы ресурсов\Menu\Fonts\BestiaryFonts</Filter>
+    </Font>
+    <Font Include="resource\Fonts\bestiaryFonts\13859.ttf">
+      <Filter>Файлы ресурсов\Menu\Fonts\BestiaryFonts</Filter>
+    </Font>
+    <Font Include="resource\Fonts\bestiaryFonts\13830.ttf">
+      <Filter>Файлы ресурсов\Menu\Fonts\BestiaryFonts</Filter>
+    </Font>
+    <Font Include="resource\Fonts\mainFonts\18963.ttf">
+      <Filter>Файлы ресурсов\Menu\Fonts\MainFonts</Filter>
+    </Font>
+    <Font Include="resource\Fonts\mainFonts\19190.ttf">
+      <Filter>Файлы ресурсов\Menu\Fonts\MainFonts</Filter>
+    </Font>
+    <Font Include="resource\Fonts\mainFonts\19246.ttf">
+      <Filter>Файлы ресурсов\Menu\Fonts\MainFonts</Filter>
+    </Font>
+    <Font Include="resource\Fonts\mainFonts\18959.ttf">
+      <Filter>Файлы ресурсов\Menu\Fonts\MainFonts</Filter>
+    </Font>
   </ItemGroup>
 </Project>

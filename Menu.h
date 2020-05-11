@@ -129,6 +129,7 @@ class Menu
 	Event event;  // Событие
 	bool isMenu;  // Индикатор работы меню (да/нет)
 	int key;  // Номер текущей кнопки
+	Clock *clock;
 	Clock clock2;  // Часы
 	float CurrentFrame;  // Таймер для анимации бэкграунда 
 	float menuTimer;  // Таймер для нажатия клавиш
@@ -159,7 +160,7 @@ class Menu
 	void updateSize();  // Обновление размеров всех текстур под текущее разрешение окна
 
 public:
-	Menu(RenderWindow& window, Music& music, Camera* camera);  // Конструктор - ВАЖНО: ЗАГРУЖАЕТ ВСЕ НЕОБХОДИМЫЕ ФАЙЛЫ В ОПЕРАТИВКУ
+	Menu(RenderWindow& window, Music& music, Camera* camera, sf::Clock& clock);  // Конструктор - ВАЖНО: ЗАГРУЖАЕТ ВСЕ НЕОБХОДИМЫЕ ФАЙЛЫ В ОПЕРАТИВКУ
 	~Menu();  // Деструктор
 	void mainMenu(RenderWindow& window, Music& musicToStop);  // Главное Меню
 	void pauseMenu(RenderWindow& window, Music& music);  // Меню Паузы
