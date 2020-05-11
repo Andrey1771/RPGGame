@@ -152,7 +152,7 @@ void Player::attackHero(sf::Event event, bool ok)
 	{
 		if (animation(8))//8 - attack left
 		{
-			Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, true, *this, 1, 0, 0);
+			Shell::makeShell("resource\\Player\\Player\\Projectile\\shadowHeroAttack.png", 4, 4, 100, 1, true, *this, 1, 0, 0);
 			resetAnimationAttack();
 		}
 		return;
@@ -162,7 +162,7 @@ void Player::attackHero(sf::Event event, bool ok)
 	{
 		if (animation(9))//9 - attack right
 		{
-			Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, true, *this, 2, 0, 0);
+			Shell::makeShell("resource\\Player\\Player\\Projectile\\shadowHeroAttack.png", 4, 4, 100, 1, true, *this, 2, 0, 0);
 			resetAnimationAttack();
 		}
 		return;
@@ -172,7 +172,7 @@ void Player::attackHero(sf::Event event, bool ok)
 	{
 		if (animation(10))//10 - attack up
 		{
-			Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, true, *this, 0, 1, 90);
+			Shell::makeShell("resource\\Player\\Player\\Projectile\\shadowHeroAttack.png", 4, 4, 100, 1, true, *this, 0, 1, 90);
 			resetAnimationAttack();
 		}
 		return;
@@ -182,7 +182,7 @@ void Player::attackHero(sf::Event event, bool ok)
 	{
 		if (animation(7))//7 - attack down
 		{
-			Shell::makeShell("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 4, 100, 1, true, *this, 0, 2, 90);
+			Shell::makeShell("resource\\Player\\Player\\Projectile\\shadowHeroAttack.png", 4, 4, 100, 1, true, *this, 0, 2, 90);
 			resetAnimationAttack();
 		}
 		return;

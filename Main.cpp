@@ -75,8 +75,7 @@ int main()
 	
 	window.setVerticalSyncEnabled(true); // запустите это один раз, после создания окна
 	Stats statsPlayer(speedPlayer, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed, 6, 5);
-	
-	Player player("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 500, 500, statsPlayer, dodgeDelay);
+	Player player("resource\\Player\\Player\\Character\\shadowHero.png", "resource\\Player\\Player\\Projectile\\shadowHeroAttack.png", 8, 11, 500, 500, statsPlayer, dodgeDelay);
 	Camera camera(&player, new sf::View, tieldsWidth, tieldsHeight, verticalHeight, horizontalHeight);
 	camera.setMapXYAndSize(0, 0, level[0].getSize() * tieldsWidth, levelHeight * tieldsHeight);
 	funRandomizer(1, player);

@@ -232,5 +232,11 @@
     <Image Include="resource\Player\ProgressBar\Energy.png">
       <Filter>Файлы ресурсов\GUI</Filter>
     </Image>
+    <Image Include="resource\Player\Player\Projectile\shadowHeroAttack.png">
+      <Filter>Файлы ресурсов\Objects</Filter>
+    </Image>
+    <Image Include="resource\Player\Player\Character\shadowHero.png">
+      <Filter>Файлы ресурсов\Heroes</Filter>
+    </Image>
   </ItemGroup>
 </Project>

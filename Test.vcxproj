@@ -196,6 +196,8 @@
     <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\hellTree.png" />
     <Image Include="resource\Map_Tileds\Dungeon\Animation Objects\jesus.png" />
     <Image Include="resource\Map_Tileds\Dungeon\Hell.png" />
+    <Image Include="resource\Player\Player\Character\shadowHero.png" />
+    <Image Include="resource\Player\Player\Projectile\shadowHeroAttack.png" />
     <Image Include="resource\Player\ProgressBar\Energy.png" />
     <Image Include="resource\Player\ProgressBar\hearts.png" />
   </ItemGroup>

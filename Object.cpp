@@ -18,7 +18,7 @@ void intersetsDebug(const sf::FloatRect& rect, int k)
 	movementTexture23.texture = new sf::Texture;
 	movementTexture23.sprite = new sf::Sprite;
 
-	movementTexture23.image->loadFromFile("resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png");//sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, int maxFrameAttackX, int maxFrameAttackY, double x, double y, double speed, double attackTime)
+	movementTexture23.image->loadFromFile(""/*"resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png"*/);//sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, int maxFrameAttackX, int maxFrameAttackY, double x, double y, double speed, double attackTime)
 	movementTexture23.texture->loadFromImage(*movementTexture23.image);
 	movementTexture23.sprite->setTexture(*movementTexture23.texture);
 
