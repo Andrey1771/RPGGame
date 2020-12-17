@@ -1,6 +1,6 @@
 #include "ProgressBar.h"
 #include <iostream>
-ProgressBar::ProgressBar(sf::View* view, sf::String ImageFile, int range, int value, XY xy, SizeXY sizeXY, int maxFrameX, int maxFrameY)
+ProgressBar::ProgressBar(sf::View* view, sf::String ImageFile, int range, int value, UtilitiesGame::XY xy, UtilitiesGame::SizeXY sizeXY, int maxFrameX, int maxFrameY)
 {
 	//Movement
 	movementTexture.image = new sf::Image;
@@ -71,7 +71,7 @@ void ProgressBar::setView(sf::View* view)
 	this->view = view;
 }
 
-void ProgressBar::setSizeXY(const SizeXY& sizeXY)
+void ProgressBar::setSizeXY(const UtilitiesGame::SizeXY& sizeXY)
 {
 	xy.x = sizeXY.sizeX;
 	xy.y = sizeXY.sizeY;

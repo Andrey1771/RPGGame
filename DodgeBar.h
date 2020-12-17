@@ -6,7 +6,7 @@ class DodgeBar :
 {
 	int maxFrameX;
 public:
-	DodgeBar(sf::View* view, int range, int value, XY xy, SizeXY sizeXY);
+	DodgeBar(sf::View* view, int range, int value, UtilitiesGame::XY xy, UtilitiesGame::SizeXY sizeXY);
 	virtual int update() override;
 };
 

@@ -13,7 +13,7 @@ const int minDistance = 0;
 extern std::vector<sf::Sprite*> debugIntersects;
 void intersetsDebug(const sf::FloatRect& rect, int k)
 {
-	TextureData movementTexture23;
+	UtilitiesGame::TextureData movementTexture23;
 	movementTexture23.image = new sf::Image;
 	movementTexture23.texture = new sf::Texture;
 	movementTexture23.sprite = new sf::Sprite;
@@ -103,7 +103,7 @@ int Object::move(double x, double y)
 	checkAndChangeIJ(i, j);
 
 	int number; //+ ((map.magicTieldsVector.size() - 1) * (j - 1));
-	SpeedXY speedXY(x, y);
+	UtilitiesGame::SpeedXY speedXY(x, y);
 
 	if (x == 0 || y == 0)
 	{
@@ -573,14 +573,14 @@ void Object::checkAndChangeIJ(int& i, int& j)
 	}
 }
 
-bool Object::checkManyTieldsIntersection(SpeedXY& speedXY, int i, int j, int direction)
+bool Object::checkManyTieldsIntersection(UtilitiesGame::SpeedXY& speedXY, int i, int j, int direction)
 {
 	sf::FloatRect rect(movementTexture.sprite->getPosition().x + speedXY.x, movementTexture.sprite->getPosition().y + speedXY.y, movementTexture.sprite->getLocalBounds().width, movementTexture.sprite->getLocalBounds().height);
 	sf::FloatRect rect2; // 01 up
 	sf::FloatRect rect3; // 11 left and up
 	sf::FloatRect rect4; // 10 left
 	int number = i + (map.getWidthMap() * j);
-	SpeedXY speedXYBuf(speedXY);
+	UtilitiesGame::SpeedXY speedXYBuf(speedXY);
 	bool ok = false;
 
 	switch (direction)
@@ -724,7 +724,7 @@ bool Object::checkManyTieldsIntersection(SpeedXY& speedXY, int i, int j, int dir
 	return ok;
 }
 
-bool Object::checkTieldsIntersection(SpeedXY& speedXY, sf::FloatRect rect, sf::FloatRect rect2, int number, int directionFlag/*0 - не блокирует координаты, 1 - блокирует X, 2 - блокирует Y*/)
+bool Object::checkTieldsIntersection(UtilitiesGame::SpeedXY& speedXY, sf::FloatRect rect, sf::FloatRect rect2, int number, int directionFlag/*0 - не блокирует координаты, 1 - блокирует X, 2 - блокирует Y*/)
 {
 	if ((!rect2.intersects(rect)) || (map.magicTieldsVector.at(number).second >> 1 != 1))
 	{
@@ -739,7 +739,7 @@ bool Object::checkTieldsIntersection(SpeedXY& speedXY, sf::FloatRect rect, sf::F
 
 }
 
-bool Object::checkObjectsCollision(SpeedXY& speedXY)
+bool Object::checkObjectsCollision(UtilitiesGame::SpeedXY& speedXY)
 {
 	switch (collisionObjectsFlag)
 	{
@@ -864,7 +864,7 @@ bool Object::checkObjectsCollision(SpeedXY& speedXY)
 	return false;
 }
 
-void Object::changeIntersection(SpeedXY& speedXY, sf::FloatRect rect2, int directionFlag/*0 - не блокирует координаты, 1 - блокирует X, 2 - блокирует Y*/)//, int actionType /*0 - move, 1 - interaction*/
+void Object::changeIntersection(UtilitiesGame::SpeedXY& speedXY, sf::FloatRect rect2, int directionFlag/*0 - не блокирует координаты, 1 - блокирует X, 2 - блокирует Y*/)//, int actionType /*0 - move, 1 - interaction*/
 {
 	double newX, newY;
 	double rangeX, rangeY;
@@ -920,7 +920,7 @@ const sf::Vector2f& Object::getPosition()
 	return this->movementTexture.sprite->getPosition();
 }
 
-const SizeXY& Object::getSizeXY()
+const UtilitiesGame::SizeXY& Object::getSizeXY()
 {
 	return valueSizeXY;
 }

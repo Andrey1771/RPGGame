@@ -4,7 +4,7 @@
 extern float mainTime;
 extern double speedAnimation;
 
-Hero::Hero(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, const Stats& stats) : Object(ImageFile, maxFrameX, maxFrameY, stats.speed)
+Hero::Hero(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, const UtilitiesGame::Stats& stats) : Object(ImageFile, maxFrameX, maxFrameY, stats.speed)
 {
 	this->stats = stats;
 	speedOneFrame = stats.attackTime / movementTexture.maxFrameX;

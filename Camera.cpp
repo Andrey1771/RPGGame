@@ -10,10 +10,10 @@ Camera::Camera(Hero* hero, sf::View* view, float tieldsWidth, float tieldsHeight
 	view->setSize(sf::Vector2f(width, height));
 	view->setCenter(width / 2, height / 2);
 	
-	healthBar = new HealthBar(view, 0, 0, XY(), SizeXY(tieldsWidth, tieldsHeight));
+	healthBar = new HealthBar(view, 0, 0, UtilitiesGame::XY(), UtilitiesGame::SizeXY(tieldsWidth, tieldsHeight));
 	healthBar->setTrackingHero(hero);
 
-	dodgeBar = new DodgeBar(view, 0, 0, XY(width - tieldsWidth, 0), SizeXY(tieldsWidth, tieldsHeight));
+	dodgeBar = new DodgeBar(view, 0, 0, UtilitiesGame::XY(width - tieldsWidth, 0), UtilitiesGame::SizeXY(tieldsWidth, tieldsHeight));
 	dodgeBar->setTrackingHero(hero);
 
 }

@@ -1,6 +1,6 @@
 #include "DodgeBar.h"
 #include <iostream>
-DodgeBar::DodgeBar(sf::View* view, int range, int value, XY xy, SizeXY sizeXY) : ProgressBar(view, "resource\\Player\\ProgressBar\\Energy.png", range, value, xy, sizeXY, 5, 1)
+DodgeBar::DodgeBar(sf::View* view, int range, int value, UtilitiesGame::XY xy, UtilitiesGame::SizeXY sizeXY) : ProgressBar(view, "resource\\Player\\ProgressBar\\Energy.png", range, value, xy, sizeXY, 5, 1)
 {
 	maxFrameX = 5;
 }

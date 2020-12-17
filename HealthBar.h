@@ -4,7 +4,7 @@ class HealthBar :
 	public ProgressBar
 {
 public:
-	HealthBar(sf::View* view, int range, int value, XY xy, SizeXY sizeXY);
+	HealthBar(sf::View* view, int range, int value, UtilitiesGame::XY xy, UtilitiesGame::SizeXY sizeXY);
 	virtual int update() override;
 };
 

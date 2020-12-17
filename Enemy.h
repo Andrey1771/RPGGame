@@ -7,7 +7,7 @@ class Enemy :
 	public Hero
 {
 public:
-	Enemy(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, const Stats& stats, Player* player = nullptr);
+	Enemy(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, const UtilitiesGame::Stats& stats, Player* player = nullptr);
 	~Enemy();
 	Player* player{ nullptr };
 	std::string styleMove{ "" };

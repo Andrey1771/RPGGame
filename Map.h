@@ -10,7 +10,7 @@ private:
 	int tieldWidth, tieldHeight;
 	sf::String* tieldMaps{ nullptr };
 	std::vector<AnimatedTield*> animatedTields;
-	std::vector<std::pair<TextureData, SizeXY>> movementTexturesAndSizeXY;
+	std::vector<std::pair<UtilitiesGame::TextureData, UtilitiesGame::SizeXY>> movementTexturesAndSizeXY;
 public:
 	Map(const sf::String& ImageFolder, int heightMap, int widthMap, int amountTiledsMap);
 	~Map();

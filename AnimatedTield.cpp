@@ -9,7 +9,7 @@ void AnimatedTield::animation()
 	movementTexture.sprite->setTextureRect(sf::IntRect((valueSizeXY.sizeX) * int(currentFrameX), valueSizeXY.sizeY * int(currentFrameY), valueSizeXY.sizeX, valueSizeXY.sizeY));//(sizeX) * int(currentFrameY) + sizeX
 }
 
-AnimatedTield::AnimatedTield(const TextureData movementTexture, const SizeXY& valueSizeXY, int currentFrameY/*Ќе хочу просить ѕашка переделывать, тк он неправильно структуризировал стенки*/, double speedAnimation)
+AnimatedTield::AnimatedTield(const UtilitiesGame::TextureData movementTexture, const UtilitiesGame::SizeXY& valueSizeXY, int currentFrameY/*Ќе хочу просить ѕашка переделывать, тк он неправильно структуризировал стенки*/, double speedAnimation)
 {
 	this->valueSizeXY.sizeX = valueSizeXY.sizeX;
 	this->valueSizeXY.sizeY = valueSizeXY.sizeY;

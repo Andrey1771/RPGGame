@@ -7,7 +7,7 @@
 class Hero : public Object
 {
 public:
-	Hero(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, const Stats& stats);
+	Hero(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, const UtilitiesGame::Stats& stats);
 	~Hero();
 
 private:
@@ -20,7 +20,7 @@ private:
 	virtual int actionCollisionObjects(Object* obj) override;
 	float attackTime;
 protected:
-	Stats stats;
+	UtilitiesGame::Stats stats;
 	bool deathResolution{ true };
 public:
 
@@ -29,7 +29,7 @@ public:
 	virtual bool animation(int direction) override;
 	virtual int update(sf::Event) override;
 	void resetAnimationAttack();
-	const Stats& getStats() { return stats; };
+	const UtilitiesGame::Stats& getStats() { return stats; };
 	void setMaxHealthPoints(const int maxHP) { this->stats.maxHealthPoints = maxHP; };
 	void setHealthPoints(const int hp) { this->stats.healthPoints = hp; };
 	const int getHealthPoints() { return stats.healthPoints; };

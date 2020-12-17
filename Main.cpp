@@ -81,7 +81,7 @@ int main()
 	window.setIcon(icon->getSize().x, icon->getSize().y, icon->getPixelsPtr());
 
 	window.setVerticalSyncEnabled(true);
-	Stats statsPlayer(speedPlayer, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed, 6, 5);
+	UtilitiesGame::Stats statsPlayer(speedPlayer, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed, 6, 5);
 	Player player("resource\\Player\\Player\\Character\\shadowHero.png", "resource\\Player\\Player\\Projectile\\shadowHeroAttack.png", 8, 11, 350, 350, statsPlayer, dodgeDelay);
 	Camera camera(&player, new sf::View, tieldsWidth, tieldsHeight, verticalHeight, horizontalHeight);
 	camera.setMapXYAndSize(0, 0, level[0].getSize() * tieldsWidth, levelHeight * tieldsHeight);
@@ -93,15 +93,15 @@ int main()
 
 	sf::Clock clock;
 
-	Music music;
+	sf::Music music;
 	music.openFromFile("resource\\Audio\\1.ogg");
 	music.setLoop(true);
 
-	Menu menu(window, music, &camera, clock);
+	Menu::Menu menu(window, music, &camera, clock);
 
 	while (window.isOpen())
 	{
-		if (Keyboard::isKeyPressed(Keyboard::Escape))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 		{
 			menu.pauseMenu(window, music);
 		}
@@ -202,7 +202,7 @@ void updateIntersects()
 			}
 		}
 	}
-
+	
 	for (int i = 0; i < Player::players.size(); ++i) // O(n^2) Можно оптимизировать в будущем
 	{
 		rect2.left = Player::players[i]->getSprite().getPosition().x;
@@ -236,7 +236,7 @@ void funRandomizer(int countEnemies, Player& player)
 	{
 		positionX = rand() % 1000 + 200;
 		positionY = rand() % 1000 + 200;
-		Enemy::enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, positionX, positionY, Stats(speedPlayer / 2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed * 2, 1, 1), &player));
+		Enemy::enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, positionX, positionY, UtilitiesGame::Stats(speedPlayer / 2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed * 2, 1, 1), &player));
 	}
 }
 
@@ -247,9 +247,9 @@ void funRandomizer(int countEnemies, Player& player)
 
 void makeEnemies(Player& player)
 {
-	Enemy::enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 650, 600, Stats(speedPlayer / 2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed * 2, 1, 1), &player));
-	Enemy::enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1650, 600, Stats(speedPlayer / 2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed * 2, 1, 1), &player));
-	Enemy::enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 950, 800, Stats(speedPlayer / 2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed * 2, 1, 1), &player));
-	Enemy::enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1250, 1000, Stats(speedPlayer / 2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed * 2, 1, 1), &player));
-	Enemy::enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1110, 900, Stats(speedPlayer / 2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed * 2, 1, 1), &player));
+	Enemy::enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 650, 600, UtilitiesGame::Stats(speedPlayer / 2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed * 2, 1, 1), &player));
+	Enemy::enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1650, 600, UtilitiesGame::Stats(speedPlayer / 2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed * 2, 1, 1), &player));
+	Enemy::enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 950, 800, UtilitiesGame::Stats(speedPlayer / 2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed * 2, 1, 1), &player));
+	Enemy::enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1250, 1000, UtilitiesGame::Stats(speedPlayer / 2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed * 2, 1, 1), &player));
+	Enemy::enemies.push_back(new Enemy("resource\\Enemy\\Dungeon\\Character\\devil.png", "resource\\Enemy\\Dungeon\\Projectile\\devilAttack.png", 4, 11, 1110, 900, UtilitiesGame::Stats(speedPlayer / 2, speedPlayerAttack, attackPlayerRange, attackPlayerSpeed * 2, 1, 1), &player));
 }

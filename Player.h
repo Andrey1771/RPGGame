@@ -10,7 +10,7 @@ class Player :
 private:
 	int keyPressed{ 0 }; int dodgeDelay;
 public:
-	Player(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, const Stats& stats, int dodgeDelay);
+	Player(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, const UtilitiesGame::Stats& stats, int dodgeDelay);
 	~Player();
 	static std::vector<Player*> players;
 	// Унаследовано через Hero

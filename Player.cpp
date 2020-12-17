@@ -7,7 +7,7 @@ extern float mainTime;
 extern double speedAnimation;
 extern float teleportDistance;
 
-Player::Player(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, const Stats& stats, int dodgeDelay) : Hero(ImageFile, ImageFileAttack, maxFrameX, maxFrameY, x, y, stats)
+Player::Player(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, const UtilitiesGame::Stats& stats, int dodgeDelay) : Hero(ImageFile, ImageFileAttack, maxFrameX, maxFrameY, x, y, stats)
 {
 	players.push_back(this);
 	this->dodgeDelay = dodgeDelay;

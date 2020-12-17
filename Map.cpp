@@ -228,7 +228,7 @@ void Map::loadObjectAnimations()
 void Map::addAnimatedTexture(const sf::String& fileFolder, int maxFrameX, int maxFrameY)
 {
 	//temp
-	TextureData movementTexture0;
+	UtilitiesGame::TextureData movementTexture0;
 
 	movementTexture0.image = new sf::Image;
 	movementTexture0.texture = new sf::Texture;
@@ -241,9 +241,9 @@ void Map::addAnimatedTexture(const sf::String& fileFolder, int maxFrameX, int ma
 	movementTexture0.maxFrameX = maxFrameX;
 	movementTexture0.maxFrameY = maxFrameY;
 
-	SizeXY sizeXY(movementTexture0.texture->getSize().x / movementTexture0.maxFrameX, movementTexture0.texture->getSize().y / movementTexture0.maxFrameY);
+	UtilitiesGame::SizeXY sizeXY(movementTexture0.texture->getSize().x / movementTexture0.maxFrameX, movementTexture0.texture->getSize().y / movementTexture0.maxFrameY);
 	//temp
-	movementTexturesAndSizeXY.push_back(std::pair<TextureData, SizeXY>(movementTexture0, sizeXY));
+	movementTexturesAndSizeXY.push_back(std::pair<UtilitiesGame::TextureData, UtilitiesGame::SizeXY>(movementTexture0, sizeXY));
 }
 
 void Map::animationTields(sf::RenderWindow* window)

@@ -5,7 +5,7 @@
 extern float mainTime;
 //extern const int distanceAttackingObject;
 
-Enemy::Enemy(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, const Stats& stats, Player* player) : Hero(ImageFile, ImageFileAttack, maxFrameX, maxFrameY, x, y, stats)
+Enemy::Enemy(sf::String ImageFile, sf::String ImageFileAttack, int maxFrameX, int maxFrameY, double x, double y, const UtilitiesGame::Stats& stats, Player* player) : Hero(ImageFile, ImageFileAttack, maxFrameX, maxFrameY, x, y, stats)
 {
 	this->player = player;
 	setMoveStyle("range Demon");

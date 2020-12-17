@@ -8,7 +8,7 @@ protected:
 	double speed;
 	int countX{ 1 }; int countY{ 1 }; int x0{ 0 }; int y0{ 0 };
 	float currentFrameX{ 0 }; float currentFrameY{ 0 };
-	TextureData movementTexture; SizeXY valueSizeXY;
+	UtilitiesGame::TextureData movementTexture; UtilitiesGame::SizeXY valueSizeXY;
 
 	virtual int actionCollisionTields();
 	virtual int actionCollisionObjects(Object* obj) = 0;
@@ -26,7 +26,7 @@ public:
 	virtual int update(sf::Event) = 0;
 	const sf::Vector2f& getPosition();
 
-	const SizeXY& getSizeXY();
+	const UtilitiesGame::SizeXY& getSizeXY();
 	//static void IntersectsWalls(std::vector<Object*> &vector);
 	void setCollisionTieldsFlag(const int collisionTieldsFlag);
 	const int getCollisionTieldsFlag();
@@ -35,12 +35,12 @@ public:
 	
 	static std::vector<Object*> objectsAll;
 private:
-	bool checkManyTieldsIntersection(SpeedXY& speedXY, int i, int j, int direction);
-	bool checkTieldsIntersection(SpeedXY &speedXY, sf::FloatRect rect, sf::FloatRect rect2, int number, int directionFlag/*0 - не блокирует координаты, 1 - блокирует X, 2 - блокирует Y*/);
+	bool checkManyTieldsIntersection(UtilitiesGame::SpeedXY& speedXY, int i, int j, int direction);
+	bool checkTieldsIntersection(UtilitiesGame::SpeedXY &speedXY, sf::FloatRect rect, sf::FloatRect rect2, int number, int directionFlag/*0 - не блокирует координаты, 1 - блокирует X, 2 - блокирует Y*/);
 	int collisionTieldsFlag, collisionObjectsFlag;
 	
-	bool checkObjectsCollision(SpeedXY& speedXY);
-	void changeIntersection(SpeedXY& speedXY, sf::FloatRect rect2, int directionFlag/*0 - не блокирует координаты, 1 - блокирует X, 2 - блокирует Y*/);
+	bool checkObjectsCollision(UtilitiesGame::SpeedXY& speedXY);
+	void changeIntersection(UtilitiesGame::SpeedXY& speedXY, sf::FloatRect rect2, int directionFlag/*0 - не блокирует координаты, 1 - блокирует X, 2 - блокирует Y*/);
 
 	bool checkTeleportIntersects(double& x, double& y);
 	void checkAndChangeIJ(int& i, int& j);
